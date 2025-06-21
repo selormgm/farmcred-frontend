@@ -1,4 +1,4 @@
-import { apiClient } from '../axios';
+
 import { 
   FarmerProfile, 
   FarmerOverview, 
@@ -10,6 +10,8 @@ import {
   TrustBreakdown,
   ApiFilters 
 } from '@/lib/types';
+
+import apiClient from '../axios';
 
 export const farmerService = {
   // Profile 

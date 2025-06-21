@@ -1,9 +1,21 @@
-import Image from "next/image";
+'use client';
+
+import { useEffect } from 'react';
+import { loginAndStoreToken } from '@/lib/services/authService';
 
 export default function Home() {
-  return (
-    <div>
-      Home
-    </div>
-  );
+  const handleLogin = async () => {
+    const success = await loginAndStoreToken('farmer1@example.com', 'newpassword123');
+    if (success) {
+      return(
+        <div>Success</div>
+      )
+    }
+  };
+
+  useEffect(() => {
+    handleLogin();
+  }, []);
+
+  return <div>Logging in...</div>;
 }

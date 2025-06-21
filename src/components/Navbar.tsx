@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { CircleUserRound, Trophy, User } from "lucide-react";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 interface NavbarProps {
   username?: string;
@@ -44,12 +45,12 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
             <ul className="flex space-x-4">
               {navlinks.map((link) => (
                 <li key={link.name}>
-                  <Link 
-                    href={link.href} 
-                    className={`text-[#05402E] text-lg pb-1 transition-all duration-50 ${
-                      isActive(link.href) 
-                        ? 'border-b-2 border-[#05402E] font-semibold' 
-                        : 'hover:border-b-2 hover:border-[#05402E]'
+                  <Link
+                    href={link.href}
+                    className={`text-[#157148] text-lg pb-1 transition-all duration-50 ${
+                      isActive(link.href)
+                        ? "border-b-2 border-[#05402E] font-semibold"
+                        : "hover:border-b-2 hover:border-[#05402E]"
                     }`}
                   >
                     {link.name}
@@ -59,9 +60,17 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
             </ul>
           </div>
           <div className="flex items-center space-x-2">
-            <Trophy className="text-[#05402E]" />
-            <CircleUserRound className="w-8 h-8 flex items-center justify-center" />
-            <span className="text-sm">{username}</span>
+            <Trophy className="text-[#157148]" />
+            {initial ? (
+              <Avatar>
+                <AvatarImage></AvatarImage>
+                <AvatarFallback className="text-[#157148]">{initial}</AvatarFallback>
+              </Avatar>
+            ) : (
+              <CircleUserRound className="w-8 h-8 flex items-center justify-center text-[#157148]" />
+            )}
+
+            <span className="text-sm text-[#157148]">{username}</span>
           </div>
         </nav>
       </div>

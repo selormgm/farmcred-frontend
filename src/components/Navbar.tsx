@@ -1,13 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { CircleUserRound, Trophy, User } from "lucide-react";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
-const Navbar = () => {
-  const username = "Sidney Mensah";
+interface NavbarProps {
+  username?: string;
+}
+
+const Navbar = ({ username = "Loading..." }: NavbarProps) => {
   const initial = username.charAt(0).toUpperCase();
-  const [active, isActive] = useState();
+  const pathname = usePathname();
 
   const navlinks = [
     { name: "Home", href: "/dashboard" },
@@ -17,7 +23,9 @@ const Navbar = () => {
     { name: "Settings", href: "/dashboard/settings" },
   ];
 
-  
+  const isActive = (href: string) => {
+    return pathname === href;
+  };
 
   return (
     <div>
@@ -36,11 +44,16 @@ const Navbar = () => {
             <ul className="flex space-x-4">
               {navlinks.map((link) => (
                 <li key={link.name}>
-                  <Button variant="link">
-                    <Link href={link.href} className="text-[#05402E] text-lg">
-                      {link.name}
-                    </Link>
-                  </Button>
+                  <Link 
+                    href={link.href} 
+                    className={`text-[#05402E] text-lg pb-1 transition-all duration-50 ${
+                      isActive(link.href) 
+                        ? 'border-b-2 border-[#05402E] font-semibold' 
+                        : 'hover:border-b-2 hover:border-[#05402E]'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
                 </li>
               ))}
             </ul>

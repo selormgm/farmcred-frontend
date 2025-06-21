@@ -1,26 +1,97 @@
-export interface Farmer {
-    id: string;
-    email: string;
-    first_name: string;
-    last_name: string;
-    created_at: Date;
-    updated_at: Date;
-    is_active: boolean;
-    is_verified: boolean;
-    profile_picture_url?: string;
+export interface FarmerProfile {
+  id: number;
+  account: number;
+  full_name: string;
+  phone_number: string;
+  country: string;
+  region: string;
+  dob: string;
+  national_id: string;
+  home_address: string;
+  produce: string[];
+  trust_score_percent: number;
+  created_at: string;
+  updated_at: string;
 }
 
+export interface FarmerOverview {
+  id: number;
+  full_name: string;
+  trust_score_percent: number;
+  total_income: number;
+  total_expenses: number;
+  current_month_income: number;
+  current_month_expenses: number;
+  total_loans: number;
+  on_time_loans: number;
+  missed_loans: number;
+  produce: string[];
+  region: string;
+  country: string;
+}
 
+export interface Transaction {
+  id: number;
+  farmer: number;
+  amount: number;
+  category: string;
+  description: string;
+  status: 'income' | 'expense';
+  date: string;
+  created_at: string;
+}
 
-export interface Overview {
-   full_name: string; 
-    phone_number: string;
-    country: string;
-    region: string;
-    trust_level_stars: number;
-    trust_score_percent: number;
-    total_income_current_month: number;
-    total_expenses_current_month: number;
-    expected_roi: number;
+export interface TransactionInput {
+  amount: number;
+  category: string;
+  description: string;
+  status: 'income' | 'expense';
+  date: string;
+}
 
+export interface Transfer {
+  id: number;
+  farmer: number;
+  amount: number;
+  recipient: string;
+  type: 'sent' | 'received';
+  status: 'completed' | 'pending' | 'failed';
+  date: string;
+  description?: string;
+  created_at: string;
+}
+
+export interface TransferInput {
+  amount: number;
+  recipient: string;
+  type: 'sent' | 'received';
+  status: 'completed' | 'pending' | 'failed';
+  date: string;
+  description?: string;
+}
+
+export interface ChartData {
+  month: string;
+  income: number;
+  expenses: number;
+}
+
+export interface TrustBreakdown {
+  trust_score_percent: number;
+  total_loans: number;
+  on_time_loans: number;
+  missed_loans: number;
+  payment_history: Array<{
+    month: string;
+    on_time: number;
+    missed: number;
+  }>;
+}
+
+export interface ApiFilters {
+  category?: string;
+  status?: string;
+  type?: string;
+  date_from?: string;
+  date_to?: string;
 }

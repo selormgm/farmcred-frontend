@@ -15,11 +15,11 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col">
       <header className="p-4">
         <Navbar username={loading ? "Loading..." : profile?.full_name} />
       </header>
-      <main className="flex-1 overflow-y-auto p-4">{children}</main>
+      <main className="flex-1  p-4">{children}</main>
     </div>
   );
 }

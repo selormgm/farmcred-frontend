@@ -20,6 +20,7 @@ export interface FarmerOverview {
   trust_score_percent: number;
   total_income: number;
   total_expenses: number;
+  trust_level_stars: number;
   current_month_income: number;
   current_month_expenses: number;
   total_loans: number;
@@ -28,6 +29,7 @@ export interface FarmerOverview {
   produce: string[];
   region: string;
   country: string;
+
 }
 
 export interface Transaction {

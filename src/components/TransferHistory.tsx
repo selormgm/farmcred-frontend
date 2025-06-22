@@ -12,7 +12,7 @@ const TransferHistory = () => {
     );
 
   return (
-    <div className="grid gap-1">
+    <div className="grid gap-0">
       {(transfers || []).slice(0, 5).map((transfer, index: number) => {
         const recipientName =
           (transfer as any).recipient_or_sender ||
@@ -27,7 +27,7 @@ const TransferHistory = () => {
         return (
           <div
             key={index}
-            className="p-3 rounded border flex items-center space-x-2"
+            className="p-3 border-b border-[#E1E3E0] flex items-center space-x-2 last:border-b-0"
           >
             {/* Avatar or Initial */}
             <div className="flex items-center space-x-2">

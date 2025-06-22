@@ -12,7 +12,7 @@ const TransferHistory = () => {
     );
 
   return (
-    <div className="grid gap-0">
+    <div className="grid gap-1">
       {(transfers || []).slice(0, 5).map((transfer, index: number) => {
         const recipientName =
           (transfer as any).recipient_or_sender ||
@@ -27,7 +27,7 @@ const TransferHistory = () => {
         return (
           <div
             key={index}
-            className="p-3 border-b border-[#E1E3E0] flex items-center space-x-2 last:border-b-0"
+            className="flex items-center space-x-2 last:border-b-0"
           >
             {/* Avatar or Initial */}
             <div className="flex items-center space-x-2">
@@ -42,7 +42,8 @@ const TransferHistory = () => {
             </div>
 
             {/* Transfer Details */}
-            <div className="flex flex-col">
+            <div className="border-b border-[#E1E3E0] py-3 flex justify-between items-center flex-1">
+              <div className="flex flex-col">
               <p className="font-medium text-base text-[#157148]">{recipientName}</p>
               <p className="text-sm text-gray-500">
                 {new Date(transfer.date).toLocaleString()}
@@ -50,6 +51,7 @@ const TransferHistory = () => {
             </div>
             <div className="text-[#157148] font-medium">
               <p>GH₵ {transfer.amount}</p>
+            </div>
             </div>
           </div>
         );

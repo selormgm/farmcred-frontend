@@ -27,7 +27,7 @@ const TransferHistory = () => {
         return (
           <div
             key={index}
-            className="shadow p-3 rounded border border-[#E1E3E0] flex items-center space-x-2"
+            className="p-3 rounded border flex items-center space-x-2"
           >
             {/* Avatar or Initial */}
             <div className="flex items-center space-x-2">
@@ -43,9 +43,7 @@ const TransferHistory = () => {
 
             {/* Transfer Details */}
             <div className="flex flex-col">
-              <p className="font-medium text-base text-[#157148]">
-                {recipientName}
-              </p>
+              <p className="font-medium text-base text-[#157148]">{recipientName}</p>
               <p className="text-sm text-gray-500">
                 {new Date(transfer.date).toLocaleString()}
               </p>

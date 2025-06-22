@@ -52,6 +52,7 @@ export interface TransactionInput {
 }
 
 export interface Transfer {
+  recipient_or_sender: any;
   id: number;
   farmer: number;
   amount: number;
@@ -65,7 +66,7 @@ export interface Transfer {
 
 export interface TransferInput {
   amount: number;
-  recipient: string;
+  recipient_or_sender: string;
   type: 'sent' | 'received';
   status: 'completed' | 'pending' | 'failed';
   date: string;

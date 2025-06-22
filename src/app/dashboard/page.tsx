@@ -67,12 +67,12 @@ export default function Dashboard() {
             <div className=" flex flex-col gap-4 lg:flex-row h-full">
               <Card className="lg:w-2/5 w-full p-4">
                 <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle>Transfer History</CardTitle>
+                  <CardTitle className="text-lg text-[#157148]">Transfer History</CardTitle>
                   <Button variant="ghost" className="text-muted-foreground">View More</Button>
                 </CardHeader>
                 <TransferHistory />
               </Card>
-              <Card className="lg:w-3/5 w-full p-4">
+              <Card className="lg:w-4/5 w-full p-4">
                 <StaticTransaction />
               </Card>
             </div>

@@ -66,7 +66,7 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
             {initial ? (
               <Avatar>
                 <AvatarImage></AvatarImage>
-                <AvatarFallback className="text-[#157148]">
+                <AvatarFallback className="text-[#157148] border-1 border-[#157148]">
                   {initial}
                 </AvatarFallback>
               </Avatar>

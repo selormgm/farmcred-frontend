@@ -58,7 +58,7 @@ export default function LoginPage() {
         <div className="hidden lg:block relative">
           <div className="absolute inset-0">
             <Image
-              src="/images/farmer-1.jpg"
+              src="/images/farmer-5.jpg"
               alt="FarmCred - Farmers working in field"
               fill
               className="object-cover"

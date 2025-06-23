@@ -96,7 +96,7 @@ export default function SignupPage() {
         <div className="hidden lg:block relative">
           <div className="absolute inset-0">
             <Image
-              src="/images/farmer-1.jpg"
+              src="/images/farmer-3.jpg"
               alt="FarmCred - Agricultural investment platform"
               fill
               className="object-cover"

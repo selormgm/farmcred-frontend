@@ -7,6 +7,21 @@ import { CircleUserRound, Trophy, User } from "lucide-react";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { MdLogout } from "react-icons/md";
+import { AiOutlineHistory } from "react-icons/ai";
+import { BsClockHistory } from "react-icons/bs";
+import { IoSettingsOutline } from "react-icons/io5";
+import { IoMdHelpCircleOutline } from "react-icons/io";
+import { MdOutlineFeedback } from "react-icons/md";
+import { RiFileList2Line } from "react-icons/ri";
 
 interface NavbarProps {
   username?: string;
@@ -61,21 +76,75 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
               ))}
             </ul>
           </div>
-          <div className="flex items-center space-x-2">
-            <Trophy className="text-[#157148]" />
-            {initial ? (
-              <Avatar>
-                <AvatarImage></AvatarImage>
-                <AvatarFallback className="text-[#157148] border-1 border-[#157148]">
-                  {initial}
-                </AvatarFallback>
-              </Avatar>
-            ) : (
-              <CircleUserRound className="w-8 h-8 flex items-center justify-center text-[#157148]" />
-            )}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center space-x-2 outline-none">
+                <Trophy className="text-[#157148]" />
+                {initial ? (
+                  <Avatar>
+                    <AvatarImage></AvatarImage>
+                    <AvatarFallback className="text-[#157148] font-semibold border-1 border-[#157148]">
+                      {initial}
+                    </AvatarFallback>
+                  </Avatar>
+                ) : (
+                  <CircleUserRound className="w-8 h-8 flex items-center justify-center text-[#157148]" />
+                )}
+                <span className="text-sm font-semibold text-[#157148]">
+                  {username}
+                </span>
+              </button>
+            </DropdownMenuTrigger>
 
-            <span className="text-sm text-[#157148]">{username}</span>
-          </div>
+            <DropdownMenuContent className="w-84 mt-2">
+              <DropdownMenuLabel className=" bg-[#eff3e4] px-4 py-8 rounded-md ">
+                <div className="flex flex-col items-center justify-center space-y-1">
+                  {initial ? (
+                    <Avatar>
+                      <AvatarImage></AvatarImage>
+                      <AvatarFallback className="text-[#157148] font-semibold border-1 border-[#157148]">
+                        {initial}
+                      </AvatarFallback>
+                    </Avatar>
+                  ) : null}
+
+                  <div className="flex space-x-1 text-[#157148] text-sm">
+                    <span className="font-semibold">{username}</span>
+                    {/*<span>{id}</span>*/}
+                  </div>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuItem className="text-[#157148]">
+                <AiOutlineHistory className="text-[#157148]" />
+                Transaction History
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-[#157148]">
+                <BsClockHistory className="text-[#157148]" />
+                Transfer History
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-[#157148]">
+                <IoSettingsOutline className="text-[#157148]" />
+                Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-[#157148]">
+                <MdLogout className="text-[#157148]" />
+                Sign out
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="text-[#157148]">
+                <IoMdHelpCircleOutline className="text-[#157148]" />
+                Help & FAQ
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-[#157148]">
+                <RiFileList2Line className="text-[#157148]" />
+                Terms and Conditions
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-[#157148]">
+                <MdOutlineFeedback className="text-[#157148]" />
+                Send Feedback
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
       </div>
     </div>

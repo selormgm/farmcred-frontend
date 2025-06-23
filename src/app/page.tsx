@@ -1,21 +1,19 @@
 'use client';
 
 import { useEffect } from 'react';
-import { loginAndStoreToken } from '@/lib/services/authService';
+import { useRouter } from 'next/navigation';
+import { isAuthenticated } from '@/lib/services/authService';
 
 export default function Home() {
-  const handleLogin = async () => {
-    const success = await loginAndStoreToken('farmer1@example.com', 'password123');
-    if (success) {
-      return(
-        <div>Success</div>
-      )
-    }
-  };
+  const router = useRouter();
 
   useEffect(() => {
-    handleLogin();
-  }, []);
+    if (isAuthenticated()) {
+      router.push('/dashboard');
+    } else {
+      router.push('/login');
+    }
+  }, [router]);
 
-  return <div>Logging in...</div>;
+  return <div>Redirecting...</div>;
 }

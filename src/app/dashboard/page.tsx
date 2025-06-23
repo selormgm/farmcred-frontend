@@ -63,22 +63,65 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="flex-1">
-          <div className=" gap-4">
-            <div className=" flex flex-col gap-4 lg:flex-row h-full">
-              <Card className="lg:w-2/5 w-full p-4">
-                <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-lg text-[#157148]">Transfer History</CardTitle>
-                  <Button variant="ghost" className="text-muted-foreground">View More</Button>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 lg:flex-row h-full">
+              <Card className="lg:w-2/5 w-full p-6 h-[500px] flex flex-col">
+                <CardHeader className="flex flex-row items-center justify-between p-0 pb-6 flex-shrink-0">
+                  <CardTitle className="text-xl font-semibold text-[#157148]">
+                    Transfer History
+                  </CardTitle>
+                  <Button
+                    variant="ghost"
+                    className="text-gray-400 hover:text-gray-600 h-auto p-0 font-medium"
+                  >
+                    View More
+                  </Button>
                 </CardHeader>
-                <TransferHistory />
+                <div className="flex-1">
+                  <TransferHistory />
+                </div>
               </Card>
-              <Card className="lg:w-4/5 w-full p-4">
-                <StaticTransaction />
+              <Card className="lg:w-3/5 w-full p-6 h-[500px] flex flex-col">
+                <CardHeader className="flex flex-row items-center justify-between p-0 pb-6 flex-shrink-0">
+                  <CardTitle className="text-xl font-medium text-[#157148]">
+                    Static Transactions
+                  </CardTitle>
+                  <div className="flex gap-6">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-[#72BF01]"></div>
+                      <span className="text-xl font-normal text-[#157148]">
+                        Income
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-[#158F20]"></div>
+                      <span className="text-xl font-normal text-[#157148]">
+                        Expenses
+                      </span>
+                    </div>
+                  </div>
+                </CardHeader>
+                <div className="flex-1">
+                  <StaticTransaction />
+                </div>
               </Card>
             </div>
 
-            <Card className="col-span-2 p-4">
-              <TransactionHistory />
+            <Card className="p-6 h-[400px] flex flex-col">
+              <CardHeader className="flex flex-row items-center justify-between p-0 pb-6 flex-shrink-0">
+                <CardTitle className="text-xl font-medium text-[#157148]">
+                  Transaction History
+                </CardTitle>
+                <Button
+                  variant="ghost"
+                  className="text-gray-400 hover:text-gray-600 h-auto p-0 font-medium"
+                >
+                  View More
+                </Button>
+              </CardHeader>
+              <div className="flex-1">
+                <TransactionHistory />
+              </div>
             </Card>
           </div>
         </div>

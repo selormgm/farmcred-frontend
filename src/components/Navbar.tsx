@@ -42,7 +42,7 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
             />
           </div>
           <div className="flex items-center">
-            <ul className="flex space-x-4">
+            <ul className="flex space-x-8">
               {navlinks.map((link) => (
                 <li key={link.name}>
                   <Link

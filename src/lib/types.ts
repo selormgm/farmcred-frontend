@@ -34,6 +34,7 @@ export interface FarmerOverview {
 
 export interface Transaction {
   id: number;
+  name: string;
   farmer: number;
   amount: number;
   category: string;

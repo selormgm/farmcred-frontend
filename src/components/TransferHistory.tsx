@@ -12,7 +12,7 @@ const TransferHistory = () => {
     );
 
   return (
-    <div className="grid gap-1">
+    <div className="space-y-6">
       {(transfers || []).slice(0, 5).map((transfer, index: number) => {
         const recipientName =
           (transfer as any).recipient_or_sender ||
@@ -25,33 +25,38 @@ const TransferHistory = () => {
           : null;
 
         return (
-          <div
-            key={index}
-            className="flex items-center space-x-2 last:border-b-0"
-          >
-            {/* Avatar or Initial */}
-            <div className="flex items-center space-x-2">
-              {initial ? (
-                <Avatar>
-                  <AvatarImage />
-                  <AvatarFallback className=" text-[#ffffff] bg-[#72BF01] border-1 border-[#E1E3E0]">
-                    {initial}
-                  </AvatarFallback>
-                </Avatar>
-              ) : null}
-            </div>
+          <div key={index} className="flex items-center gap-4">
+            {/* Avatar */}
+            {initial && (
+              <Avatar className="h-12 w-12 flex-shrink-0">
+                <AvatarImage />
+                <AvatarFallback className="text-white bg-[#72BF01] text-lg font-bold">
+                  {initial}
+                </AvatarFallback>
+              </Avatar>
+            )}
 
             {/* Transfer Details */}
-            <div className="border-b border-[#E1E3E0] py-3 flex justify-between items-center flex-1">
-              <div className="flex flex-col">
-              <p className="font-medium text-base text-[#157148]">{recipientName}</p>
-              <p className="text-sm text-gray-500">
-                {new Date(transfer.date).toLocaleString()}
+            <div className="flex-1 min-w-0">
+              <p className="font-medium text-l text-[#157148] mb-0.5">
+                {recipientName}
+              </p>
+              <p className="text-sm text-[#157148]">
+                {new Date(transfer.date)
+                  .toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })
+                  .replace(",", "")}
               </p>
             </div>
-            <div className="text-[#157148] font-medium">
-              <p>GH₵ {transfer.amount}</p>
-            </div>
+
+            {/* Amount */}
+            <div className="text-right flex-shrink-0">
+              <p className="font-normal text-xl text-[#157148]">
+                GH₵ {transfer.amount}
+              </p>
             </div>
           </div>
         );

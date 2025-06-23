@@ -20,6 +20,7 @@ export interface FarmerOverview {
   trust_score_percent: number;
   total_income: number;
   total_expenses: number;
+  trust_level_stars: number;
   current_month_income: number;
   current_month_expenses: number;
   total_loans: number;
@@ -28,10 +29,12 @@ export interface FarmerOverview {
   produce: string[];
   region: string;
   country: string;
+
 }
 
 export interface Transaction {
   id: number;
+  name: string;
   farmer: number;
   amount: number;
   category: string;
@@ -50,6 +53,7 @@ export interface TransactionInput {
 }
 
 export interface Transfer {
+  recipient_or_sender: any;
   id: number;
   farmer: number;
   amount: number;
@@ -63,7 +67,7 @@ export interface Transfer {
 
 export interface TransferInput {
   amount: number;
-  recipient: string;
+  recipient_or_sender: string;
   type: 'sent' | 'received';
   status: 'completed' | 'pending' | 'failed';
   date: string;

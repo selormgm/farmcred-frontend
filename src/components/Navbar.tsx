@@ -42,16 +42,18 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
             />
           </div>
           <div className="flex items-center">
-            <ul className="flex space-x-4">
+            <ul className="flex space-x-8">
               {navlinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className={`text-[#157148] text-lg pb-1 transition-all duration-50 ${
-                      isActive(link.href)
-                        ? "border-b-2 border-[#05402E] font-semibold"
-                        : "hover:border-b-2 hover:border-[#05402E]"
-                    }`}
+                    className={`text-lg pb-1 transition-all duration-150 relative
+                      ${
+                        isActive(link.href)
+                          ? "text-[#158F20] font-semibold after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-[130%] after:h-[2px] after:bg-[#158F20] after:rounded-[10px]"
+                          : "text-[#157148] hover:after:content-[''] hover:after:absolute hover:after:bottom-0 hover:after:left-1/2 hover:after:-translate-x-1/2 hover:after:w-[110%] hover:after:h-[2px] hover:after:bg-[#157148] hover:after:rounded-[10px]"
+                      }
+                      `}
                   >
                     {link.name}
                   </Link>
@@ -64,7 +66,9 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
             {initial ? (
               <Avatar>
                 <AvatarImage></AvatarImage>
-                <AvatarFallback className="text-[#157148]">{initial}</AvatarFallback>
+                <AvatarFallback className="text-[#157148] border-1 border-[#157148]">
+                  {initial}
+                </AvatarFallback>
               </Avatar>
             ) : (
               <CircleUserRound className="w-8 h-8 flex items-center justify-center text-[#157148]" />

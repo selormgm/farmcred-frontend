@@ -11,6 +11,7 @@ import { toast } from "sonner";
 
 export default function Dashboard() {
   const { data: overview, loading, error } = useFarmerOverview();
+  const tablelength = 3;
   if (error) {
     console.error("Failed to fetch overview data:", error);
   }
@@ -59,7 +60,7 @@ export default function Dashboard() {
               Total Income
             </p>
             <h2 className="text-3xl font-bold">
-              GH₵{overview.total_income || 0}
+              GH₵{overview.total_income_last_12_months || 0}
             </h2>
           </div>
         </div>
@@ -121,7 +122,7 @@ export default function Dashboard() {
                 </Button>
               </CardHeader>
               <div className="flex-1">
-                <TransactionHistory />
+                <TransactionHistory tablelength={4}/>
               </div>
             </Card>
           </div>

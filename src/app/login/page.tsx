@@ -45,7 +45,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-white">
       <div className="fixed top-6 left-6 z-50">
         <Image
-          src="/logo/logo-04.png"
+          src="/logo/farmcred-04.png"
           alt="FarmCred Logo"
           width={200}
           height={80}

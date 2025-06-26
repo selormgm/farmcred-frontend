@@ -2,6 +2,8 @@ import { useFarmerTransfers } from "@/hooks/useFarmerData";
 import { TransferInput } from "@/lib/types";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
+
+
 const TransferHistory = () => {
   const { data: transfers, loading, error } = useFarmerTransfers();
 
@@ -13,7 +15,7 @@ const TransferHistory = () => {
 
   return (
     <div className="space-y-1.5">
-      {(transfers || []).slice(0, 5).map((transfer, index: number) => {
+      {(transfers || []).slice(0, 3).map((transfer, index: number) => {
         const recipientName =
           (transfer as any).recipient_or_sender ||
           transfer.recipient_or_sender ||

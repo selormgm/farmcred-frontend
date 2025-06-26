@@ -49,9 +49,9 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
         <nav className="flex items-center justify-between p-4">
           <div className="flex items-center">
             <Image
-              src="/logo/logo-01.png"
+              src="/logo/farmcred-03.png"
               alt="FarmCred Logo"
-              width={50}
+              width={180}
               height={50}
               className="mr-2"
             />
@@ -115,33 +115,62 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuItem className="text-[#157148]">
-                <AiOutlineHistory className="text-[#157148]" />
-                Transaction History
+                <Link
+                  href="/dashboard/transactions"
+                  className="flex items-center gap-2 w-full"
+                >
+                  <AiOutlineHistory className="text-[#157148]" />
+                  Transaction History
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="text-[#157148]">
-                <BsClockHistory className="text-[#157148]" />
-                Transfer History
+                <Link
+                  href="/dashboard/transfers"
+                  className="flex items-center gap-2 w-full"
+                >
+                  <BsClockHistory className="text-[#157148]" />
+                  Transfer History
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="text-[#157148]">
-                <IoSettingsOutline className="text-[#157148]" />
-                Settings
+                <Link
+                  href="/dashboard/settings"
+                  className="flex items-center gap-2 w-full"
+                >
+                  <IoSettingsOutline className="text-[#157148]" />
+                  Settings
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="text-[#157148]">
-                <MdLogout className="text-[#157148]" />
-                Sign out
+                <Link
+                  href="/signout"
+                  className="flex items-center gap-2 w-full"
+                >
+                  <MdLogout className="text-[#157148]" />
+                  Sign out
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-[#157148]">
-                <IoMdHelpCircleOutline className="text-[#157148]" />
-                Help & FAQ
+                <Link href="/help" className="flex items-center gap-2 w-full">
+                  <IoMdHelpCircleOutline className="text-[#157148]" />
+                  Help & FAQ
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="text-[#157148]">
-                <RiFileList2Line className="text-[#157148]" />
-                Terms and Conditions
+                <Link href="/terms" className="flex items-center gap-2 w-full">
+                  <RiFileList2Line className="text-[#157148]" />
+                  Terms and Conditions
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="text-[#157148]">
-                <MdOutlineFeedback className="text-[#157148]" />
-                Send Feedback
+                <Link
+                  href="/feedback"
+                  className="flex items-center gap-2 w-full"
+                >
+                  <MdOutlineFeedback className="text-[#157148]" />
+                  Send Feedback
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

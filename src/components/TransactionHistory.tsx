@@ -10,12 +10,25 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {  MoreVertical } from "lucide-react";
+import { MoreVertical } from "lucide-react";
 import { useFarmerTransactions } from "@/hooks/useFarmerData";
 import { Transaction } from "@/lib/types";
 
-const TransactionHistory = () => {
+interface TransactionHistoryProps {
+  tablelength: number;
+  search?: string;
+  filter?: string;
+  onFiltered?: (filtered: Transaction[]) => void;
+}
+
+const TransactionHistory = ({
+  tablelength,
+  search,
+  filter = "all",
+  
+}: TransactionHistoryProps) => {
   const { data: transactions, loading, error } = useFarmerTransactions();
+  const length = tablelength;
 
   if (loading) {
     return (
@@ -41,7 +54,26 @@ const TransactionHistory = () => {
     );
   }
 
-  const transactionData = transactions.slice(0, 4); // Show max 4 transactions
+  // Filter transactions based on search query (case-insensitive)
+  const filteredTransactions = transactions.filter(
+    (transaction: Transaction) => {
+      if (filter === "income" && transaction.status !== "income") return false;
+      if (filter === "expense" && transaction.status !== "expense")
+        return false;
+
+      if (!search) return true;
+
+      const query = search.toLowerCase();
+      return (
+        transaction.name.toLowerCase().includes(query) ||
+        transaction.category.toLowerCase().includes(query) ||
+        transaction.status.toLowerCase().includes(query) ||
+        transaction.amount.toString().includes(query)
+      );
+    }
+  );
+
+  const transactionData = filteredTransactions.slice(0, length);
 
   return (
     <Table>
@@ -136,11 +168,7 @@ const TransactionHistory = () => {
               ₵ {transaction.amount.toLocaleString()}
             </TableCell>
             <TableCell className="py-3">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-8 w-8 p-0"
-              >
+              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                 <MoreVertical className="h-4 w-4 text-[#157148]" />
               </Button>
             </TableCell>
@@ -152,3 +180,10 @@ const TransactionHistory = () => {
 };
 
 export default TransactionHistory;
+ function handleTransactions(filtered: any[]) {
+    setTransactions(filtered);
+  }
+function setTransactions(filtered: any[]) {
+  throw new Error("Function not implemented.");
+}
+

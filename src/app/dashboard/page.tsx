@@ -7,9 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useFarmerOverview } from "@/hooks/useFarmerData";
+import { toast } from "sonner";
 
 export default function Dashboard() {
   const { data: overview, loading, error } = useFarmerOverview();
+  const tablelength = 3;
   if (error) {
     console.error("Failed to fetch overview data:", error);
   }
@@ -58,7 +60,7 @@ export default function Dashboard() {
               Total Income
             </p>
             <h2 className="text-3xl font-bold">
-              GH₵{overview.total_income || 0}
+              GH₵{overview.total_income_last_12_months || 0}
             </h2>
           </div>
         </div>
@@ -72,7 +74,7 @@ export default function Dashboard() {
                   </CardTitle>
                   <Button
                     variant="ghost"
-                    className="text-gray-400 hover:text-gray-600 h-auto p-0 font-medium"
+                    className="text-gray-400 hover:text-[#157148] h-auto p-1 font-medium"
                   >
                     View More
                   </Button>
@@ -81,21 +83,21 @@ export default function Dashboard() {
                   <TransferHistory />
                 </div>
               </Card>
-              <Card className="lg:w-3/5 w-full p-6 h-[500px] flex flex-col">
+              <Card className="lg:w-5/5 w-full p-6 h-[500px] flex flex-col">
                 <CardHeader className="flex flex-row items-center justify-between p-0 pb-6 flex-shrink-0">
                   <CardTitle className="text-xl font-medium text-[#157148]">
                     Static Transactions
                   </CardTitle>
                   <div className="flex gap-6">
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-[#72BF01]"></div>
-                      <span className="text-xl font-normal text-[#157148]">
+                      <div className="w-3 h-3 rounded-full bg-[#72BF01] border border-[#B8B8B8]"></div>
+                      <span className="text-lg font-normal text-[#157148]">
                         Income
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-[#158F20]"></div>
-                      <span className="text-xl font-normal text-[#157148]">
+                      <div className="w-3 h-3 rounded-full bg-[#158F20] border border-[#B8B8B8]"></div>
+                      <span className="text-lg font-normal text-[#157148]">
                         Expenses
                       </span>
                     </div>
@@ -114,13 +116,13 @@ export default function Dashboard() {
                 </CardTitle>
                 <Button
                   variant="ghost"
-                  className="text-gray-400 hover:text-gray-600 h-auto p-0 font-medium"
+                  className="text-gray-400 hover:text-[#157148] h-auto p-1 font-medium"
                 >
                   View More
                 </Button>
               </CardHeader>
               <div className="flex-1">
-                <TransactionHistory />
+                <TransactionHistory tablelength={4}/>
               </div>
             </Card>
           </div>

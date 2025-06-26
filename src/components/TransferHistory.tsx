@@ -2,6 +2,8 @@ import { useFarmerTransfers } from "@/hooks/useFarmerData";
 import { TransferInput } from "@/lib/types";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
+
+
 const TransferHistory = () => {
   const { data: transfers, loading, error } = useFarmerTransfers();
 
@@ -12,8 +14,8 @@ const TransferHistory = () => {
     );
 
   return (
-    <div className="space-y-6">
-      {(transfers || []).slice(0, 5).map((transfer, index: number) => {
+    <div className="space-y-1.5">
+      {(transfers || []).slice(0, 3).map((transfer, index: number) => {
         const recipientName =
           (transfer as any).recipient_or_sender ||
           transfer.recipient_or_sender ||
@@ -28,7 +30,7 @@ const TransferHistory = () => {
           <div key={index} className="flex items-center gap-4">
             {/* Avatar */}
             {initial && (
-              <Avatar className="h-12 w-12 flex-shrink-0">
+              <Avatar className="h-12 w-12 flex-shrink-0 border border-[#E1E3E0]">
                 <AvatarImage />
                 <AvatarFallback className="text-white bg-[#72BF01] text-lg font-bold">
                   {initial}
@@ -36,8 +38,10 @@ const TransferHistory = () => {
               </Avatar>
             )}
 
-            {/* Transfer Details */}
-            <div className="flex-1 min-w-0">
+            {/* Transfer Details + Amount with bottom border*/}
+            <div className="flex justify-between items-center flex-1 border-b border-[#E1E3E0] py-2">
+              {/*Transfer Details */}
+              <div className="min-w-0">
               <p className="font-medium text-l text-[#157148] mb-0.5">
                 {recipientName}
               </p>
@@ -57,6 +61,7 @@ const TransferHistory = () => {
               <p className="font-normal text-xl text-[#157148]">
                 GH₵ {transfer.amount}
               </p>
+            </div>
             </div>
           </div>
         );

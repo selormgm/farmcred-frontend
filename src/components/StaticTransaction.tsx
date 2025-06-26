@@ -53,7 +53,7 @@ const StaticTransaction = () => {
       income: parseFloat(item.income) || 0,
       expenses: parseFloat(item.expenses) || 0,
     }))
-    .slice(-4); // Get the latest 4 weeks
+    .slice(-6); // Get the latest 6 weeks
 
   // Calculate max value for Y-axis
   const maxIncome =
@@ -74,7 +74,7 @@ const StaticTransaction = () => {
   );
 
   return (
-    <ChartContainer config={chartConfig} className="h-full w-full">
+    <ChartContainer config={chartConfig} className=" w-full h-full">
       <BarChart
         accessibilityLayer
         data={transformedData}
@@ -82,7 +82,7 @@ const StaticTransaction = () => {
           top: 0,
           right: 0,
           left: 0,
-          bottom: 40,
+          bottom: 130,
         }}
       >
         <CartesianGrid

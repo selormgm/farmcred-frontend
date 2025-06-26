@@ -45,7 +45,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-white">
       <div className="fixed top-6 left-6 z-50">
         <Image
-          src="/logo/logo-04.png"
+          src="/logo/farmcred-04.png"
           alt="FarmCred Logo"
           width={200}
           height={80}
@@ -58,7 +58,7 @@ export default function LoginPage() {
         <div className="hidden lg:block relative">
           <div className="absolute inset-0">
             <Image
-              src="/images/farmer-1.jpg"
+              src="/images/farmer-5.jpg"
               alt="FarmCred - Farmers working in field"
               fill
               className="object-cover"

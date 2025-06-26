@@ -7,6 +7,21 @@ import { CircleUserRound, Trophy, User } from "lucide-react";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { MdLogout } from "react-icons/md";
+import { AiOutlineHistory } from "react-icons/ai";
+import { BsClockHistory } from "react-icons/bs";
+import { IoSettingsOutline } from "react-icons/io5";
+import { IoMdHelpCircleOutline } from "react-icons/io";
+import { MdOutlineFeedback } from "react-icons/md";
+import { RiFileList2Line } from "react-icons/ri";
 
 interface NavbarProps {
   username?: string;
@@ -34,9 +49,9 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
         <nav className="flex items-center justify-between p-4">
           <div className="flex items-center">
             <Image
-              src="/logo/logo-01.png"
+              src="/logo/farmcred-03.png"
               alt="FarmCred Logo"
-              width={50}
+              width={180}
               height={50}
               className="mr-2"
             />
@@ -61,21 +76,104 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
               ))}
             </ul>
           </div>
-          <div className="flex items-center space-x-2">
-            <Trophy className="text-[#157148]" />
-            {initial ? (
-              <Avatar>
-                <AvatarImage></AvatarImage>
-                <AvatarFallback className="text-[#157148] border-1 border-[#157148]">
-                  {initial}
-                </AvatarFallback>
-              </Avatar>
-            ) : (
-              <CircleUserRound className="w-8 h-8 flex items-center justify-center text-[#157148]" />
-            )}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center space-x-2 outline-none">
+                <Trophy className="text-[#157148]" />
+                {initial ? (
+                  <Avatar>
+                    <AvatarImage></AvatarImage>
+                    <AvatarFallback className="text-[#157148] font-semibold border-1 border-[#157148]">
+                      {initial}
+                    </AvatarFallback>
+                  </Avatar>
+                ) : (
+                  <CircleUserRound className="w-8 h-8 flex items-center justify-center text-[#157148]" />
+                )}
+                <span className="text-sm font-semibold text-[#157148]">
+                  {username}
+                </span>
+              </button>
+            </DropdownMenuTrigger>
 
-            <span className="text-sm text-[#157148]">{username}</span>
-          </div>
+            <DropdownMenuContent className="w-84 mt-2">
+              <DropdownMenuLabel className=" bg-[#eff3e4] px-4 py-8 rounded-md ">
+                <div className="flex flex-col items-center justify-center space-y-1">
+                  {initial ? (
+                    <Avatar>
+                      <AvatarImage></AvatarImage>
+                      <AvatarFallback className="text-[#157148] font-semibold border-1 border-[#157148]">
+                        {initial}
+                      </AvatarFallback>
+                    </Avatar>
+                  ) : null}
+
+                  <div className="flex space-x-1 text-[#157148] text-sm">
+                    <span className="font-semibold">{username}</span>
+                    {/*<span>{id}</span>*/}
+                  </div>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuItem className="text-[#157148]">
+                <Link
+                  href="/dashboard/transactions"
+                  className="flex items-center gap-2 w-full"
+                >
+                  <AiOutlineHistory className="text-[#157148]" />
+                  Transaction History
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-[#157148]">
+                <Link
+                  href="/dashboard/transfers"
+                  className="flex items-center gap-2 w-full"
+                >
+                  <BsClockHistory className="text-[#157148]" />
+                  Transfer History
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-[#157148]">
+                <Link
+                  href="/dashboard/settings"
+                  className="flex items-center gap-2 w-full"
+                >
+                  <IoSettingsOutline className="text-[#157148]" />
+                  Settings
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-[#157148]">
+                <Link
+                  href="/signout"
+                  className="flex items-center gap-2 w-full"
+                >
+                  <MdLogout className="text-[#157148]" />
+                  Sign out
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="text-[#157148]">
+                <Link href="/help" className="flex items-center gap-2 w-full">
+                  <IoMdHelpCircleOutline className="text-[#157148]" />
+                  Help & FAQ
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-[#157148]">
+                <Link href="/terms" className="flex items-center gap-2 w-full">
+                  <RiFileList2Line className="text-[#157148]" />
+                  Terms and Conditions
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-[#157148]">
+                <Link
+                  href="/feedback"
+                  className="flex items-center gap-2 w-full"
+                >
+                  <MdOutlineFeedback className="text-[#157148]" />
+                  Send Feedback
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
       </div>
     </div>

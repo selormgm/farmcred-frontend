@@ -83,7 +83,7 @@ export default function SignupPage() {
       {/* Logo positioned at top left */}
       <div className="fixed top-6 left-6 z-50">
         <Image
-          src="/logo/logo-04.png"
+          src="/logo/farmcred-07.png"
           alt="FarmCred Logo"
           width={200}
           height={80}
@@ -96,7 +96,7 @@ export default function SignupPage() {
         <div className="hidden lg:block relative">
           <div className="absolute inset-0">
             <Image
-              src="/images/farmer-1.jpg"
+              src="/images/farmer-3.jpg"
               alt="FarmCred - Agricultural investment platform"
               fill
               className="object-cover"

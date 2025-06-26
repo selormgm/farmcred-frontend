@@ -18,7 +18,7 @@ export interface FarmerOverview {
   id: number;
   full_name: string;
   trust_score_percent: number;
-  total_income: number;
+  total_income_last_12_months: number;
   total_expenses: number;
   trust_level_stars: number;
   current_month_income: number;

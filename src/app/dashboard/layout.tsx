@@ -19,7 +19,7 @@ export default function DashboardLayout({
     <ProtectedRoute>
       <div className="flex flex-col">
         <header className="p-4">
-          <Navbar username={loading ? "Loading..." : profile?.full_name} />
+          <Navbar username={loading ? "Loading..." : profile?.full_name}  id={profile?.id || 0}/>
         </header>
         <main className="flex-1 p-4">{children}</main>
       </div>

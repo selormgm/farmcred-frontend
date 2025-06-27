@@ -85,7 +85,7 @@ const TransferTable = ({
             className="text-base font-normal text-black/40 h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
-            Transaction ID
+            Transfer ID
           </TableHead>
           <TableHead
             className="text-base font-normal text-black/40 h-auto py-3"

@@ -1,8 +1,6 @@
 import { useFarmerTransfers } from "@/hooks/useFarmerData";
 import { TransferInput } from "@/lib/types";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-
-
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const TransferHistory = () => {
   const { data: transfers, loading, error } = useFarmerTransfers();
@@ -42,26 +40,26 @@ const TransferHistory = () => {
             <div className="flex justify-between items-center flex-1 border-b border-[#E1E3E0] py-2">
               {/*Transfer Details */}
               <div className="min-w-0">
-              <p className="font-medium text-l text-[#157148] mb-0.5">
-                {recipientName}
-              </p>
-              <p className="text-sm text-[#157148]">
-                {new Date(transfer.date)
-                  .toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })
-                  .replace(",", "")}
-              </p>
-            </div>
+                <p className="font-medium text-l text-[#157148] mb-0.5">
+                  {recipientName}
+                </p>
+                <p className="text-sm text-[#157148]">
+                  {new Date(transfer.date)
+                    .toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })
+                    .replace(",", "")}
+                </p>
+              </div>
 
-            {/* Amount */}
-            <div className="text-right flex-shrink-0">
-              <p className="font-normal text-xl text-[#157148]">
-                GH₵ {transfer.amount}
-              </p>
-            </div>
+              {/* Amount */}
+              <div className="text-right flex-shrink-0">
+                <p className="font-normal text-xl text-[#157148]">
+                  GH₵ {transfer.amount}
+                </p>
+              </div>
             </div>
           </div>
         );

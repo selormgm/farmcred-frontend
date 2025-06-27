@@ -1,6 +1,6 @@
 "use client";
 
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function SettingsLayout({
@@ -11,9 +11,7 @@ export default function SettingsLayout({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="flex-1 pl-4">
-        {children}
-      </main>
+      <main className="flex-1 pl-4">{children}</main>
     </SidebarProvider>
   );
 }

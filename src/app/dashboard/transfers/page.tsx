@@ -1,6 +1,6 @@
 "use client";
 
-import TransferTable from "@/components/TransferTable";
+import TransferTable from "@/components/dashboard/TransferTable";
 import { Button } from "@/components/ui/button";
 import {
   DialogContent,
@@ -16,9 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  useFarmerTransfers,
-} from "@/hooks/useFarmerData";
+import { useFarmerTransfers } from "@/hooks/useFarmerData";
 import { handlePrintTransfersPDF } from "@/lib/helper-functions";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { Printer, Search } from "lucide-react";

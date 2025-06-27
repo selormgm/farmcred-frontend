@@ -1,8 +1,8 @@
 "use client";
-import StaticTransaction from "@/components/StaticTransaction";
-import TransactionHistory from "@/components/TransactionHistory";
-import TransferHistory from "@/components/TransferHistory";
-import TrustStar from "@/components/TrustStar";
+import StaticTransaction from "@/components/dashboard/StaticTransaction";
+import TransactionHistory from "@/components/dashboard/TransactionHistory";
+import TransferHistory from "@/components/dashboard/TransferHistory";
+import TrustStar from "@/components/dashboard/TrustStar";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -61,7 +61,8 @@ export default function Dashboard() {
               Total Income
             </p>
             <h2 className="text-3xl font-bold ">
-              GH<span className="text-1xl">₵</span>{overview.total_income_last_12_months || 0}
+              GH<span className="text-1xl">₵</span>
+              {overview.total_income_last_12_months || 0}
             </h2>
           </div>
         </div>

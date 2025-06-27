@@ -1,6 +1,6 @@
 "use client";
 
-import TransferHistory from "@/components/TransferHistory";
+import TransferTable from "@/components/TransferTable";
 import { Button } from "@/components/ui/button";
 import {
   DialogContent,
@@ -17,10 +17,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  useFarmerTransactions,
   useFarmerTransfers,
 } from "@/hooks/useFarmerData";
-import { handlePrintPDF } from "@/lib/helper-functions";
+import { handlePrintTransfersPDF } from "@/lib/helper-functions";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { Printer, Search } from "lucide-react";
 import { useState } from "react";
@@ -62,7 +61,7 @@ export default function TransferHistoryPage() {
 
   function handleDownload() {
     if (downloadFormat === "pdf") {
-      handlePrintPDF(transfers ?? []);
+      handlePrintTransfersPDF(transfers ?? []);
     } else {
       handleExportTransfersCSV();
     }
@@ -146,6 +145,8 @@ export default function TransferHistoryPage() {
             </DialogContent>
           </Dialog>
         </div>
+
+        <TransferTable tablelength={10} search={search} filter={filter} />
       </div>
     </div>
   );

@@ -71,7 +71,7 @@ export default function TransactionrHistoryPage() {
   return (
     <div className="mx-24">
       <div className=" flex items-center justify-center mb-4 flex-col gap-4">
-        <span className="font-[Plus Jakarta Sans] text-5xl font-semibold text-[#158F20]">
+        <span className="font-[Plus Jakarta Sans] text-5xl font-semibold text-[#158F20] ">
           Transactions
         </span>
         <div className="relative w-full max-w-lg">
@@ -108,7 +108,10 @@ export default function TransactionrHistoryPage() {
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button variant="secondary" className=" hover:bg-[#157148] hover:text-white">
+            <Button
+              variant="secondary"
+              className=" hover:bg-[#157148] hover:text-white"
+            >
               <BsPrinter className="mr-0.5" />
               Print
             </Button>

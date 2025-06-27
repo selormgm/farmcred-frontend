@@ -53,6 +53,7 @@ export interface TransactionInput {
 }
 
 export interface Transfer {
+  length: number;
   recipient_or_sender: any;
   id: number;
   farmer: number;

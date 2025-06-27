@@ -29,10 +29,10 @@ export default function Dashboard() {
       <main className="p-4 flex flex-1">
         {/*Sidebar with Greeting */}
         <div className="w-1/4 p-8  text-[#158f20]">
-          <h2 className="text-[1.5rem] font-medium leading-[1.2] font-[Plus Jakarta Sans]">
+          <h2 className="text-[1.5rem] font-medium leading-[1.2] font-[Plus Jakarta Sans] tracking-tighter">
             Hello,
             <br />
-            <span className="text-[#158f20] block text-[2.2rem] font-bold font-[Plus Jakarta Sans]">
+            <span className="text-[#158f20] font-[Plus Jakarta Sans] text-6xl font-semibold tracking-tighter">
               {overview.full_name}
             </span>
           </h2>
@@ -47,7 +47,7 @@ export default function Dashboard() {
               Trust Score
             </p>
             <div>
-              <h3 className="text-3xl font-bold">
+              <h3 className="text-3xl font-bold tracking-tighter">
                 {overview.trust_score_percent}%
               </h3>
               <Progress
@@ -60,8 +60,8 @@ export default function Dashboard() {
             <p className="text-[0.85rem] font-medium mb-2 text-[#158f20]">
               Total Income
             </p>
-            <h2 className="text-3xl font-bold">
-              GH₵{overview.total_income_last_12_months || 0}
+            <h2 className="text-3xl font-bold ">
+              GH<span className="text-1xl">₵</span>{overview.total_income_last_12_months || 0}
             </h2>
           </div>
         </div>

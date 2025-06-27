@@ -28,7 +28,7 @@ export default function Dashboard() {
     <div className="flex flex-col ">
       <main className="p-4 flex flex-1">
         {/*Sidebar with Greeting */}
-        <div className="w-1/4 p-8  text-[#158f20]">
+        <div className="w-1/4 pr-8 pl-8 text-[#158f20]">
           <h2 className="text-[1.5rem] font-medium leading-[1.2] font-[Plus Jakarta Sans] tracking-tighter">
             Hello,
             <br />
@@ -117,7 +117,7 @@ export default function Dashboard() {
                 <CardTitle className="text-xl font-medium text-[#157148]">
                   Transaction History
                 </CardTitle>
-                <Link href="/dashboard/transactions">
+                <Link href="/dashboard/transactions" className="z-10000">
                   <Button
                     variant="ghost"
                     className="text-gray-400 hover:text-[#157148] h-auto p-1 font-medium"

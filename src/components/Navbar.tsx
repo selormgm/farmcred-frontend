@@ -45,13 +45,13 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
 
   return (
     <div>
-      <div className=" mx-24">
+      <div className="mx-14">
         <nav className="flex items-center justify-between p-4">
           <div className="flex items-center">
             <Image
               src="/logo/farmcred-03.png"
               alt="FarmCred Logo"
-              width={180}
+              width={200}
               height={50}
               className="mr-2"
             />

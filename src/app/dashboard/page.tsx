@@ -8,6 +8,7 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useFarmerOverview } from "@/hooks/useFarmerData";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export default function Dashboard() {
   const { data: overview, loading, error } = useFarmerOverview();
@@ -27,7 +28,7 @@ export default function Dashboard() {
     <div className="flex flex-col ">
       <main className="p-4 flex flex-1">
         {/*Sidebar with Greeting */}
-        <div className="w-1/4 p-8 text-[#158f20]">
+        <div className="w-1/4 p-8  text-[#158f20]">
           <h2 className="text-[1.5rem] font-medium leading-[1.2] font-[Plus Jakarta Sans]">
             Hello,
             <br />
@@ -72,12 +73,14 @@ export default function Dashboard() {
                   <CardTitle className="text-xl font-semibold text-[#157148]">
                     Transfer History
                   </CardTitle>
-                  <Button
-                    variant="ghost"
-                    className="text-gray-400 hover:text-[#157148] h-auto p-1 font-medium"
-                  >
-                    View More
-                  </Button>
+                  <Link href="/dashboard/transfers">
+                    <Button
+                      variant="ghost"
+                      className="text-gray-400 hover:text-[#157148] h-auto p-1 font-medium"
+                    >
+                      View More
+                    </Button>
+                  </Link>
                 </CardHeader>
                 <div className="flex-1">
                   <TransferHistory />
@@ -114,15 +117,17 @@ export default function Dashboard() {
                 <CardTitle className="text-xl font-medium text-[#157148]">
                   Transaction History
                 </CardTitle>
-                <Button
-                  variant="ghost"
-                  className="text-gray-400 hover:text-[#157148] h-auto p-1 font-medium"
-                >
-                  View More
-                </Button>
+                <Link href="/dashboard/transactions">
+                  <Button
+                    variant="ghost"
+                    className="text-gray-400 hover:text-[#157148] h-auto p-1 font-medium"
+                  >
+                    View More
+                  </Button>
+                </Link>
               </CardHeader>
               <div className="flex-1">
-                <TransactionHistory tablelength={4}/>
+                <TransactionHistory tablelength={4} />
               </div>
             </Card>
           </div>

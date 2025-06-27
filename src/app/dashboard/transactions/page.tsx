@@ -108,8 +108,8 @@ export default function TransactionrHistoryPage() {
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button variant="secondary">
-              <BsPrinter className="mr-2" />
+            <Button variant="secondary" className=" hover:bg-[#157148] hover:text-white">
+              <BsPrinter className="mr-0.5" />
               Print
             </Button>
           </DialogTrigger>

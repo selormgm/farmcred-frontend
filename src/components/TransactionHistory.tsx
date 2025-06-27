@@ -128,13 +128,13 @@ const TransactionHistory = ({
             }`}
           >
             <TableCell
-              className="text-base font-normal text-[#157148] py-3"
+              className="text-base font-normal text-[#158F20] py-3"
               style={{ letterSpacing: "-0.06em" }}
             >
               {transaction.name}
             </TableCell>
             <TableCell
-              className="text-base font-normal text-[#157148] py-3"
+              className="text-base font-normal text-[#05402E] py-3"
               style={{ letterSpacing: "-0.06em" }}
             >
               {new Date(transaction.date).toLocaleDateString("en-GB", {
@@ -144,7 +144,7 @@ const TransactionHistory = ({
               })}
             </TableCell>
             <TableCell
-              className="text-base font-normal text-[#157148] py-3"
+              className="text-base font-normal text-[#158F20] py-3"
               style={{ letterSpacing: "-0.06em" }}
             >
               {transaction.category}
@@ -162,7 +162,7 @@ const TransactionHistory = ({
               </Badge>
             </TableCell>
             <TableCell
-              className="text-base font-medium text-[#157148] py-3"
+              className="text-base font-medium text-[#158F20] py-3"
               style={{ letterSpacing: "-0.06em" }}
             >
               ₵ {transaction.amount.toLocaleString()}

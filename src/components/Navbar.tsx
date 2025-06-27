@@ -22,14 +22,17 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { MdOutlineFeedback } from "react-icons/md";
 import { RiFileList2Line } from "react-icons/ri";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface NavbarProps {
   username?: string;
+  id: number;
 }
 
-const Navbar = ({ username = "Loading..." }: NavbarProps) => {
+const Navbar = ({ username = "Loading...", id }: NavbarProps) => {
   const initial = username.charAt(0).toUpperCase();
   const pathname = usePathname();
+  const { t } = useLanguage();
 
   const navlinks = [
     { name: "Home", href: "/dashboard" },
@@ -40,12 +43,15 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
   ];
 
   const isActive = (href: string) => {
+    if (href === "/dashboard/settings") {
+      return pathname.startsWith("/dashboard/settings");
+    }
     return pathname === href;
   };
 
   return (
     <div>
-      <div className="mx-14">
+      <div className="mx-14 z-[10000000000]">
         <nav className="flex items-center justify-between p-4">
           <div className="flex items-center">
             <Image
@@ -59,7 +65,7 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
           <div className="flex items-center">
             <ul className="flex space-x-8">
               {navlinks.map((link) => (
-                <li key={link.name}>
+                <li key={t(link.name)}>
                   <Link
                     href={link.href}
                     className={`text-lg pb-1 transition-all duration-150 relative
@@ -110,7 +116,6 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
 
                   <div className="flex space-x-1 text-[#157148] text-sm">
                     <span className="font-semibold">{username}</span>
-                    {/*<span>{id}</span>*/}
                   </div>
                 </div>
               </DropdownMenuLabel>
@@ -120,7 +125,7 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
                   className="flex items-center gap-2 w-full"
                 >
                   <AiOutlineHistory className="text-[#157148]" />
-                  Transaction History
+                  <span>{t("Transaction History")}</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="text-[#157148]">
@@ -129,7 +134,7 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
                   className="flex items-center gap-2 w-full"
                 >
                   <BsClockHistory className="text-[#157148]" />
-                  Transfer History
+                  <span>{t("Transfer History")}</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="text-[#157148]">
@@ -147,7 +152,7 @@ const Navbar = ({ username = "Loading..." }: NavbarProps) => {
                   className="flex items-center gap-2 w-full"
                 >
                   <MdLogout className="text-[#157148]" />
-                  Sign out
+                  <span>{t("Sign Out")}</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />

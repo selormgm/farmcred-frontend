@@ -33,7 +33,17 @@ export default function LoginPage() {
     const result = await loginAndStoreToken(email, password);
 
     if (result.success) {
-      router.push("/dashboard");
+      // Route based on user role
+      const userRole = result.userRole;
+
+      if (userRole === "farmer") {
+        router.push("/dashboard");
+      } else if (userRole === "investor") {
+        router.push("/investor");
+      } else {
+        // Default fallback
+        router.push("/dashboard");
+      }
     } else {
       setError(result.error?.message || "Login failed. Please try again.");
     }

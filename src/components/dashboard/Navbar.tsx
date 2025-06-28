@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { CircleUserRound, Trophy, User } from "lucide-react";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   DropdownMenu,
@@ -23,6 +23,7 @@ import { IoMdHelpCircleOutline } from "react-icons/io";
 import { MdOutlineFeedback } from "react-icons/md";
 import { RiFileList2Line } from "react-icons/ri";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { logout } from "@/lib/services/authService";
 
 interface NavbarProps {
   username?: string;
@@ -32,6 +33,7 @@ interface NavbarProps {
 const Navbar = ({ username = "Loading...", id }: NavbarProps) => {
   const initial = username.charAt(0).toUpperCase();
   const pathname = usePathname();
+  const router = useRouter();
   const { t } = useLanguage();
 
   const navlinks = [
@@ -47,6 +49,19 @@ const Navbar = ({ username = "Loading...", id }: NavbarProps) => {
       return pathname.startsWith("/dashboard/settings");
     }
     return pathname === href;
+  };
+
+  const handleLogout = () => {
+    try {
+      logout();
+
+      router.push("/login");
+
+      console.log("Logged out successfully");
+    } catch (error) {
+      console.error("Error during logout:", error);
+      router.push("/login");
+    }
   };
 
   return (
@@ -146,14 +161,12 @@ const Navbar = ({ username = "Loading...", id }: NavbarProps) => {
                   Settings
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-[#157148]">
-                <Link
-                  href="/signout"
-                  className="flex items-center gap-2 w-full"
-                >
-                  <MdLogout className="text-[#157148]" />
-                  <span>{t("Sign Out")}</span>
-                </Link>
+              <DropdownMenuItem
+                className="text-[#157148] cursor-pointer"
+                onClick={handleLogout}
+              >
+                <MdLogout className="text-[#157148]" />
+                <span>{t("Sign Out")}</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-[#157148]">

@@ -2,6 +2,38 @@ import axios from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+const getStorageItem = (key: string) => {
+  if (typeof window !== "undefined") {
+    try {
+      return localStorage.getItem(key);
+    } catch (error) {
+      console.error(`Error accessing localStorage for key ${key}:`, error);
+      return null;
+    }
+  }
+  return null;
+};
+
+const setStorageItem = (key: string, value: string) => {
+  if (typeof window !== "undefined") {
+    try {
+      localStorage.setItem(key, value);
+    } catch (error) {
+      console.error(`Error setting localStorage for key ${key}:`, error);
+    }
+  }
+};
+
+const removeStorageItem = (key: string) => {
+  if (typeof window !== "undefined") {
+    try {
+      localStorage.removeItem(key);
+    } catch (error) {
+      console.error(`Error removing localStorage for key ${key}:`, error);
+    }
+  }
+};
+
 const apiClient = axios.create({
   baseURL: API_URL,
 });
@@ -22,7 +54,13 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    const isTokenError =
+      error.response?.status === 401 ||
+      error.response?.data?.detail?.includes("token not valid") ||
+      error.response?.data?.detail?.includes("Token is invalid") ||
+      error.response?.data?.code === "token_not_valid";
+
+    if (isTokenError && !originalRequest._retry) {
       originalRequest._retry = true;
 
       const refreshToken = getRefreshToken();
@@ -36,24 +74,47 @@ apiClient.interceptors.response.use(
           );
 
           const { access } = response.data;
-          localStorage.setItem("access_token", access);
+          setStorageItem("access_token", access);
 
           originalRequest.headers.Authorization = `Bearer ${access}`;
           return apiClient(originalRequest);
-        } catch (refreshError) {
-          logout();
-          window.location.href = "/login";
+        } catch (refreshError: any) {
+          console.error("Token refresh failed:", refreshError);
+
+          const isRefreshTokenInvalid =
+            refreshError.response?.data?.detail?.includes("token not valid") ||
+            refreshError.response?.data?.code === "token_not_valid";
+
+          if (isRefreshTokenInvalid) {
+            console.log("Refresh token is invalid, forcing logout");
+            forceLogout();
+          }
+
           return Promise.reject(refreshError);
         }
       } else {
-        logout();
-        window.location.href = "/login";
+        console.log("No refresh token available, forcing logout");
+        forceLogout();
       }
+    }
+
+    if (isTokenError && originalRequest._retry) {
+      console.log("Token still invalid after refresh attempt, forcing logout");
+      forceLogout();
     }
 
     return Promise.reject(error);
   }
 );
+
+const forceLogout = () => {
+  console.log("Forcing logout due to invalid token");
+  logout();
+
+  if (typeof window !== "undefined") {
+    window.location.href = "/login";
+  }
+};
 
 export const loginAndStoreToken = async (email: string, password: string) => {
   try {
@@ -62,13 +123,21 @@ export const loginAndStoreToken = async (email: string, password: string) => {
       password,
     });
 
-    const { access, refresh } = response.data;
+    const { access, refresh, user } = response.data;
 
-    localStorage.setItem("access_token", access);
-    localStorage.setItem("refresh_token", refresh);
+    setStorageItem("access_token", access);
+    setStorageItem("refresh_token", refresh);
+
+    if (user) {
+      setStorageItem("user_info", JSON.stringify(user));
+    }
 
     console.log("Logged in! Token stored.");
-    return { success: true, data: response.data };
+    return {
+      success: true,
+      data: response.data,
+      userRole: user?.role,
+    };
   } catch (error: any) {
     console.error("Login failed:", error.response?.data || error.message);
     return { success: false, error: error.response?.data || error.message };
@@ -101,27 +170,34 @@ export const registerUser = async (
 };
 
 export const logout = () => {
-  localStorage.removeItem("access_token");
-  localStorage.removeItem("refresh_token");
+  removeStorageItem("access_token");
+  removeStorageItem("refresh_token");
+  removeStorageItem("user_info");
   console.log("Logged out successfully");
 };
 
 export const getAccessToken = () => {
-  if (typeof window !== "undefined") {
-    return localStorage.getItem("access_token");
-  }
-  return null;
+  return getStorageItem("access_token");
 };
 
 export const getRefreshToken = () => {
-  if (typeof window !== "undefined") {
-    return localStorage.getItem("refresh_token");
-  }
-  return null;
+  return getStorageItem("refresh_token");
+};
+
+export const getUserInfo = () => {
+  const userInfo = getStorageItem("user_info");
+  return userInfo ? JSON.parse(userInfo) : null;
+};
+
+export const getUserRole = () => {
+  const userInfo = getUserInfo();
+  return userInfo?.role || null;
 };
 
 export const isAuthenticated = () => {
-  return !!getAccessToken();
+  const token = getAccessToken();
+  const userInfo = getUserInfo();
+  return !!(token && userInfo);
 };
 
-export { apiClient };
+export { apiClient, forceLogout };

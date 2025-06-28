@@ -15,16 +15,39 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   useEffect(() => {
     const checkAuth = () => {
-      if (isAuthenticated()) {
-        setIsAuthorized(true);
-      } else {
-        router.push("/login");
-        return;
+      try {
+        const authenticated = isAuthenticated();
+
+        if (authenticated) {
+          setIsAuthorized(true);
+          setIsChecking(false);
+        } else {
+          setIsAuthorized(false);
+          setIsChecking(false);
+          router.replace("/login"); 
+          return;
+        }
+      } catch (error) {
+        console.error("Authentication check failed:", error);
+        setIsAuthorized(false);
+        setIsChecking(false);
+        router.replace("/login");
       }
-      setIsChecking(false);
     };
 
     checkAuth();
+
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "access_token" || e.key === "refresh_token") {
+        checkAuth();
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, [router]);
 
   if (isChecking) {

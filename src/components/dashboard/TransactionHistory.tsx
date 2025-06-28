@@ -80,37 +80,37 @@ const TransactionHistory = ({
       <TableHeader>
         <TableRow className="border-b border-gray-200 hover:bg-transparent">
           <TableHead
-            className="text-base font-normal text-black/40 h-auto py-3"
+            className="text-base font-normal text-card-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Transaction Name
           </TableHead>
           <TableHead
-            className="text-base font-normal text-black/40 h-auto py-3"
+            className="text-base font-normal text-card-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Date
           </TableHead>
           <TableHead
-            className="text-base font-normal text-black/40 h-auto py-3"
+            className="text-base font-normal text-card-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Category
           </TableHead>
           <TableHead
-            className="text-base font-normal text-black/40 h-auto py-3"
+            className="text-base font-normal text-card-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Status
           </TableHead>
           <TableHead
-            className="text-base font-normal text-black/40 h-auto py-3"
+            className="text-base font-normal text-card-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Amount
           </TableHead>
           <TableHead
-            className="text-base font-normal text-black/40 h-auto py-3"
+            className="text-base font-normal text-card-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Action

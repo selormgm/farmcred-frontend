@@ -82,43 +82,43 @@ const TransferTable = ({
       <TableHeader>
         <TableRow className="border-b border-gray-200 hover:bg-transparent">
           <TableHead
-            className="text-base font-normal text-black/40 h-auto py-3"
+            className="text-base font-normal text-card-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Transfer ID
           </TableHead>
           <TableHead
-            className="text-base font-normal text-black/40 h-auto py-3"
+            className="text-base font-normal text-card-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Date
           </TableHead>
           <TableHead
-            className="text-base font-normal text-black/40 h-auto py-3"
+            className="text-base font-normal text-card-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Recipient/Sender
           </TableHead>
           <TableHead
-            className="text-base font-normal text-black/40 h-auto py-3"
+            className="text-base font-normal text-card-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Type
           </TableHead>
           <TableHead
-            className="text-base font-normal text-black/40 h-auto py-3"
+            className="text-base font-normal text-card-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Amount
           </TableHead>
           <TableHead
-            className="text-base font-normal text-black/40 h-auto py-3"
+            className="text-base font-normal text-card-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Status
           </TableHead>
           <TableHead
-            className="text-base font-normal text-black/40 h-auto py-3"
+            className="text-base font-normal text-card-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Action
@@ -161,7 +161,7 @@ const TransferTable = ({
               className="text-base font-normal text-[#158F20] py-3"
               style={{ letterSpacing: "-0.06em" }}
             >
-              {transfer.status}
+              {transfer.type}
             </TableCell>
             <TableCell
               className="text-base font-medium text-[#158F20] py-3"

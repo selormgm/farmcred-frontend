@@ -6,6 +6,7 @@ import Navbar from "@/components/dashboard/Navbar";
 import ProtectedRoute from "@/components/Security/ProtectedRoute";
 import { useFarmerProfile } from "@/hooks/useFarmerData";
 import { useAuth } from "@/contexts/AuthContext";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export default function DashboardLayout({
   children,
@@ -56,16 +57,18 @@ export default function DashboardLayout({
   }
 
   return (
-    <ProtectedRoute>
-      <div className="flex flex-col">
-        <header className="p-4">
-          <Navbar
-            username={loading ? "Loading..." : profile?.full_name}
-            id={profile?.id || 0}
-          />
-        </header>
-        <main className="flex-1 p-4">{children}</main>
-      </div>
-    </ProtectedRoute>
+  
+      <ProtectedRoute>
+        <div className="flex flex-col">
+          <header className="p-4">
+            <Navbar
+              username={loading ? "Loading..." : profile?.full_name}
+              id={profile?.id || 0}
+            />
+          </header>
+          <main className="flex-1 p-4">{children}</main>
+        </div>
+      </ProtectedRoute>
+
   );
 }

@@ -9,18 +9,15 @@ import {
   SelectItem,
   SelectValue,
 } from "@/components/ui/select";
-import { Sun, Moon, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { logout } from "@/lib/services/authService";
+import { useTheme } from "next-themes";
 
 export default function Settings() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-  const { language, setLanguage, t } = useLanguage();
+  const { setTheme } = useTheme();
 
-  function handleThemeChange(value: "light" | "dark") {
-    setTheme(value);
-    document.documentElement.classList.toggle("dark", value === "dark");
-  }
+  const { language, setLanguage, t } = useLanguage();
 
   function handleLanguageChange(value: "en" | "twi" | "fr") {
     setLanguage(value);
@@ -34,15 +31,22 @@ export default function Settings() {
     <div className="bg-white dark:bg-background">
       <div className="mb-6 flex items-center justify-between max-w-3xl border-b pb-2">
         <label className="text-[#158F20] block mb-2 font-medium">
-          {t("theme")}
+          {t("Theme")}
         </label>
-        <Select value={theme} onValueChange={handleThemeChange}>
+        <Select>
           <SelectTrigger className="border-none shadow-none text-[#158F20]">
             <SelectValue placeholder={t("theme")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="light">{t("light")}</SelectItem>
-            <SelectItem value="dark">{t("dark")}</SelectItem>
+            <SelectItem onClick={() => setTheme("light")} value="light">
+              {t("light")}
+            </SelectItem>
+            <SelectItem onClick={() => setTheme("dark")} value="dark">
+              {t("dark")}
+            </SelectItem>
+            <SelectItem onClick={() => setTheme("system")} value="system">
+              {t("System")}
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>

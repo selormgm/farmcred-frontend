@@ -40,7 +40,7 @@ export default function Dashboard() {
             <CardTitle className="text-[0.85rem] font-medium mb-2 text-[#158f20]">
               Trust Level
             </CardTitle>
-            <CardContent>
+            <CardContent className="text-3xl px-0">
               <TrustStar income={overview.trust_level_stars} />
             </CardContent>
           </Card>
@@ -48,7 +48,7 @@ export default function Dashboard() {
             <CardTitle className="text-[0.85rem] font-medium mb-2 text-[#158f20]">
               Trust Score
             </CardTitle>
-            <CardContent className="text-[#158f20] text-3xl font-semibold">
+            <CardContent className="text-[#158f20] text-3xl font-semibold px-0">
               {overview.trust_score_percent}%
               <Progress
                 value={overview.trust_score_percent}
@@ -60,7 +60,7 @@ export default function Dashboard() {
             <CardTitle className="text-[0.85rem] font-medium mb-2 text-[#158f20]">
               Total Income
             </CardTitle>
-            <CardContent className="text-[#158f20] text-3xl font-semibold">
+            <CardContent className="text-[#158f20] text-3xl font-semibold px-0">
               GH₵{overview.total_income_last_12_months || 0}
             </CardContent>
           </Card>
@@ -106,7 +106,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </CardHeader>
-                <div className="flex-1">
+                <div className="flex-1 overflow-auto">
                   <StaticTransaction />
                 </div>
               </Card>
@@ -117,7 +117,7 @@ export default function Dashboard() {
                 <CardTitle className="text-xl font-medium text-[#157148]">
                   Transaction History
                 </CardTitle>
-                <Link href="/dashboard/transactions" className="z-10000">
+                <Link href="/dashboard/transactions">
                   <Button
                     variant="ghost"
                     className="text-gray-400 hover:text-[#157148] h-auto p-1 font-medium"

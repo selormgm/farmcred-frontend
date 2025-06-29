@@ -29,9 +29,14 @@ export function handlePrintPDF(transactions: any[]) {
           table { border-collapse: collapse; width: 100%; }
           th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
           th { background: #f4f4f4; }
+           .header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+          .logo { height: 48px; }
         </style>
       </head>
       <body>
+      <div class="header">
+          <img src="${logoUrl}" class="logo" alt="Logo" />
+        </div>
         <h2>Transactions</h2>
         <table>
           ${tableHeader}
@@ -85,9 +90,12 @@ export function handlePrintTransfersPDF(transfers: any[]) {
           table { border-collapse: collapse; width: 100%; }
           th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
           th { background: #f4f4f4; }
+           .header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+          .logo { height: 48px; }
         </style>
       </head>
       <body>
+        <img src="${logoUrl}" class="logo" alt="Logo" />
         <h2>Transfers</h2>
         <table>
           ${tableHeader}

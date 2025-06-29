@@ -100,93 +100,93 @@ const Navbar = ({ username = "Loading...", id }: NavbarProps) => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex items-center space-x-2 outline-none">
-                <Trophy className="text-[#157148]" />
+                <Trophy className="text-[#158f20]" />
                 {initial ? (
                   <Avatar>
                     <AvatarImage></AvatarImage>
-                    <AvatarFallback className="text-[#157148] font-semibold border-1 border-[#157148]">
+                    <AvatarFallback className="text-[#158f20] font-semibold border-1 border-[#158f20]">
                       {initial}
                     </AvatarFallback>
                   </Avatar>
                 ) : (
-                  <CircleUserRound className="w-8 h-8 flex items-center justify-center text-[#157148]" />
+                  <CircleUserRound className="w-8 h-8 flex items-center justify-center text-[#158f20]" />
                 )}
-                <span className="text-sm font-semibold text-[#157148]">
+                <span className="text-[18px] font-semibold text-[#158f20]">
                   {username}
                 </span>
               </button>
             </DropdownMenuTrigger>
 
             <DropdownMenuContent className="w-84 mt-2">
-              <DropdownMenuLabel className=" bg-[#eff3e4] px-4 py-8 rounded-md ">
+              <DropdownMenuLabel className=" bg-[#eff3e4] dark:bg-background px-4 py-8 rounded-md ">
                 <div className="flex flex-col items-center justify-center space-y-1">
                   {initial ? (
                     <Avatar>
                       <AvatarImage></AvatarImage>
-                      <AvatarFallback className="text-[#157148] font-semibold border-1 border-[#157148]">
+                      <AvatarFallback className="text-[#158f20] font-semibold border-1 border-[#158f20]">
                         {initial}
                       </AvatarFallback>
                     </Avatar>
                   ) : null}
 
-                  <div className="flex space-x-1 text-[#157148] text-sm">
+                  <div className="flex space-x-1 text-[#158f20] text-sm">
                     <span className="font-semibold">{username}</span>
                   </div>
                 </div>
               </DropdownMenuLabel>
-              <DropdownMenuItem className="text-[#157148]">
+              <DropdownMenuItem className="text-[#158f20]">
                 <Link
                   href="/dashboard/transactions"
                   className="flex items-center gap-2 w-full"
                 >
-                  <AiOutlineHistory className="text-[#157148]" />
+                  <AiOutlineHistory className="text-[#158f20]" />
                   <span>{t("Transaction History")}</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-[#157148]">
+              <DropdownMenuItem className="text-[#158f20]">
                 <Link
                   href="/dashboard/transfers"
                   className="flex items-center gap-2 w-full"
                 >
-                  <BsClockHistory className="text-[#157148]" />
+                  <BsClockHistory className="text-[#158f20]" />
                   <span>{t("Transfer History")}</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-[#157148]">
+              <DropdownMenuItem className="text-[#158f20]">
                 <Link
                   href="/dashboard/settings"
                   className="flex items-center gap-2 w-full"
                 >
-                  <IoSettingsOutline className="text-[#157148]" />
+                  <IoSettingsOutline className="text-[#158f20]" />
                   Settings
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem
-                className="text-[#157148] cursor-pointer"
+                className="text-[#158f20] cursor-pointer"
                 onClick={handleLogout}
               >
-                <MdLogout className="text-[#157148]" />
+                <MdLogout className="text-[#158f20]" />
                 <span>{t("Sign Out")}</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-[#157148]">
+              <DropdownMenuItem className="text-[#158f20]">
                 <Link href="/help" className="flex items-center gap-2 w-full">
-                  <IoMdHelpCircleOutline className="text-[#157148]" />
+                  <IoMdHelpCircleOutline className="text-[#158f20]" />
                   Help & FAQ
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-[#157148]">
+              <DropdownMenuItem className="text-[#158f20]">
                 <Link href="/terms" className="flex items-center gap-2 w-full">
-                  <RiFileList2Line className="text-[#157148]" />
+                  <RiFileList2Line className="text-[#158f20]" />
                   Terms and Conditions
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-[#157148]">
+              <DropdownMenuItem className="text-[#158f20]">
                 <Link
                   href="/feedback"
                   className="flex items-center gap-2 w-full"
                 >
-                  <MdOutlineFeedback className="text-[#157148]" />
+                  <MdOutlineFeedback className="text-[#158f20]" />
                   Send Feedback
                 </Link>
               </DropdownMenuItem>

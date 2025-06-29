@@ -15,7 +15,7 @@ import { logout } from "@/lib/services/authService";
 import { useTheme } from "next-themes";
 
 export default function Settings() {
-  const { setTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
 
   const { language, setLanguage, t } = useLanguage();
 
@@ -33,20 +33,22 @@ export default function Settings() {
         <label className="text-[#158F20] block mb-2 font-medium">
           {t("Theme")}
         </label>
-        <Select>
+        <Select value={theme} onValueChange={setTheme}>
           <SelectTrigger className="border-none shadow-none text-[#158F20]">
-            <SelectValue placeholder={t("theme")} />
+            <SelectValue
+              placeholder={
+                theme === "light"
+                  ? t("Light")
+                  : theme === "dark"
+                  ? t("Dark")
+                  : t("System")
+              }
+            />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem onClick={() => setTheme("light")} value="light">
-              {t("light")}
-            </SelectItem>
-            <SelectItem onClick={() => setTheme("dark")} value="dark">
-              {t("dark")}
-            </SelectItem>
-            <SelectItem onClick={() => setTheme("system")} value="system">
-              {t("System")}
-            </SelectItem>
+            <SelectItem value="light">{t("light")}</SelectItem>
+            <SelectItem value="dark">{t("dark")}</SelectItem>
+            <SelectItem value="system">{t("System")}</SelectItem>
           </SelectContent>
         </Select>
       </div>

@@ -4,7 +4,7 @@ import TransactionHistory from "@/components/dashboard/TransactionHistory";
 import TransferHistory from "@/components/dashboard/TransferHistory";
 import TrustStar from "@/components/dashboard/TrustStar";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useFarmerOverview } from "@/hooks/useFarmerData";
 import { toast } from "sonner";
@@ -36,40 +36,39 @@ export default function Dashboard() {
               {overview.full_name}
             </span>
           </h2>
-          <div className="bg-[#eff3e4] min-h-48 font-[Inter] mt-4 p-4 rounded-[12px] border border-[#D6DFBC] flex flex-col justify-between">
-            <p className="text-[0.85rem] font-medium mb-2 text-[#158f20]">
+          <Card className="bg-[#eff3e4] dark:bg-card min-h-48 font-[Inter] mt-4 p-4 rounded-[12px] border flex flex-col justify-between">
+            <CardTitle className="text-[0.85rem] font-medium mb-2 text-[#158f20]">
               Trust Level
-            </p>
-            <TrustStar income={overview.trust_level_stars} />
-          </div>
-          <div className="bg-[#eff3e4] min-h-48 font-[Inter] mt-4 p-4 rounded-[12px] border border-[#D6DFBC] flex flex-col justify-between">
-            <p className="text-[0.85rem] font-medium mb-2 text-[#158f20]">
+            </CardTitle>
+            <CardContent className="text-3xl px-0">
+              <TrustStar income={overview.trust_level_stars} />
+            </CardContent>
+          </Card>
+          <Card className="bg-[#eff3e4] dark:bg-card min-h-48 font-[Inter] mt-4 p-4 rounded-[12px] border flex flex-col justify-between">
+            <CardTitle className="text-[0.85rem] font-medium mb-2 text-[#158f20]">
               Trust Score
-            </p>
-            <div>
-              <h3 className="text-3xl font-bold tracking-tighter">
-                {overview.trust_score_percent}%
-              </h3>
+            </CardTitle>
+            <CardContent className="text-[#158f20] text-3xl font-semibold px-0">
+              {overview.trust_score_percent}%
               <Progress
                 value={overview.trust_score_percent}
                 className="w-full h-[7px] rounded-full overflow-hidden mt-2 "
               />
-            </div>
-          </div>
-          <div className="bg-[#eff3e4] min-h-48 font-[Inter] mt-4 p-4 rounded-[12px] border border-[#D6DFBC] flex flex-col justify-between">
-            <p className="text-[0.85rem] font-medium mb-2 text-[#158f20]">
+            </CardContent>
+          </Card>
+          <Card className="bg-[#eff3e4]  dark:bg-card min-h-48 font-[Inter] mt-4 p-4 rounded-[12px] border flex flex-col justify-between">
+            <CardTitle className="text-[0.85rem] font-medium mb-2 text-[#158f20]">
               Total Income
-            </p>
-            <h2 className="text-3xl font-bold ">
-              GH<span className="text-1xl">₵</span>
-              {overview.total_income_last_12_months || 0}
-            </h2>
-          </div>
+            </CardTitle>
+            <CardContent className="text-[#158f20] text-3xl font-semibold px-0">
+              GH₵{overview.total_income_last_12_months || 0}
+            </CardContent>
+          </Card>
         </div>
         <div className="flex-1">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-4 lg:flex-row h-full">
-              <Card className="lg:w-2/5 w-full p-6 h-[500px] flex flex-col">
+              <Card className="lg:w-2/5 w-full p-6 h-[450px] flex flex-col">
                 <CardHeader className="flex flex-row items-center justify-between p-0 pb-6 flex-shrink-0">
                   <CardTitle className="text-xl font-semibold text-[#157148]">
                     Transfer History
@@ -87,7 +86,7 @@ export default function Dashboard() {
                   <TransferHistory />
                 </div>
               </Card>
-              <Card className="lg:w-5/5 w-full p-6 h-[500px] flex flex-col">
+              <Card className="lg:w-5/5 w-full p-6 h-[450px] flex flex-col">
                 <CardHeader className="flex flex-row items-center justify-between p-0 pb-6 flex-shrink-0">
                   <CardTitle className="text-xl font-medium text-[#157148]">
                     Static Transactions
@@ -107,7 +106,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </CardHeader>
-                <div className="flex-1">
+                <div className="flex-1 overflow-auto">
                   <StaticTransaction />
                 </div>
               </Card>
@@ -118,7 +117,7 @@ export default function Dashboard() {
                 <CardTitle className="text-xl font-medium text-[#157148]">
                   Transaction History
                 </CardTitle>
-                <Link href="/dashboard/transactions" className="z-10000">
+                <Link href="/dashboard/transactions">
                   <Button
                     variant="ghost"
                     className="text-gray-400 hover:text-[#157148] h-auto p-1 font-medium"

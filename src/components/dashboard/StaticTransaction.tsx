@@ -46,7 +46,7 @@ const StaticTransaction = () => {
     );
   }
 
-  // Transform the data to match the expected format and limit to latest 4 weeks
+  // Transform the data to match the expected format and limit to latest 6 weeks
   const transformedData = (chartData || [])
     .map((item: any, index: number) => ({
       week: item.period || `Week ${index + 1}`,
@@ -75,14 +75,14 @@ const StaticTransaction = () => {
 
   return (
     <ChartContainer config={chartConfig} className=" w-full h-full">
-      <BarChart
+        <BarChart
         accessibilityLayer
         data={transformedData}
         margin={{
           top: 0,
           right: 0,
           left: 0,
-          bottom: 130,
+          bottom: 0,
         }}
       >
         <CartesianGrid

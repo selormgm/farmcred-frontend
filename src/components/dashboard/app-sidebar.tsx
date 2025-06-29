@@ -37,7 +37,7 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar className="mt-32 text-[#158f20]">
-      <SidebarContent className="bg-card">
+      <SidebarContent className="bg-card dark:bg-background">
         <SidebarGroup>
           <SidebarGroupLabel className="text-[#158f20]">Settings</SidebarGroupLabel>
           <SidebarGroupContent>

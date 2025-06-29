@@ -42,6 +42,7 @@ export interface Transaction {
   status: 'income' | 'expense';
   date: string;
   created_at: string;
+  buyer: string;
 }
 
 export interface TransactionInput {

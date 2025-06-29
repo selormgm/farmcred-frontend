@@ -52,7 +52,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-background">
       <div className="fixed top-6 left-6 z-50">
         <Image
           src="/logo/farmcred-04.png"

@@ -240,10 +240,6 @@ function TransactionTableRow({
                   {transaction.status}
                 </div>
                 <div>
-                  <strong className="text-[#158f20]">Description:</strong>{" "}
-                  {transaction.description || "—"}
-                </div>
-                <div>
                   <strong className="text-[#158f20]">Date:</strong>{" "}
                   {transaction.date}
                 </div>

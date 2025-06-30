@@ -1,6 +1,6 @@
 export interface FarmerProfile {
   id: number;
-  account: number;
+  account_id: number;
   full_name: string;
   phone_number: string;
   country: string;
@@ -9,7 +9,12 @@ export interface FarmerProfile {
   national_id: string;
   home_address: string;
   produce: string[];
+  trust_level_stars: number;
   trust_score_percent: number;
+  total_income_last_12_months: number;
+  transactions: string[];
+  transfers: string[];
+  loans: string[];
   created_at: string;
   updated_at: string;
 }
@@ -29,7 +34,6 @@ export interface FarmerOverview {
   produce: string[];
   region: string;
   country: string;
-
 }
 
 export interface Transaction {
@@ -38,10 +42,10 @@ export interface Transaction {
   farmer: number;
   amount: number;
   category: string;
-  description: string;
   status: 'income' | 'expense';
   date: string;
   created_at: string;
+  updated_at: string;
   buyer: string;
 }
 
@@ -57,6 +61,7 @@ export interface Transfer {
   length: number;
   recipient_or_sender: any;
   id: number;
+  transfer_id : string;
   farmer: number;
   amount: number;
   recipient: string;
@@ -65,6 +70,8 @@ export interface Transfer {
   date: string;
   description?: string;
   created_at: string;
+  updated_at: string;
+  notes: string;
 }
 
 export interface TransferInput {
@@ -100,4 +107,41 @@ export interface ApiFilters {
   type?: string;
   date_from?: string;
   date_to?: string;
+}
+
+export interface InvestorProfile{
+  account: number;
+  full_name:string;
+  phone_number: number;
+  country: string;
+  region: string;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface InvestorReview{
+  id: number;
+  farmer: number;
+  farmer_full_name: string;
+  farmer_phone_number: number;
+  investor: number;
+  investor_full_name: string;
+  created_at: string;
+}
+
+export interface InvestorFarmers{
+  account_id: number;
+  full_name:string;
+  phone_number: number;
+  country: string;
+  region: string;
+  produce: string[];
+  trust_level_stars: number;
+  trust_score_percent: number;
+  total_income_last_12_months:number;
+}
+
+export interface ReviewInput{
+  detail: string;
+  review_id: number;
 }

@@ -160,7 +160,7 @@ function TransferTableRow({ transfer, isLast }: TransferTableRowProps) {
         className="text-base font-normal text-[#158F20] py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
-        {transfer.id}
+        {transfer.transfer_id}
       </TableCell>
       <TableCell
         className="text-base font-normal text-[#05402E] py-3"
@@ -221,7 +221,7 @@ function TransferTableRow({ transfer, isLast }: TransferTableRowProps) {
             <DialogDescription>
               <div className="space-y-2">
                 <div>
-                  <strong className="text-[#158f20]">ID:</strong> {transfer.id}
+                  <strong className="text-[#158f20]">Transfer ID:</strong> {transfer.transfer_id}
                 </div>
                 <div>
                   <strong className="text-[#158f20]">Farmer:</strong>{" "}
@@ -249,7 +249,7 @@ function TransferTableRow({ transfer, isLast }: TransferTableRowProps) {
                 </div>
                 <div>
                   <strong className="text-[#158f20]">Description:</strong>{" "}
-                  {transfer.description || "—"}
+                  {transfer.notes || "—"}
                 </div>
                 <div>
                   <strong className="text-[#158f20]">Created At:</strong>{" "}

@@ -2,10 +2,11 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Navbar from "@/components/investor/Navbar";
 import ProtectedRoute from "@/components/Security/ProtectedRoute";
 import { useInvestorProfile } from "@/hooks/useInvestorData";
 import { useAuth } from "@/contexts/AuthContext";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/investor/investor-sidebar";
 
 export default function InvestorLayout({
   children,
@@ -56,15 +57,7 @@ export default function InvestorLayout({
 
   return (
     <ProtectedRoute>
-      <div className="flex flex-col">
-        <header className="p-4">
-          <Navbar
-            username={loading ? "Loading..." : profile?.full_name}
-            id={0}
-          />
-        </header>
         <main className="flex-1 p-4">{children}</main>
-      </div>
     </ProtectedRoute>
   );
 }

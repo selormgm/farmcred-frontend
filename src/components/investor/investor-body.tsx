@@ -1,7 +1,7 @@
 import { Link, Sidebar } from "lucide-react";
 import { Card, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
-import { MonthlyProfitPieChart } from "./ProfitPiechart";
+import { ChartBarProfitLoss} from "./ProfitChart";
 
 export function BodyCards() {
   return (
@@ -56,10 +56,10 @@ export function BodyCards() {
           {/* Right column: Monthly Profit and Recent Activity */}
           <div className="flex-1 flex flex-col gap-4 pr-4">
             <div className="flex flex-row gap-4">
-              <div className="flex-1 overflow-auto">
-                <MonthlyProfitPieChart />
+              <div className="flex-[2] min-w-0">
+                <ChartBarProfitLoss />
               </div>
-              <Card className="p-4 flex-1 flex flex-col">
+              <Card className="p-4 flex-1 flex flex-col max-w-[350px]">
                 <CardHeader className="flex flex-row items-center justify-between p-0 pb-6 flex-shrink-0">
                   <CardTitle className="text-xl font-medium text-[#157148]">
                     Recent Activity

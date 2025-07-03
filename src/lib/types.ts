@@ -117,6 +117,7 @@ export interface InvestorProfile{
   region: string;
   created_at: number;
   updated_at: number;
+  farmers: string[];
 }
 
 export interface InvestorReview{

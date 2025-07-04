@@ -1,6 +1,6 @@
-import { TrendingDown, TrendingUp } from "lucide-react"
+import { TrendingDown, TrendingUp } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardAction,
@@ -8,15 +8,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 
 export function SectionCards() {
   return (
-    <div className=" grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
-      <Card className="@container/card bg-[#eff3e4]">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+      <Card className="bg-[#eff3e4]">
         <CardHeader>
-          <CardDescription className="text-[#157148]">Total Investments</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-[#158f20]">
+          <CardDescription className="text-[#157148]">
+            Total Investments
+          </CardDescription>
+          <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl text-[#158f20]">
             $1,250.00
           </CardTitle>
           <CardAction className="text-[#158f20]">
@@ -35,10 +37,12 @@ export function SectionCards() {
           </div>
         </CardFooter>
       </Card>
-      <Card className="@container/card bg-[#eff3e4]">
+      <Card className="bg-[#eff3e4]">
         <CardHeader>
-          <CardDescription className="text-[#157148]">New Farmers</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-[#158f20]">
+          <CardDescription className="text-[#157148]">
+            New Farmers
+          </CardDescription>
+          <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl text-[#158f20]">
             1,234
           </CardTitle>
           <CardAction className="text-[#158f20]">
@@ -57,10 +61,12 @@ export function SectionCards() {
           </div>
         </CardFooter>
       </Card>
-      <Card className="@container/card bg-[#eff3e4]">
+      <Card className="bg-[#eff3e4]">
         <CardHeader>
-          <CardDescription className="text-[#157148]">Active Farmers</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-[#158f20]">
+          <CardDescription className="text-[#157148]">
+            Active Farmers
+          </CardDescription>
+          <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl text-[#158f20]">
             45,678
           </CardTitle>
           <CardAction className="text-[#158f20]">
@@ -77,10 +83,12 @@ export function SectionCards() {
           <div className="text-muted-foreground">Engagement exceed targets</div>
         </CardFooter>
       </Card>
-      <Card className="@container/card bg-[#eff3e4]">
+      <Card className="bg-[#eff3e4]">
         <CardHeader>
-          <CardDescription className="text-[#157148]">Return On Investments</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-[#158f20]">
+          <CardDescription className="text-[#157148]">
+            Return On Investments
+          </CardDescription>
+          <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl text-[#158f20]">
             4.5%
           </CardTitle>
           <CardAction className="text-[#158f20]">
@@ -98,5 +106,5 @@ export function SectionCards() {
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

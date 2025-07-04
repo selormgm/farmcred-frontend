@@ -1,9 +1,7 @@
 "use client";
 import { BodyCards } from "@/components/investor/investor-body";
 import { SectionCards } from "@/components/investor/investor-overview";
-import { AppSidebar } from "@/components/investor/investor-sidebar";
 import { SiteHeader } from "@/components/investor/site-header";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useInvestorProfile } from "@/hooks/useInvestorData";
 
 export default function Investor() {
@@ -21,28 +19,12 @@ export default function Investor() {
   console.log(overview);*/
 
   return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "calc(var(--spacing) * 62)",
-          "--header-height": "calc(var(--spacing) * 14)",
-        } as React.CSSProperties
-      }
-    >
-      <AppSidebar variant="inset" />
-      <SidebarInset>
-        <SiteHeader />
-        <div className="flex flex-1 flex-col">
-          <div className="@container/main flex flex-1 flex-col gap-2">
-            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-              <SectionCards />
-              <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-                <BodyCards />
-              </div>
-            </div>
-          </div>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+    <div className="space-y-6">
+      <SiteHeader />
+      <div className="space-y-8 px-4">
+        <SectionCards />
+        <BodyCards />
+      </div>
+    </div>
   );
 }

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import ProtectedRoute from "@/components/Security/ProtectedRoute";
 import { useInvestorProfile } from "@/hooks/useInvestorData";
 import { useAuth } from "@/contexts/AuthContext";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/investor/investor-sidebar";
 
 export default function InvestorLayout({
@@ -36,6 +36,7 @@ export default function InvestorLayout({
       }
     }
   }, [error, router]);
+
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#eff3e4]">
@@ -57,7 +58,23 @@ export default function InvestorLayout({
 
   return (
     <ProtectedRoute>
-        <main className="flex-1 p-4">{children}</main>
+      <SidebarProvider
+        style={
+          {
+            "--sidebar-width": "calc(var(--spacing) * 62)",
+            "--header-height": "calc(var(--spacing) * 14)",
+          } as React.CSSProperties
+        }
+      >
+        <AppSidebar variant="inset" />
+        <SidebarInset>
+          <main className="flex-1 min-h-screen bg-background">
+            <div className="container mx-auto px-4 py-6 max-w-7xl">
+              {children}
+            </div>
+          </main>
+        </SidebarInset>
+      </SidebarProvider>
     </ProtectedRoute>
   );
 }

@@ -22,7 +22,7 @@ import { useFarmerList } from "@/hooks/useInvestorData";
 import { useFarmerDetails } from "@/hooks/useInvestorData";
 import { InvestorFarmers } from "@/lib/types";
 import { useState } from "react";
-import FarmerProfile from "./FarmerProfile";
+import FarmerProfile from "./FarmerProfileDialog";
 
 interface BrowseFarmersProps {
   tablelength: number;
@@ -36,14 +36,16 @@ const BrowseFarmers = ({
   search,
   filter = "all",
 }: BrowseFarmersProps) => {
-  const { data: investorProfile, loading, error } = useFarmerList();
+  const { data: farmerListData, loading, error } = useFarmerList();
   const length = tablelength;
-  const farmers: InvestorFarmers[] = investorProfile ?? [];
+  const farmers: InvestorFarmers[] = Array.isArray(farmerListData)
+    ? farmerListData
+    : [];
 
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="text-[#157148]">Loading availbale farmers...</div>
+        <div className="text-[#157148]">Loading available farmers...</div>
       </div>
     );
   }
@@ -51,7 +53,9 @@ const BrowseFarmers = ({
   if (error) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="text-red-600">Failed to load available farmers</div>
+        <div className="text-red-600">
+          Failed to load available farmers: {error}
+        </div>
       </div>
     );
   }
@@ -64,36 +68,35 @@ const BrowseFarmers = ({
     );
   }
 
-  //Filter farmers based on search query(case-insensitive)
-  const filteredFarmers = farmers.filter((farmers: InvestorFarmers) => {
+  const filteredFarmers = farmers.filter((farmer: InvestorFarmers) => {
     const query = search?.toLowerCase() || "";
     if (
       filter === "region" &&
       search &&
-      farmers.region.toLowerCase() !== query
+      farmer.region.toLowerCase() !== query
     ) {
       return false;
     }
-    if (filter === "trust score > 60" && farmers.trust_score_percent <= 60) {
+    if (filter === "trust score > 60" && farmer.trust_score_percent <= 60) {
       return false;
     }
-    if (filter === "trust score < 60" && farmers.trust_score_percent >= 60) {
+    if (filter === "trust score < 60" && farmer.trust_score_percent >= 60) {
       return false;
     }
     if (
       filter === "crop" &&
       search &&
-      !farmers.produce.some((crop) => crop.toLowerCase().includes(query))
+      !farmer.produce.some((crop) => crop.toLowerCase().includes(query))
     ) {
       return false;
     }
 
     if (search && filter === "all") {
       return (
-        farmers.full_name.toLowerCase().includes(query) ||
-        farmers.account_id.toString().includes(query) ||
-        farmers.country.toLowerCase().includes(query) ||
-        farmers.region.toLowerCase().includes(query)
+        farmer.full_name.toLowerCase().includes(query) ||
+        farmer.account_id.toString().includes(query) ||
+        farmer.country.toLowerCase().includes(query) ||
+        farmer.region.toLowerCase().includes(query)
       );
     }
     return true;
@@ -156,10 +159,10 @@ const BrowseFarmers = ({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {farmerData.map((farmers: InvestorFarmers, index: number) => (
+        {farmerData.map((farmer: InvestorFarmers, index: number) => (
           <FarmerTableRow
-            key={farmers.account_id}
-            farmers={farmers}
+            key={farmer.account_id}
+            farmers={farmer}
             isLast={index === farmerData.length - 1}
           />
         ))}
@@ -205,7 +208,7 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
         className="text-base font-normal py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
-        {farmers.trust_score_percent}
+        {farmers.trust_score_percent}%
       </TableCell>
       <TableCell
         className="text-base font-normal text-[#158F20] py-3 flex gap-1 flex-wrap"
@@ -236,7 +239,7 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
               : "bg-gray-100 text-gray-700"
           }`}
         >
-          {farmers.investment_status}
+          {farmers.investment_status || "No investment"}
         </span>
       </TableCell>
 
@@ -250,7 +253,11 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
           <MoreVertical className="h-4 w-4 text-[#157148]" />
         </Button>
         <Dialog open={open} onOpenChange={setOpen}>
-          <FarmerProfile farmer={farmers} onClose={() => setOpen(false)} />
+          <FarmerProfile
+            farmer={farmers}
+            fullProfile={fullProfile}
+            onClose={() => setOpen(false)}
+          />
         </Dialog>
       </TableCell>
     </TableRow>

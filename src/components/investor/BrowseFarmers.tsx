@@ -187,31 +187,31 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
       }`}
     >
       <TableCell
-        className="text-base font-normal py-3"
+        className="text-base font-normal text-[#158F20] py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
         {farmers.account_id}
       </TableCell>
       <TableCell
-        className="text-base font-normal py-3"
+        className="text-base font-normal text-[#158F20] py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
         {farmers.full_name}
       </TableCell>
       <TableCell
-        className="text-base font-normal py-3"
+        className="text-base font-normal text-[#72BF01] py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
         {farmers.region}
       </TableCell>
       <TableCell
-        className="text-base font-normal py-3"
+        className="text-base font-normal py-3 text-[#05402E]"
         style={{ letterSpacing: "-0.06em" }}
       >
         {farmers.trust_score_percent}%
       </TableCell>
       <TableCell
-        className="text-base font-normal text-[#158F20] py-3 flex gap-1 flex-wrap"
+        className="text-base font-normal py-3 flex gap-1 flex-wrap"
         style={{ letterSpacing: "-0.06em" }}
       >
         {farmers.produce.map((item, index) => (
@@ -224,7 +224,7 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
         ))}
       </TableCell>
       <TableCell
-        className="text-base font-normal text-[#158F20] py-3"
+        className="text-base font-normal text-[#05402E] py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
         {farmers.phone_number}

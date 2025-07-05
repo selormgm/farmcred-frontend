@@ -59,11 +59,11 @@ const chartConfig = {
 export function ChartBarProfitLoss() {
   return (
     <Card className="p-4 flex-1 flex flex-col h-[600px]">
-      <CardHeader className="flex flex-row items-center justify-between p-0 pb-6 flex-shrink-0">
+      <CardHeader className="flex flex-row items-center justify-between p-0 pb-2 flex-shrink-0">
         <CardTitle className="text-xl font-medium text-[#157148]">
           Investor Profit & Loss
         </CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription>January - December 2024</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 h-full max-w-[500px]">
         <ChartContainer config={chartConfig} className="h-full w-full">

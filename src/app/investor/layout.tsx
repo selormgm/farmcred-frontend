@@ -69,7 +69,7 @@ export default function InvestorLayout({
         <AppSidebar variant="sidebar" />
         <SidebarInset>
           <main className="flex-1 min-h-screen bg-background">
-            <div className="container mx-auto px-4 py-6 max-w-auto">
+            <div className="w-full px-4 py-6 mx-auto">
               {children}
             </div>
           </main>

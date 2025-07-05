@@ -3,7 +3,6 @@
 import {
   DialogContent,
   DialogTitle,
-  DialogDescription,
   DialogClose,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -25,6 +24,8 @@ import {
   BadgeCent,
   PiggyBank,
   Loader2,
+  BookUser,
+  Handshake,
 } from "lucide-react";
 
 interface FarmerProfileDialogProps {
@@ -63,7 +64,7 @@ export default function FarmerProfileDialogContent({
             <User className="text-[#158f20] w-5 h-5" />
             <div>
               <p className="text-sm text-muted-foreground">Full Name</p>
-              <p className="text-base font-medium">{profileData.full_name}</p>
+              <p className="text-base font-medium text-[#05402E]">{profileData.full_name}</p>
             </div>
           </div>
 
@@ -72,7 +73,7 @@ export default function FarmerProfileDialogContent({
             <Phone className="text-[#158f20] w-5 h-5" />
             <div>
               <p className="text-sm text-muted-foreground">Phone</p>
-              <p className="text-base font-medium">
+              <p className="text-base font-medium text-[#05402E]">
                 {profileData.phone_number}
               </p>
             </div>
@@ -80,10 +81,10 @@ export default function FarmerProfileDialogContent({
 
           {/* Account ID */}
           <div className="flex items-center gap-3">
-            <Contact className="text-[#158f20] w-5 h-5" />
+            <BookUser className="text-[#158f20] w-5 h-5" />
             <div>
               <p className="text-sm text-muted-foreground">Account ID</p>
-              <p className="text-base font-medium">{farmer.account_id}</p>
+              <p className="text-base font-medium text-[#05402E]">{farmer.account_id}</p>
             </div>
           </div>
 
@@ -93,7 +94,7 @@ export default function FarmerProfileDialogContent({
               <Contact className="text-[#158f20] w-5 h-5" />
               <div>
                 <p className="text-sm text-muted-foreground">National ID</p>
-                <p className="text-base font-medium">
+                <p className="text-base font-medium text-[#05402E]">
                   {fullProfile.national_id}
                 </p>
               </div>
@@ -106,7 +107,7 @@ export default function FarmerProfileDialogContent({
               <Calendar className="text-[#158f20] w-5 h-5" />
               <div>
                 <p className="text-sm text-muted-foreground">Date of Birth</p>
-                <p className="text-base font-medium">{fullProfile.dob}</p>
+                <p className="text-base font-medium text-[#05402E]">{fullProfile.dob}</p>
               </div>
             </div>
           )}
@@ -117,7 +118,7 @@ export default function FarmerProfileDialogContent({
               <Home className="text-[#158f20] w-5 h-5" />
               <div>
                 <p className="text-sm text-muted-foreground">Home Address</p>
-                <p className="text-base font-medium">
+                <p className="text-base font-medium text-[#05402E]">
                   {fullProfile.home_address}
                 </p>
               </div>
@@ -129,7 +130,7 @@ export default function FarmerProfileDialogContent({
             <MapPin className="text-[#158f20] w-5 h-5" />
             <div>
               <p className="text-sm text-muted-foreground">Region</p>
-              <p className="text-base font-medium">{profileData.region}</p>
+              <p className="text-base font-medium text-[#05402E]">{profileData.region}</p>
             </div>
           </div>
 
@@ -138,7 +139,7 @@ export default function FarmerProfileDialogContent({
             <Globe className="text-[#158f20] w-5 h-5" />
             <div>
               <p className="text-sm text-muted-foreground">Country</p>
-              <p className="text-base font-medium">{profileData.country}</p>
+              <p className="text-base font-medium text-[#05402E]">{profileData.country}</p>
             </div>
           </div>
 
@@ -147,7 +148,7 @@ export default function FarmerProfileDialogContent({
             <ShieldCheck className="text-[#158f20] w-5 h-5" />
             <div>
               <p className="text-sm text-muted-foreground">Trust Score</p>
-              <p className="text-base font-medium">
+              <p className="text-base font-medium text-[#05402E]">
                 {profileData.trust_score_percent}%
               </p>
             </div>
@@ -155,10 +156,10 @@ export default function FarmerProfileDialogContent({
 
           {/* Trust Level */}
           <div className="flex items-center gap-3">
-            <ShieldCheck className="text-[#158f20] w-5 h-5" />
+            <Handshake className="text-[#158f20] w-5 h-5" />
             <div>
               <p className="text-sm text-muted-foreground">Trust Level</p>
-              <p className="text-base font-medium">
+              <p className="text-base font-medium text-[#05402E]">
                 {profileData.trust_level_stars} stars
               </p>
             </div>
@@ -172,7 +173,7 @@ export default function FarmerProfileDialogContent({
                 <p className="text-sm text-muted-foreground">
                   Total Income (12mo)
                 </p>
-                <p className="text-base font-medium">
+                <p className="text-base font-medium text-[#05402E]">
                   GHS {fullProfile.total_income_last_12_months.toLocaleString()}
                 </p>
               </div>
@@ -222,21 +223,21 @@ export default function FarmerProfileDialogContent({
               <div className="text-sm text-muted-foreground flex items-center gap-2">
                 <ClipboardList className="w-4 h-4 text-[#158f20]" />
                 Transactions:{" "}
-                <span className="font-medium">
+                <span className="font-medium text-[#05402E]">
                   {fullProfile.transactions?.length ?? 0}
                 </span>
               </div>
               <div className="text-sm text-muted-foreground flex items-center gap-2">
                 <BadgeCent className="w-4 h-4 text-[#158f20]" />
                 Transfers:{" "}
-                <span className="font-medium">
+                <span className="font-medium text-[#05402E]">
                   {fullProfile.transfers?.length ?? 0}
                 </span>
               </div>
               <div className="text-sm text-muted-foreground flex items-center gap-2">
                 <PiggyBank className="w-4 h-4 text-[#158f20]" />
                 Loans:{" "}
-                <span className="font-medium">
+                <span className="font-medium text-[#05402E]">
                   {fullProfile.loans?.length ?? 0}
                 </span>
               </div>
@@ -258,12 +259,36 @@ export default function FarmerProfileDialogContent({
           )}
         </CardContent>
       </Card>
+      
+        <div className="flex items-center  justify-between">
+          <div className="space-x-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                // TODO: handle review action
+                console.log("Review Farmer clicked");
+              }}
+            >
+              Review Farmer
+            </Button>
 
-      <DialogClose asChild>
-        <Button variant="outline" className="mt-2" onClick={onClose}>
-          Close
-        </Button>
-      </DialogClose>
+            <Button
+              variant="outline"
+              onClick={() => {
+                // TODO: handle invest action
+                console.log("Invest in Farmer clicked");
+              }}
+            >
+              Invest in Farmer
+            </Button>
+          </div>
+
+          <DialogClose asChild>
+            <Button variant="destructive" onClick={onClose}>
+              Close
+            </Button>
+          </DialogClose>
+        </div>
     </DialogContent>
   );
 }

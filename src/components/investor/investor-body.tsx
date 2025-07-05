@@ -1,4 +1,4 @@
-import { Link, Sidebar } from "lucide-react";
+import { ClipboardCheck, HandCoins } from "lucide-react";
 import { Card, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import { ChartBarProfitLoss} from "./ProfitChart";
@@ -9,7 +9,7 @@ export function BodyCards() {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 lg:flex-row h-full">
           {/* Left column: Farmers Reviewed, Farmers Funded and Insight Graph stacked */}
-          <div className="lg:w-2/5 flex flex-col gap-4 pl-4">
+          <div className="flex-[2] flex flex-col gap-4 pl-4">
             <div className="flex flex-row gap-4">
               <Card className="p-4 h-[240px] flex flex-col flex-1">
                 <CardHeader className="flex flex-row items-center justify-between p-0 pb-6 flex-shrink-0">
@@ -23,7 +23,9 @@ export function BodyCards() {
                     View More
                   </Button>
                 </CardHeader>
-                <div className="flex-1"></div>
+                <div className="flex-1">
+                  <ClipboardCheck />
+                </div>
               </Card>
               <Card className="p-4 h-[240px] flex flex-col flex-1">
                 <CardHeader className="flex flex-row items-center justify-between p-0 pb-6 flex-shrink-0">
@@ -38,7 +40,7 @@ export function BodyCards() {
                   </Button>
                 </CardHeader>
                 <div className="flex-1">
-                  
+                  <HandCoins />
                 </div>
               </Card>
             </div>
@@ -54,7 +56,7 @@ export function BodyCards() {
             </Card>
           </div>
           {/* Right column: Monthly Profit and Recent Activity */}
-          <div className="flex-1 flex flex-col gap-4 pr-4">
+          <div className="flex-[3] flex flex-col gap-4 pr-4">
             <div className="flex flex-row gap-4">
               <div className="flex-[2] min-w-0">
                 <ChartBarProfitLoss />

@@ -17,6 +17,7 @@ export interface FarmerProfile {
   loans: string[];
   created_at: string;
   updated_at: string;
+  investment_status: "accepted" | "declined" | "pending";
 }
 
 export interface FarmerOverview {
@@ -140,6 +141,7 @@ export interface InvestorFarmers{
   trust_level_stars: number;
   trust_score_percent: number;
   total_income_last_12_months:number;
+  investment_status: "accepted" | "declined" | "pending";
 }
 
 export interface ReviewInput{

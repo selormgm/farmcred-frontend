@@ -18,9 +18,11 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { MoreVertical } from "lucide-react";
-import { useInvestorProfile } from "@/hooks/useInvestorData";
+import { useFarmerList } from "@/hooks/useInvestorData";
+import { useFarmerDetails } from "@/hooks/useInvestorData";
 import { InvestorFarmers } from "@/lib/types";
 import { useState } from "react";
+import FarmerProfile from "./FarmerProfile";
 
 interface BrowseFarmersProps {
   tablelength: number;
@@ -34,13 +36,9 @@ const BrowseFarmers = ({
   search,
   filter = "all",
 }: BrowseFarmersProps) => {
-  const { data: investorProfile, loading, error } = useInvestorProfile();
+  const { data: investorProfile, loading, error } = useFarmerList();
   const length = tablelength;
-  const farmers: InvestorFarmers[] = investorProfile?.farmers
-    ? (investorProfile.farmers as string[]).map((farmerStr) =>
-        JSON.parse(farmerStr)
-      )
-    : [];
+  const farmers: InvestorFarmers[] = investorProfile ?? [];
 
   if (loading) {
     return (
@@ -68,21 +66,37 @@ const BrowseFarmers = ({
 
   //Filter farmers based on search query(case-insensitive)
   const filteredFarmers = farmers.filter((farmers: InvestorFarmers) => {
-    if (filter === "region" && farmers.region !== "region") return false;
-    if (filter === "trust score" && farmers.trust_score_percent < 80)
+    const query = search?.toLowerCase() || "";
+    if (
+      filter === "region" &&
+      search &&
+      farmers.region.toLowerCase() !== query
+    ) {
       return false;
-    if (filter === "crop" && (!search || !farmers.produce.includes(search)))
+    }
+    if (filter === "trust score > 60" && farmers.trust_score_percent <= 60) {
       return false;
+    }
+    if (filter === "trust score < 60" && farmers.trust_score_percent >= 60) {
+      return false;
+    }
+    if (
+      filter === "crop" &&
+      search &&
+      !farmers.produce.some((crop) => crop.toLowerCase().includes(query))
+    ) {
+      return false;
+    }
 
-    if (!search) return true;
-
-    const query = search.toLowerCase();
-    return (
-      farmers.full_name.toLowerCase().includes(query) ||
-      farmers.account_id.toString().includes(query) ||
-      farmers.country.toLowerCase().includes(query) ||
-      farmers.region.toLowerCase().includes(query)
-    );
+    if (search && filter === "all") {
+      return (
+        farmers.full_name.toLowerCase().includes(query) ||
+        farmers.account_id.toString().includes(query) ||
+        farmers.country.toLowerCase().includes(query) ||
+        farmers.region.toLowerCase().includes(query)
+      );
+    }
+    return true;
   });
 
   const farmerData = filteredFarmers.slice(0, length);
@@ -131,6 +145,12 @@ const BrowseFarmers = ({
             className="text-base font-normal text-card-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
+            Investment Status
+          </TableHead>
+          <TableHead
+            className="text-base font-normal text-card-foreground h-auto py-3"
+            style={{ letterSpacing: "-0.06em" }}
+          >
             Action
           </TableHead>
         </TableRow>
@@ -155,6 +175,7 @@ interface FarmersTableRowProps {
 
 function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
   const [open, setOpen] = useState(false);
+  const { data: fullProfile, loading } = useFarmerDetails(farmers.account_id);
 
   return (
     <TableRow
@@ -187,10 +208,17 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
         {farmers.trust_score_percent}
       </TableCell>
       <TableCell
-        className="text-base font-normal text-[#158F20] py-3"
+        className="text-base font-normal text-[#158F20] py-3 flex gap-1 flex-wrap"
         style={{ letterSpacing: "-0.06em" }}
       >
-        {farmers.produce}
+        {farmers.produce.map((item, index) => (
+          <span
+            key={index}
+            className="bg-[#158F20] items-center text-white text-xs px-2 py-1 rounded-full"
+          >
+            {item}
+          </span>
+        ))}
       </TableCell>
       <TableCell
         className="text-base font-normal text-[#158F20] py-3"
@@ -198,6 +226,20 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
       >
         {farmers.phone_number}
       </TableCell>
+      <TableCell className="py-3">
+        <span
+          className={`px-3 py-1 rounded-full text-xs font-medium ${
+            farmers.investment_status === "accepted"
+              ? "bg-green-100 text-[#158f20]"
+              : farmers.investment_status === "declined"
+              ? "bg-red-100 text-red-700"
+              : "bg-gray-100 text-gray-700"
+          }`}
+        >
+          {farmers.investment_status}
+        </span>
+      </TableCell>
+
       <TableCell className="py-3">
         <Button
           variant="ghost"
@@ -208,17 +250,7 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
           <MoreVertical className="h-4 w-4 text-[#157148]" />
         </Button>
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent className="text-[#158f20]">
-            <DialogTitle className="text-[#157148]">
-              Farmer Profile
-            </DialogTitle>
-            <DialogDescription>
-              
-            </DialogDescription>
-            <DialogClose asChild>
-              <Button variant="outline">Close</Button>
-            </DialogClose>
-          </DialogContent>
+          <FarmerProfile farmer={farmers} onClose={() => setOpen(false)} />
         </Dialog>
       </TableCell>
     </TableRow>

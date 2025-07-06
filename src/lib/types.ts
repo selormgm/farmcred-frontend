@@ -119,6 +119,8 @@ export interface InvestorProfile{
   created_at: number;
   updated_at: number;
   farmers: string[];
+  farmers_reviewed: number;
+  farmers_funded: number;
 }
 
 export interface InvestorReview{

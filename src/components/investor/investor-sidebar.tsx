@@ -24,9 +24,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import {  usePathname } from "next/navigation";
 import { useInvestorProfile } from "@/hooks/useInvestorData";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
+
   const { data, loading, error } = useInvestorProfile();
 
   const navMain = [
@@ -79,22 +82,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   };
 
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
+    <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild className="p-8 mr-1">
-              <a href="/investor">
-                <Image
-                  src="/logo/farmcred-03.png"
-                  alt="FarmCred Logo"
-                  width={200}
-                  height={50}
-                />
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <Image
+          src="/logo/agro logo-01.png"
+          alt="FarmCred Logo"
+          width={40}
+          height={40}
+        />
       </SidebarHeader>
       <SidebarContent className="text-[#158f20]">
         <NavMain items={navMain} />

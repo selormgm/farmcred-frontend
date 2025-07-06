@@ -66,7 +66,7 @@ export default function InvestorLayout({
           } as React.CSSProperties
         }
       >
-        <AppSidebar variant="sidebar" />
+        <AppSidebar variant="inset" />
         <SidebarInset>
           <main className="flex-1 min-h-screen bg-background">
             <div className="w-full px-4 py-6 mx-auto">

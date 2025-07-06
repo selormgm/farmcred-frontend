@@ -1,9 +1,24 @@
 import { ClipboardCheck, HandCoins } from "lucide-react";
 import { Card, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
-import { ChartBarProfitLoss} from "./ProfitChart";
+import { ChartBarProfitLoss } from "./ProfitChart";
+import { useInvestorProfile } from "@/hooks/useInvestorData";
+import { InvestorInsightCard } from "./InvestorInsight";
 
 export function BodyCards() {
+  const { data: profile, loading, error } = useInvestorProfile();
+  const tablelength = 3;
+  if (error) {
+    console.error("Failed to fetch data:", error);
+  }
+  if (loading) {
+    return <div className="p-4">Loading...</div>;
+  }
+  if (!profile) {
+    return <div className="p-4">No data available.</div>;
+  }
+  console.log(profile);
+
   return (
     <div className="flex-1">
       <div className="flex flex-col gap-4">
@@ -23,8 +38,17 @@ export function BodyCards() {
                     View More
                   </Button>
                 </CardHeader>
-                <div className="flex-1">
-                  <ClipboardCheck />
+                <div className="flex-1 flex flex-col justify-center items-center gap-2">
+                  <div className="flex items-center gap-16 mb-4">
+                    <ClipboardCheck className="text-[#158f20]" size={80} />
+                    <div className="text-6xl font-bold text-[#158f20]">
+                      {profile.farmers_reviewed || 0}
+                    </div>
+                  </div>
+
+                  <div className="text-sm text-muted-foreground">
+                    Total reviews submitted
+                  </div>
                 </div>
               </Card>
               <Card className="p-4 h-[240px] flex flex-col flex-1">
@@ -39,21 +63,22 @@ export function BodyCards() {
                     View More
                   </Button>
                 </CardHeader>
-                <div className="flex-1">
-                  <HandCoins />
+                <div className="flex-1 flex flex-col justify-center items-center gap-2">
+                  <div className="flex items-center gap-16 mb-4">
+                    <HandCoins className="text-[#158f20]" size={80} />
+                    <div className="text-6xl font-bold text-[#158f20]">
+                      {profile.farmers_funded || 0}
+                    </div>
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    Total funded farmers
+                  </div>
                 </div>
               </Card>
             </div>
-            <Card className=" p-4 h-[345px] flex flex-col">
-              <CardHeader className="flex flex-row items-center justify-between p-0 pb-6 flex-shrink-0">
-                <CardTitle className="text-xl font-medium text-[#157148]">
-                  Insight
-                </CardTitle>
-              </CardHeader>
-              <div className="flex-1">
-
-              </div>
-            </Card>
+            <div className="flex-1">
+              <InvestorInsightCard />
+            </div>
           </div>
           {/* Right column: Monthly Profit and Recent Activity */}
           <div className="flex-[3] flex flex-col gap-4 pr-4">

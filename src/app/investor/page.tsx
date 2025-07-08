@@ -20,7 +20,6 @@ export default function Investor() {
 
   return (
     <div className="space-y-6">
-      <SiteHeader />
       <div className="space-y-8 px-4">
         <SectionCards />
         <BodyCards />

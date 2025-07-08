@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogClose,
+  DialogFooter,
 } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,14 @@ import { useFarmerDetails } from "@/hooks/useInvestorData";
 import { InvestorFarmers } from "@/lib/types";
 import { useState } from "react";
 import FarmerProfile from "./FarmerProfileDialog";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { InvestorDialogContent } from "./InvestmentDialog";
 
 interface BrowseFarmersProps {
   tablelength: number;
@@ -177,7 +186,9 @@ interface FarmersTableRowProps {
 }
 
 function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
-  const [open, setOpen] = useState(false);
+  const [openDetails, setOpenDetails] = useState(false);
+  const [openReview, setOpenReview] = useState(false);
+  const [openInvest, setOpenInvest] = useState(false);
   const { data: fullProfile, loading } = useFarmerDetails(farmers.account_id);
 
   return (
@@ -244,19 +255,36 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
       </TableCell>
 
       <TableCell className="py-3">
-        <Button
-          variant="ghost"
-          size="sm"
-          className="h-8 w-8 p-0"
-          onClick={() => setOpen(true)}
-        >
-          <MoreVertical className="h-4 w-4 text-[#157148]" />
-        </Button>
-        <Dialog open={open} onOpenChange={setOpen}>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+              <MoreVertical className="h-4 w-4 text-[#157148]" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="flex flex-col w-40 gap-1">
+            <DropdownMenuItem onClick={() => setOpenDetails(true)}>
+              View Details
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setOpenReview(true)}>
+              Review Farmer
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setOpenInvest(true)}>
+              Invest in Farmer
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <Dialog open={openDetails} onOpenChange={setOpenDetails}>
           <FarmerProfile
             farmer={farmers}
             fullProfile={fullProfile}
-            onClose={() => setOpen(false)}
+            onClose={() => setOpenDetails(false)}
+          />
+        </Dialog>
+        <Dialog open={openReview} onOpenChange={setOpenReview}></Dialog>
+        <Dialog open={openInvest} onOpenChange={setOpenInvest}>
+          <InvestorDialogContent
+            farmer={farmers}
+            onClose={() => setOpenInvest(false)}
           />
         </Dialog>
       </TableCell>

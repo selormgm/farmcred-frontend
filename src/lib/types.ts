@@ -17,7 +17,7 @@ export interface FarmerProfile {
   loans: string[];
   created_at: string;
   updated_at: string;
-  investment_status: "accepted" | "declined" | "pending";
+  investment_status: "available" | "non-available" ;
 }
 
 export interface FarmerOverview {

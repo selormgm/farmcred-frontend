@@ -121,6 +121,8 @@ export interface InvestorProfile{
   farmers: string[];
   farmers_reviewed: number;
   farmers_funded: number;
+  email: string;
+  bio: string;
 }
 
 export interface InvestorReview{

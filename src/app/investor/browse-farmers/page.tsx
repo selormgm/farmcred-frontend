@@ -22,7 +22,7 @@ export default function BrowseFarmersPage() {
   const { data: farmers, loading, error } = useFarmerList();
 
   return (
-    <div className="mx-24">
+    <div className="px-6 lg:px-24 py-6">
       <div className=" flex items-center justify-center mb-4 flex-col gap-4">
         <div className="relative w-full max-w-lg">
           <Input

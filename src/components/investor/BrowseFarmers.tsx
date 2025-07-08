@@ -32,6 +32,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { InvestorDialogContent } from "./InvestmentDialog";
+import { ReviewDialogContent } from "./ReviewDialog";
 
 interface BrowseFarmersProps {
   tablelength: number;
@@ -280,7 +281,9 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
             onClose={() => setOpenDetails(false)}
           />
         </Dialog>
-        <Dialog open={openReview} onOpenChange={setOpenReview}></Dialog>
+        <Dialog open={openReview} onOpenChange={setOpenReview}>
+          <ReviewDialogContent/>
+        </Dialog>
         <Dialog open={openInvest} onOpenChange={setOpenInvest}>
           <InvestorDialogContent
             farmer={farmers}

@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/sidebar";
 import { logout } from "@/lib/services/authService";
 import router from "next/router";
+import Link from "next/link";
 
 export function NavUser({
   user,
@@ -98,13 +99,17 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <CircleUser />
-                Account
+              <DropdownMenuItem asChild>
+                <Link href="investor/settings/my-account">
+                  <CircleUser />
+                  Account
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
+              <DropdownMenuItem asChild>
+                <Link href="investor/settings/notification-settings">
+                  <Bell />
+                  Notifications
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

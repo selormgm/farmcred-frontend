@@ -260,29 +260,7 @@ export default function FarmerProfileDialogContent({
         </CardContent>
       </Card>
       
-        <div className="flex items-center  justify-between">
-          <div className="space-x-2">
-            <Button
-              variant="outline"
-              onClick={() => {
-                // TODO: handle review action
-                console.log("Review Farmer clicked");
-              }}
-            >
-              Review Farmer
-            </Button>
-
-            <Button
-              variant="outline"
-              onClick={() => {
-                // TODO: handle invest action
-                console.log("Invest in Farmer clicked");
-              }}
-            >
-              Invest in Farmer
-            </Button>
-          </div>
-
+        <div className="flex justify-end">
           <DialogClose asChild>
             <Button variant="destructive" onClick={onClose}>
               Close

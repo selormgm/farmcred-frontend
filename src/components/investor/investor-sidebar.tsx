@@ -63,13 +63,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     },
     {
       title: "Get Help",
-      url: "#",
+      url: "/investor/settings/get-help",
       icon: HelpCircle,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: Search,
     },
   ];
 

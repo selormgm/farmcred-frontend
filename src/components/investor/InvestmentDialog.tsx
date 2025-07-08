@@ -15,20 +15,24 @@ interface FarmerProfileDialogProps {
 
 export function InvestorDialogContent({
   farmer,
- 
   onClose,
 }: FarmerProfileDialogProps) {
-  
   return (
-    <DialogContent>
-      <DialogTitle>
-        Are you sure you want to invest in {farmer.full_name}
+    <DialogContent className="text-center space-y-2">
+      <DialogTitle className="text-lg font-medium text-gray-800">
+        Are you sure you want to invest in{" "}
+        <span className="font-semibold text-[#158f20]">{farmer.full_name}</span>
+        ?
         <DialogClose />
       </DialogTitle>
-      <DialogFooter>
-        <Button>Yes</Button>
-        <Button>No</Button>
+      <DialogFooter className="flex items-center justify-between">
+        <Button variant="outline">Yes</Button>
+        <Button variant="destructive" onClick={onClose}>
+          No
+        </Button>
       </DialogFooter>
     </DialogContent>
   );
 }
+
+

@@ -64,7 +64,9 @@ export default function FarmerProfileDialogContent({
             <User className="text-[#158f20] w-5 h-5" />
             <div>
               <p className="text-sm text-muted-foreground">Full Name</p>
-              <p className="text-base font-medium text-[#05402E]">{profileData.full_name}</p>
+              <p className="text-base font-medium text-[#05402E]">
+                {profileData.full_name}
+              </p>
             </div>
           </div>
 
@@ -84,7 +86,9 @@ export default function FarmerProfileDialogContent({
             <BookUser className="text-[#158f20] w-5 h-5" />
             <div>
               <p className="text-sm text-muted-foreground">Account ID</p>
-              <p className="text-base font-medium text-[#05402E]">{farmer.account_id}</p>
+              <p className="text-base font-medium text-[#05402E]">
+                {farmer.account_id}
+              </p>
             </div>
           </div>
 
@@ -107,7 +111,9 @@ export default function FarmerProfileDialogContent({
               <Calendar className="text-[#158f20] w-5 h-5" />
               <div>
                 <p className="text-sm text-muted-foreground">Date of Birth</p>
-                <p className="text-base font-medium text-[#05402E]">{fullProfile.dob}</p>
+                <p className="text-base font-medium text-[#05402E]">
+                  {fullProfile.dob}
+                </p>
               </div>
             </div>
           )}
@@ -130,7 +136,9 @@ export default function FarmerProfileDialogContent({
             <MapPin className="text-[#158f20] w-5 h-5" />
             <div>
               <p className="text-sm text-muted-foreground">Region</p>
-              <p className="text-base font-medium text-[#05402E]">{profileData.region}</p>
+              <p className="text-base font-medium text-[#05402E]">
+                {profileData.region}
+              </p>
             </div>
           </div>
 
@@ -139,7 +147,9 @@ export default function FarmerProfileDialogContent({
             <Globe className="text-[#158f20] w-5 h-5" />
             <div>
               <p className="text-sm text-muted-foreground">Country</p>
-              <p className="text-base font-medium text-[#05402E]">{profileData.country}</p>
+              <p className="text-base font-medium text-[#05402E]">
+                {profileData.country}
+              </p>
             </div>
           </div>
 
@@ -148,7 +158,7 @@ export default function FarmerProfileDialogContent({
             <ShieldCheck className="text-[#158f20] w-5 h-5" />
             <div>
               <p className="text-sm text-muted-foreground">Trust Score</p>
-              <p className="text-base font-medium text-[#05402E]">
+              <p className="text-base font-medium text-[#05402E] dark:text-green-300">
                 {profileData.trust_score_percent}%
               </p>
             </div>
@@ -188,10 +198,10 @@ export default function FarmerProfileDialogContent({
               <span
                 className={`px-3 py-1 rounded-full text-xs font-medium ${
                   farmer.investment_status === "accepted"
-                    ? "bg-green-100 text-green-700"
+                    ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
                     : farmer.investment_status === "declined"
-                    ? "bg-red-100 text-red-700"
-                    : "bg-gray-100 text-gray-700"
+                    ? "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
+                    : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
                 }`}
               >
                 {farmer.investment_status || "No investment"}
@@ -259,14 +269,14 @@ export default function FarmerProfileDialogContent({
           )}
         </CardContent>
       </Card>
-      
-        <div className="flex justify-end">
-          <DialogClose asChild>
-            <Button variant="destructive" onClick={onClose}>
-              Close
-            </Button>
-          </DialogClose>
-        </div>
+
+      <div className="flex justify-end">
+        <DialogClose asChild>
+          <Button variant="destructive" onClick={onClose}>
+            Close
+          </Button>
+        </DialogClose>
+      </div>
     </DialogContent>
   );
 }

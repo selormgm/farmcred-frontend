@@ -14,8 +14,6 @@ export default function NotificationSettingsPage() {
 
   return (
     <div className="space-y-6 px-6 py-8">
-      <h1 className="text-2xl font-bold text-[#158f20]">Notification Preferences</h1>
-
       {/* Delivery Methods */}
       <Card>
         <CardHeader>

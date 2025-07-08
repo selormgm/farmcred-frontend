@@ -45,7 +45,7 @@ export function ProgressCircle({
         dominantBaseline="middle"
         textAnchor="middle"
         fontSize="0.75rem"
-        fill="#111827"
+        className="fill-gray-800 dark:fill-gray-100"
         fontWeight="bold"
       >
         {value}%

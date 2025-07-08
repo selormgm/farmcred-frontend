@@ -15,6 +15,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { Card, CardContent } from "@/components/ui/card";
 
 // Dummy investment data
 const investments = [
@@ -139,14 +140,14 @@ export default function InvestmentPage() {
           }
 
           return (
-            <div className="border rounded-lg p-4 shadow-sm bg-white hover:shadow-md transition-all flex justify-between items-center">
-              {/* Left side: info */}
-              <div className="flex items-start gap-3 max-w-[80%]">
-                <div>
-                  <h2 className="text-lg font-semibold text-gray-800">
+            <Card key={inv.id} className="hover:shadow-md transition-all dark:bg-card">
+              <CardContent className="flex justify-between items-center gap-3 p-4">
+                {/* Left side: info */}
+                <div className="flex flex-col max-w-[80%]">
+                  <h2 className="text-lg font-semibold text-foreground">
                     {inv.farmerName}
                   </h2>
-                  <p className="text-sm text-gray-500">{inv.status}</p>
+                  <p className="text-sm text-muted-foreground">{inv.status}</p>
 
                   {tag && (
                     <span
@@ -156,17 +157,17 @@ export default function InvestmentPage() {
                     </span>
                   )}
 
-                  <div className="text-sm text-gray-600 mt-2">
+                  <div className="text-sm text-muted-foreground mt-2">
                     <p>
                       <strong>Expected Return:</strong> {inv.expectedReturn}
                     </p>
                   </div>
                 </div>
-              </div>
 
-              {/* Right side: progress circle */}
-              <ProgressCircle value={inv.repaymentProgress} />
-            </div>
+                {/* Right side: progress */}
+                <ProgressCircle value={inv.repaymentProgress} />
+              </CardContent>
+            </Card>
           );
         })}
       </div>

@@ -75,11 +75,11 @@ export function ReviewDialogContent() {
           const baseColor =
             type === "positive"
               ? isSelected
-                ? "bg-green-100 text-green-800 border-green-400"
-                : "bg-green-50 text-green-600 border-green-200"
+                ? "bg-green-100 text-green-800 border-green-400 dark:bg-green-900 dark:text-green-100 dark:border-green-700"
+                : "bg-green-50 text-green-600 border-green-200 dark:bg-green-800 dark:text-green-200 dark:border-green-600"
               : isSelected
-              ? "bg-red-100 text-red-800 border-red-400"
-              : "bg-red-50 text-red-600 border-red-200";
+              ? "bg-red-100 text-red-800 border-red-400 dark:bg-red-900 dark:text-red-100 dark:border-red-700"
+              : "bg-red-50 text-red-600 border-red-200 dark:bg-red-800 dark:text-red-200 dark:border-red-600";
 
           return (
             <button

@@ -1,8 +1,6 @@
 "use client";
 import { BodyCards } from "@/components/investor/investor-body";
 import { SectionCards } from "@/components/investor/investor-overview";
-import { SiteHeader } from "@/components/investor/site-header";
-import { useInvestorProfile } from "@/hooks/useInvestorData";
 
 export default function Investor() {
   /*const { data: overview, loading, error } = useInvestorProfile;
@@ -19,11 +17,9 @@ export default function Investor() {
   console.log(overview);*/
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-8 px-4">
+    <div className="min-h-screen bg-muted/40 py-6 px-6 lg:px-12 space-y-8">
         <SectionCards />
         <BodyCards />
       </div>
-    </div>
   );
 }

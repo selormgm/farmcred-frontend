@@ -29,8 +29,6 @@ export default function MyAccountPage() {
 
   return (
     <div className="space-y-6 px-6 py-8">
-      <h1 className="text-2xl font-bold text-[#158f20]">My Account</h1>
-
       {/* Profile Info */}
       <Card>
         <CardHeader>

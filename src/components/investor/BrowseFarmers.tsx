@@ -243,13 +243,14 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
       </TableCell>
       <TableCell className="py-3">
         <span
-          className={`px-3 py-1 rounded-full text-xs font-medium ${
-            farmers.investment_status === "accepted"
-              ? "bg-green-100 text-[#158f20]"
-              : farmers.investment_status === "declined"
-              ? "bg-red-100 text-red-700"
-              : "bg-gray-100 text-gray-700"
-          }`}
+          className={`px-3 py-1 rounded-full text-xs font-medium
+      ${
+        farmers.investment_status === "accepted"
+          ? "bg-green-100 text-[#158f20] dark:bg-green-900 dark:text-green-300"
+          : farmers.investment_status === "declined"
+          ? "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
+          : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+      }`}
         >
           {farmers.investment_status || "No investment"}
         </span>
@@ -282,7 +283,7 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
           />
         </Dialog>
         <Dialog open={openReview} onOpenChange={setOpenReview}>
-          <ReviewDialogContent/>
+          <ReviewDialogContent />
         </Dialog>
         <Dialog open={openInvest} onOpenChange={setOpenInvest}>
           <InvestorDialogContent

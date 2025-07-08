@@ -5,6 +5,7 @@ import { Search, LayoutGrid, List, Star } from "lucide-react";
 import { useState } from "react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { ReviewDialogContent } from "@/components/investor/ReviewDialog";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 // Dummy reviews
 const dummyReviews = [
@@ -137,66 +138,69 @@ export default function ReviewFarmersPage() {
       >
         {paginatedReviews.length > 0 ? (
           paginatedReviews.map((review) => (
-            <div
-              key={review.id}
-              className="border rounded-lg p-4 shadow-sm bg-white"
-            >
-              <h2 className="text-lg font-semibold text-gray-800">
-                {review.farmerName}
-              </h2>
+            <Card key={review.id} className="dark:bg-card">
+              <CardHeader>
+                <h2 className="text-lg font-semibold text-foreground">
+                  {review.farmerName}
+                </h2>
+              </CardHeader>
 
-              {/* Rating */}
-              <div className="flex items-center gap-1 mt-1">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <Star
-                    key={i}
-                    className={`w-4 h-4 ${
-                      i <= review.rating
-                        ? "fill-yellow-400 text-yellow-400"
-                        : "text-gray-300"
-                    }`}
-                  />
-                ))}
-              </div>
+              <CardContent>
+                {/* Rating */}
+                <div className="flex items-center gap-1 mt-1">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <Star
+                      key={i}
+                      className={`w-4 h-4 ${
+                        i <= review.rating
+                          ? "fill-yellow-400 text-yellow-400"
+                          : "text-muted"
+                      }`}
+                    />
+                  ))}
+                </div>
 
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2 mt-2">
-                {review.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-xs border bg-green-50 text-green-700 px-2 py-1 rounded-full"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {review.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs border bg-green-50 dark:bg-green-900 text-green-700 dark:text-green-300 px-2 py-1 rounded-full"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
 
-              {/* Comment */}
-              {review.comment && (
-                <p className="mt-2 text-sm text-gray-600">{review.comment}</p>
-              )}
+                {/* Comment */}
+                {review.comment && (
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {review.comment}
+                  </p>
+                )}
 
-              {/* Update Button */}
-              <div className="mt-4">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button size="sm" variant="outline">
-                      Update Review
-                    </Button>
-                  </DialogTrigger>
-                  <ReviewDialogContent />
-                </Dialog>
-              </div>
-            </div>
+                {/* Update Button */}
+                <div className="mt-4">
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button size="sm" variant="outline">
+                        Update Review
+                      </Button>
+                    </DialogTrigger>
+                    <ReviewDialogContent />
+                  </Dialog>
+                </div>
+              </CardContent>
+            </Card>
           ))
         ) : (
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-muted-foreground">
             No reviews found for "{search}".
           </p>
         )}
       </div>
 
-       {/* Pagination Controls */}
+      {/* Pagination Controls */}
       {totalPages > 1 && (
         <div className="mt-6 flex justify-center gap-4 items-center">
           <Button

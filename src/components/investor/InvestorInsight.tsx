@@ -62,7 +62,7 @@ export function InvestorInsightCard() {
   }, [api]);
 
   return (
-    <Card className="p-4 h-[345px] flex flex-col">
+    <Card className="p-4 flex flex-col h-full min-h-[335px] max-h-[460px] justify-between">
       <CardHeader className="flex flex-row items-center justify-between p-0 pb-6">
         <CardTitle className="text-xl font-medium text-[#157148]">
           Insight

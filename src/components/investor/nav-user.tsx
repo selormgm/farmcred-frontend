@@ -100,13 +100,13 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
-                <Link href="investor/settings/my-account">
+                <Link href="/investor/settings/my-account">
                   <CircleUser />
                   Account
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="investor/settings/notification-settings">
+                <Link href="/investor/settings/notification-settings">
                   <Bell />
                   Notifications
                 </Link>

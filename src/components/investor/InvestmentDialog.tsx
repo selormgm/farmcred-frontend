@@ -19,7 +19,7 @@ export function InvestorDialogContent({
 }: FarmerProfileDialogProps) {
   return (
     <DialogContent className="text-center space-y-2">
-      <DialogTitle className="text-lg font-medium text-gray-800">
+      <DialogTitle className="text-lg font-medium text-gray-800 dark:text-gray-100 ">
         Are you sure you want to invest in{" "}
         <span className="font-semibold text-[#158f20]">{farmer.full_name}</span>
         ?

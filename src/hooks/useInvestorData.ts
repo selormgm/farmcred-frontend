@@ -1,0 +1,160 @@
+import { useState, useEffect, useCallback } from "react";
+import { investorService } from "@/lib/api/investor";
+import { InvestorReview, FarmerProfile, InvestorFarmers, InvestorProfile, ReviewInput } from "@/lib/types";
+
+function useApiCall<T>(apiCall: () => Promise<T>, dependencies: any[] = []) {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const result = await apiCall();
+      setData(result);
+    } catch (err: any) {
+      setError(err.response?.data?.detail || err.message || 'An error occurred');
+    } finally {
+      setLoading(false);
+    }
+  }, dependencies);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return { data, loading, error, refetch: fetchData };
+}
+
+//Investor Profile Hook
+export function useInvestorProfile() {
+  return useApiCall(() => investorService.getProfile());
+}
+
+//Investor Review Hook
+export function useInvestorReview() {
+  return useApiCall(() => investorService.getFarmerReview());
+}
+
+//Farmer List Hook
+export function useFarmerList() {
+  return useApiCall(() => investorService.getFarmerList());
+}
+
+//Investor Review Remark Hook
+export function useCreateReviewForFarmer() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const createReview = async (pk: number, reviewData: ReviewInput): Promise<InvestorReview> => {
+    try {
+      setLoading(true);
+      setError(null);
+      const result = await investorService.createReviewforFarmer(pk, reviewData);
+      return result;
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.detail || err.message || 'Failed to create review';
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { createReview, loading, error };
+}
+
+//Specific Farmer Hook
+export function useFarmerDetails(pk: number) {
+  const [data, setData] = useState<FarmerProfile | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchFarmerDetails = async () => {
+      try {
+        setLoading(true);
+        const response = await investorService.getDetailsforSpecificFarmer(pk);
+        setData(response);
+        setError(null);
+      } catch (err: any) {
+        setError(err.response?.data?.detail || err.message || "Failed to fetch farmer details");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (pk) {
+      fetchFarmerDetails();
+    }
+  }, [pk]);
+
+  return { data, loading, error };
+}
+
+export function useUpdateProfile() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const updateProfile = async (data: Partial<InvestorProfile>) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const result = await investorService.updateProfile(data);
+      return result;
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.detail || err.message || 'Failed to update profile';
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { updateProfile, loading, error };
+}
+
+export function useUpdateFarmerReview() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const updateFarmerReview = async (data: Partial<InvestorReview>) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const result = await investorService.updateFarmerReview(data);
+      return result;
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.detail || err.message || 'Failed to update farmer review';
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { updateFarmerReview, loading, error };
+}
+
+export function useUpdateFarmerList() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const updateFarmerList = async (data: Partial<InvestorFarmers>) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const result = await investorService.updateFarmerList(data);
+      return result;
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.detail || err.message || 'Failed to update profile';
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { updateFarmerList, loading, error };
+}

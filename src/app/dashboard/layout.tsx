@@ -6,7 +6,6 @@ import Navbar from "@/components/dashboard/Navbar";
 import ProtectedRoute from "@/components/Security/ProtectedRoute";
 import { useFarmerProfile } from "@/hooks/useFarmerData";
 import { useAuth } from "@/contexts/AuthContext";
-import { ThemeProvider } from "@/components/theme-provider";
 
 export default function DashboardLayout({
   children,

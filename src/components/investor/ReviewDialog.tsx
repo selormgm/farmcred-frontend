@@ -112,7 +112,7 @@ export function ReviewDialogContent() {
               tags: selectedTags,
               comment: extraComments,
             });
-            // You can submit to backend here
+            // Submit to backend here
           }}
           disabled={rating === 0}
         >

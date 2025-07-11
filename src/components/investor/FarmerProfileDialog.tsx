@@ -27,6 +27,7 @@ import {
   BookUser,
   Handshake,
 } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface FarmerProfileDialogProps {
   farmer: InvestorFarmers;
@@ -39,162 +40,101 @@ export default function FarmerProfileDialogContent({
   fullProfile,
   onClose,
 }: FarmerProfileDialogProps) {
+  const { t } = useLanguage();
   const profileData = fullProfile || farmer;
   const isLoadingFullProfile = !fullProfile;
 
   return (
     <DialogContent className="text-[#158f20] space-y-4 max-w-4xl">
       <DialogTitle className="text-[#158f20] text-xl mb-2 flex items-center gap-2">
-        <User className="w-5 h-5" /> Farmer Profile
+        <User className="w-5 h-5" /> {t("farmer_profile")}
       </DialogTitle>
 
       {isLoadingFullProfile && (
         <div className="flex items-center justify-center p-4">
           <Loader2 className="w-6 h-6 animate-spin text-[#158f20]" />
           <span className="ml-2 text-sm text-muted-foreground">
-            Loading detailed profile...
+            {t("loading_detailed_profile")}
           </span>
         </div>
       )}
 
       <Card className="border border-[#157148]/30 rounded-xl shadow-sm">
         <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-4">
-          {/* Full Name */}
-          <div className="flex items-center gap-3">
-            <User className="text-[#158f20] w-5 h-5" />
-            <div>
-              <p className="text-sm text-muted-foreground">Full Name</p>
-              <p className="text-base font-medium text-[#05402E]">
-                {profileData.full_name}
-              </p>
-            </div>
-          </div>
+          <InfoItem
+            icon={<User />}
+            label={t("full_name")}
+            value={profileData.full_name}
+          />
+          <InfoItem
+            icon={<Phone />}
+            label={t("phone")}
+            value={profileData.phone_number}
+          />
+          <InfoItem
+            icon={<BookUser />}
+            label={t("account_ID")}
+            value={farmer.account_id}
+          />
 
-          {/* Phone */}
-          <div className="flex items-center gap-3">
-            <Phone className="text-[#158f20] w-5 h-5" />
-            <div>
-              <p className="text-sm text-muted-foreground">Phone</p>
-              <p className="text-base font-medium text-[#05402E]">
-                {profileData.phone_number}
-              </p>
-            </div>
-          </div>
-
-          {/* Account ID */}
-          <div className="flex items-center gap-3">
-            <BookUser className="text-[#158f20] w-5 h-5" />
-            <div>
-              <p className="text-sm text-muted-foreground">Account ID</p>
-              <p className="text-base font-medium text-[#05402E]">
-                {farmer.account_id}
-              </p>
-            </div>
-          </div>
-
-          {/* National ID */}
           {fullProfile?.national_id && (
-            <div className="flex items-center gap-3">
-              <Contact className="text-[#158f20] w-5 h-5" />
-              <div>
-                <p className="text-sm text-muted-foreground">National ID</p>
-                <p className="text-base font-medium text-[#05402E]">
-                  {fullProfile.national_id}
-                </p>
-              </div>
-            </div>
+            <InfoItem
+              icon={<Contact />}
+              label={t("national_ID")}
+              value={fullProfile.national_id}
+            />
           )}
-
-          {/* Date of Birth */}
           {fullProfile?.dob && (
-            <div className="flex items-center gap-3">
-              <Calendar className="text-[#158f20] w-5 h-5" />
-              <div>
-                <p className="text-sm text-muted-foreground">Date of Birth</p>
-                <p className="text-base font-medium text-[#05402E]">
-                  {fullProfile.dob}
-                </p>
-              </div>
-            </div>
+            <InfoItem
+              icon={<Calendar />}
+              label={t("date_of_birth")}
+              value={fullProfile.dob}
+            />
           )}
-
-          {/* Home Address */}
           {fullProfile?.home_address && (
-            <div className="flex items-center gap-3">
-              <Home className="text-[#158f20] w-5 h-5" />
-              <div>
-                <p className="text-sm text-muted-foreground">Home Address</p>
-                <p className="text-base font-medium text-[#05402E]">
-                  {fullProfile.home_address}
-                </p>
-              </div>
-            </div>
+            <InfoItem
+              icon={<Home />}
+              label={t("home_address")}
+              value={fullProfile.home_address}
+            />
           )}
 
-          {/* Region */}
-          <div className="flex items-center gap-3">
-            <MapPin className="text-[#158f20] w-5 h-5" />
-            <div>
-              <p className="text-sm text-muted-foreground">Region</p>
-              <p className="text-base font-medium text-[#05402E]">
-                {profileData.region}
-              </p>
-            </div>
-          </div>
+          <InfoItem
+            icon={<MapPin />}
+            label={t("region")}
+            value={profileData.region}
+          />
+          <InfoItem
+            icon={<Globe />}
+            label={t("country")}
+            value={profileData.country}
+          />
+          <InfoItem
+            icon={<ShieldCheck />}
+            label={t("trust_score")}
+            value={`${profileData.trust_score_percent}%`}
+          />
+          <InfoItem
+            icon={<Handshake />}
+            label={t("trust_level")}
+            value={`${profileData.trust_level_stars} ${t("stars")}`}
+          />
 
-          {/* Country */}
-          <div className="flex items-center gap-3">
-            <Globe className="text-[#158f20] w-5 h-5" />
-            <div>
-              <p className="text-sm text-muted-foreground">Country</p>
-              <p className="text-base font-medium text-[#05402E]">
-                {profileData.country}
-              </p>
-            </div>
-          </div>
-
-          {/* Trust Score */}
-          <div className="flex items-center gap-3">
-            <ShieldCheck className="text-[#158f20] w-5 h-5" />
-            <div>
-              <p className="text-sm text-muted-foreground">Trust Score</p>
-              <p className="text-base font-medium text-[#05402E] dark:text-green-300">
-                {profileData.trust_score_percent}%
-              </p>
-            </div>
-          </div>
-
-          {/* Trust Level */}
-          <div className="flex items-center gap-3">
-            <Handshake className="text-[#158f20] w-5 h-5" />
-            <div>
-              <p className="text-sm text-muted-foreground">Trust Level</p>
-              <p className="text-base font-medium text-[#05402E]">
-                {profileData.trust_level_stars} stars
-              </p>
-            </div>
-          </div>
-
-          {/* Income */}
           {fullProfile?.total_income_last_12_months !== undefined && (
-            <div className="flex items-center gap-3">
-              <BadgeDollarSign className="text-[#158f20] w-5 h-5" />
-              <div>
-                <p className="text-sm text-muted-foreground">
-                  Total Income (12mo)
-                </p>
-                <p className="text-base font-medium text-[#05402E]">
-                  GHS {fullProfile.total_income_last_12_months.toLocaleString()}
-                </p>
-              </div>
-            </div>
+            <InfoItem
+              icon={<BadgeDollarSign />}
+              label={t("total_income_12mo")}
+              value={`GHS ${fullProfile.total_income_last_12_months.toLocaleString()}`}
+            />
           )}
 
           {/* Investment Status */}
           <div className="flex items-center gap-3">
             <Landmark className="text-[#158f20] w-5 h-5" />
             <div>
-              <p className="text-sm text-muted-foreground">Investment Status</p>
+              <p className="text-sm text-muted-foreground">
+                {t("investment_status")}
+              </p>
               <span
                 className={`px-3 py-1 rounded-full text-xs font-medium ${
                   farmer.investment_status === "accepted"
@@ -204,7 +144,7 @@ export default function FarmerProfileDialogContent({
                     : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
                 }`}
               >
-                {farmer.investment_status || "No investment"}
+                {t(farmer.investment_status || "no_investment")}
               </span>
             </div>
           </div>
@@ -213,7 +153,7 @@ export default function FarmerProfileDialogContent({
           <div className="flex items-center gap-3 col-span-1 sm:col-span-2">
             <Leaf className="text-[#158f20] w-5 h-5" />
             <div>
-              <p className="text-sm text-muted-foreground">Produce</p>
+              <p className="text-sm text-muted-foreground">{t("produce")}</p>
               <div className="flex flex-wrap gap-2 mt-1">
                 {profileData.produce?.map((item, idx) => (
                   <span
@@ -230,27 +170,21 @@ export default function FarmerProfileDialogContent({
           {/* Transactions, Transfers, Loans */}
           {fullProfile && (
             <div className="col-span-1 sm:col-span-2 flex flex-col gap-2 mt-2">
-              <div className="text-sm text-muted-foreground flex items-center gap-2">
-                <ClipboardList className="w-4 h-4 text-[#158f20]" />
-                Transactions:{" "}
-                <span className="font-medium text-[#05402E]">
-                  {fullProfile.transactions?.length ?? 0}
-                </span>
-              </div>
-              <div className="text-sm text-muted-foreground flex items-center gap-2">
-                <BadgeCent className="w-4 h-4 text-[#158f20]" />
-                Transfers:{" "}
-                <span className="font-medium text-[#05402E]">
-                  {fullProfile.transfers?.length ?? 0}
-                </span>
-              </div>
-              <div className="text-sm text-muted-foreground flex items-center gap-2">
-                <PiggyBank className="w-4 h-4 text-[#158f20]" />
-                Loans:{" "}
-                <span className="font-medium text-[#05402E]">
-                  {fullProfile.loans?.length ?? 0}
-                </span>
-              </div>
+              <InfoCount
+                icon={<ClipboardList />}
+                label={t("transactions")}
+                value={fullProfile.transactions?.length ?? 0}
+              />
+              <InfoCount
+                icon={<BadgeCent />}
+                label={t("transfers")}
+                value={fullProfile.transfers?.length ?? 0}
+              />
+              <InfoCount
+                icon={<PiggyBank />}
+                label={t("loans")}
+                value={fullProfile.loans?.length ?? 0}
+              />
             </div>
           )}
 
@@ -258,12 +192,13 @@ export default function FarmerProfileDialogContent({
             <div className="col-span-1 sm:col-span-2 flex flex-col gap-2 mt-2">
               <div className="text-sm text-muted-foreground">
                 <span className="font-medium">
-                  Basic profile information displayed.
+                  {t("basic_profile_information_displayed")}
                 </span>
               </div>
               <div className="text-sm text-muted-foreground">
-                Detailed transaction and loan history available upon full
-                profile load.
+                {t(
+                  "detailed_transaction_and_loan_history_available"
+                )}
               </div>
             </div>
           )}
@@ -273,10 +208,53 @@ export default function FarmerProfileDialogContent({
       <div className="flex justify-end">
         <DialogClose asChild>
           <Button variant="destructive" onClick={onClose}>
-            Close
+            {t("close")}
           </Button>
         </DialogClose>
       </div>
     </DialogContent>
+  );
+}
+
+// Reusable components for brevity
+function InfoItem({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string | number;
+}) {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="text-[#158f20] w-5 h-5">{icon}</div>
+      <div>
+        <p className="text-sm text-muted-foreground">{label}</p>
+        <p className="text-base font-medium text-[#05402E] dark:text-green-700">
+          {value}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function InfoCount({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: number;
+}) {
+  return (
+    <div className="text-sm text-muted-foreground flex items-center gap-2">
+      <div className="w-4 h-4 text-[#158f20]">{icon}</div>
+      {label}:{" "}
+      <span className="font-medium text-[#05402E] dark:text-green-700">
+        {value}
+      </span>
+    </div>
   );
 }

@@ -53,21 +53,18 @@ export default function SettingsPage() {
     setLanguage(value);
   }
 
-  function handleLogout() {
-    logout();
-  }
 
   return (
     <div className="space-y-6 px-6 py-8">
-      <h1 className="text-2xl font-bold text-[#158f20]">{t("General Settings")}</h1>
+      <h1 className="text-2xl font-bold text-[#158f20]">{t("general_settings")}</h1>
 
       {/* Theme */}
       <Card>
         <CardHeader>
-          <CardTitle>{t("Appearance")}</CardTitle>
+          <CardTitle>{t("appearance")}</CardTitle>
         </CardHeader>
         <CardContent className="flex items-center justify-between">
-          <Label htmlFor="theme-toggle">{t("Dark Mode")}</Label>
+          <Label htmlFor="theme-toggle">{t("dark_mode")}</Label>
           <Switch
             id="theme-toggle"
             checked={darkMode}
@@ -79,7 +76,7 @@ export default function SettingsPage() {
       {/* Language */}
       <Card>
         <CardHeader>
-          <CardTitle>{t("Language")}</CardTitle>
+          <CardTitle>{t("language")}</CardTitle>
         </CardHeader>
         <CardContent>
           <Select value={language} onValueChange={handleLanguageChange}>
@@ -98,10 +95,10 @@ export default function SettingsPage() {
       {/* Export */}
       <Card>
         <CardHeader>
-          <CardTitle>{t("Export Data")}</CardTitle>
+          <CardTitle>{t("export_data")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <Button variant="outline">{t("Export Investment Data (CSV)")}</Button>
+          <Button variant="outline">{t("export_investment_data_csv")}</Button>
         </CardContent>
       </Card>
     </div>

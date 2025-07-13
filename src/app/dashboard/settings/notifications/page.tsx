@@ -41,7 +41,9 @@ export default function NotificationSettings() {
       <div className="flex items-center justify-between mb-4 text-[#158f20]">
         <div className="flex flex-col">
           <span className="font-semibold">Mobile SMS Notification</span>
-          <span className="text-sm text-[#72BF01]">Receive sms notifications whenever trust level increases </span>
+          <span className="text-sm text-[#72BF01]">
+            Receive sms notifications whenever trust level increases{" "}
+          </span>
         </div>
         <Switch
           checked={smsNotify}
@@ -52,7 +54,9 @@ export default function NotificationSettings() {
       <div className="flex items-center justify-between mb-4 text-[#158f20]">
         <div className="flex flex-col">
           <span className="font-semibold">Email Notification</span>
-          <span className="text-sm text-[#72BF01]">Receive email notifications whenever trust level increases </span>
+          <span className="text-sm text-[#72BF01]">
+            Receive email notifications whenever trust level increases{" "}
+          </span>
         </div>
         <Switch
           checked={emailNotify}

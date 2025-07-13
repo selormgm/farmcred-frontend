@@ -19,8 +19,9 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { logout } from "@/lib/services/authService";
-import router from "next/router";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 
 export function NavUser({
   user,
@@ -38,6 +39,9 @@ export function NavUser({
     .map((n) => n[0])
     .join("")
     .toUpperCase();
+
+  const router = useRouter();
+
 
   const handleLogout = () => {
     try {

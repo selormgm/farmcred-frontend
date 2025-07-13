@@ -9,7 +9,6 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/investor/investor-sidebar";
 import { SiteHeader } from "@/components/investor/site-header";
 import { Toaster } from "sonner";
-import ChatWidget from "@/components/investor/ChatWidget";
 
 export default function InvestorLayout({
   children,
@@ -74,8 +73,7 @@ export default function InvestorLayout({
         <SidebarInset>
           <SiteHeader name={profile?.full_name} text={pathname} />
           <Toaster position="top-right" richColors />
-           <ChatWidget />
-          <main className="flex-1 min-h-screen bg-background">
+          <main className="flex-1 bg-background">
             <div className="w-full px-4 py-6 mx-auto">{children}</div>
           </main>
         </SidebarInset>

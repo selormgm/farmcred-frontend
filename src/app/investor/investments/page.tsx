@@ -69,7 +69,7 @@ export default function InvestmentPage() {
   }, []);
 
   return (
-    <div className="px-6 lg:px-24 py-6">
+    <div className="px-6 lg:px-24 overflow-hidden py-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row items-center justify-between mb-6 gap-4">
         <h1 className="text-2xl font-semibold text-[#158f20]">

@@ -22,19 +22,31 @@ export default function GetHelpPage() {
   const [input, setInput] = useState("");
 
   const handleSend = async () => {
-    if (!input.trim()) return;
-    const userMsg = { role: "user", text: input };
-    setMessages((prev) => [...prev, userMsg]);
-    setInput("");
+  if (!input.trim()) return;
+  const userMsg = { role: "user", text: input };
+  setMessages((prev) => [...prev, userMsg]);
+  setInput("");
 
-    const response = await fetch("/api/chatbot", {
+  try {
+    const response = await fetch("/api/route", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json", //
+      },
       body: JSON.stringify({ message: input }),
     });
 
     const data = await response.json();
     setMessages((prev) => [...prev, { role: "bot", text: data.reply }]);
-  };
+  } catch (error) {
+    console.error("Error fetching AI reply:", error);
+    setMessages((prev) => [
+      ...prev,
+      { role: "bot", text: "Oops, something went wrong." },
+    ]);
+  }
+};
+
 
   return (
     <div className="px-6 py-8 space-y-6">

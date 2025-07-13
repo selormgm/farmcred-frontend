@@ -1,9 +1,8 @@
 "use client";
 
 import {
-  Bar,
-  BarChart,
-  ResponsiveContainer,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -14,6 +13,15 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { TrendingUp } from "lucide-react";
 import { useFarmerTransactionsChart } from "@/hooks/useFarmerData";
 
 const chartConfig = {
@@ -27,110 +35,84 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const StaticTransaction = () => {
+export function IncomeExpensesLineChart() {
   const { data: chartData, loading, error } = useFarmerTransactionsChart();
 
   if (loading) {
-    return (
-      <div className="h-full w-full flex items-center justify-center">
-        <div className="text-[#157148]">Loading chart data...</div>
-      </div>
-    );
+    return <div className="text-[#157148] p-4">Loading line chart data...</div>;
   }
 
   if (error) {
     return (
-      <div className="h-full w-full flex items-center justify-center">
-        <div className="text-red-600">Failed to load chart data</div>
-      </div>
+      <div className="text-red-600 p-4">Failed to load line chart data</div>
     );
   }
 
-  // Transform the data to match the expected format and limit to latest 6 weeks
   const transformedData = (chartData || [])
     .map((item: any, index: number) => ({
       week: item.period || `Week ${index + 1}`,
       income: parseFloat(item.income) || 0,
       expenses: parseFloat(item.expenses) || 0,
     }))
-    .slice(-6); // Get the latest 6 weeks
-
-  // Calculate max value for Y-axis
-  const maxIncome =
-    transformedData.length > 0
-      ? Math.max(...transformedData.map((d) => d.income))
-      : 0;
-  const maxExpenses =
-    transformedData.length > 0
-      ? Math.max(...transformedData.map((d) => d.expenses))
-      : 0;
-  const maxValue = Math.max(maxIncome, maxExpenses);
-  const yAxisMax = Math.ceil(maxValue / 100) * 100 || 500; // Default to 500 if no data
-
-  // Generate Y-axis ticks
-  const yAxisTicks = Array.from(
-    { length: 5 },
-    (_, i) => (yAxisMax / 4) * (i + 1)
-  );
+    .slice(-6);
 
   return (
-    <ChartContainer config={chartConfig} className=" w-full h-full">
-        <BarChart
-        accessibilityLayer
-        data={transformedData}
-        margin={{
-          top: 0,
-          right: 0,
-          left: 0,
-          bottom: 0,
-        }}
-      >
-        <CartesianGrid
-          strokeDasharray="3 3"
-          stroke="rgba(50, 50, 50, 0.29)"
-          strokeWidth={2}
-          horizontal={true}
-          vertical={false}
-        />
-        <XAxis
-          dataKey="week"
-          tickLine={false}
-          axisLine={false}
-          className="text-base font-normal text-[#157148]"
-          style={{ letterSpacing: "-0.06em" }}
-        />
-        <YAxis
-          domain={[0, yAxisMax]}
-          ticks={yAxisTicks}
-          tickLine={false}
-          axisLine={false}
-          className="text-base font-normal text-[#157148]"
-          style={{ letterSpacing: "-0.06em" }}
-          tickFormatter={(value) => `₵ ${value}`}
-        />
-        <ChartTooltip
-          cursor={false}
-          content={<ChartTooltipContent indicator="dashed" />}
-        />
-        <Bar
-          dataKey="income"
-          fill="#72BF01"
-          radius={[9, 9, 9, 9]}
-          stroke="#EFEFEF"
-          strokeWidth={5}
-          maxBarSize={58}
-        />
-        <Bar
-          dataKey="expenses"
-          fill="#158F20"
-          radius={[9, 9, 9, 9]}
-          stroke="#EFEFEF"
-          strokeWidth={5}
-          maxBarSize={58}
-        />
-      </BarChart>
-    </ChartContainer>
+    <Card>
+      <CardHeader>
+        <CardTitle>Income & Expenses Trend</CardTitle>
+        <CardDescription>Last 6 weeks</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ChartContainer config={chartConfig} className="w-full h-[320px]">
+          <LineChart
+            accessibilityLayer
+            data={transformedData}
+            margin={{ top: 12, right: 12, bottom: 12, left: 12 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+            <XAxis
+              dataKey="week"
+              tickLine={false}
+              axisLine={false}
+              className="text-[#157148] text-sm"
+            />
+            <YAxis
+              tickLine={false}
+              axisLine={false}
+              className="text-[#157148] text-sm"
+              tickFormatter={(value) => `₵ ${value}`}
+            />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel />}
+            />
+            <Line
+              type="monotone"
+              dataKey="income"
+              stroke="#72BF01"
+              strokeWidth={2}
+              dot={{ fill: "#72BF01" }}
+              activeDot={{ r: 6 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="expenses"
+              stroke="#158F20"
+              strokeWidth={2}
+              dot={{ fill: "#158F20" }}
+              activeDot={{ r: 6 }}
+            />
+          </LineChart>
+        </ChartContainer>
+      </CardContent>
+      <CardFooter className="flex-col items-start gap-2 text-sm">
+        <div className="flex gap-2 font-medium">
+          Spending and earnings trend <TrendingUp className="w-4 h-4" />
+        </div>
+        <div className="text-muted-foreground">
+          Showing data from your last 6 weeks of activity
+        </div>
+      </CardFooter>
+    </Card>
   );
-};
-
-export default StaticTransaction;
+}

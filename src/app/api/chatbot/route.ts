@@ -11,27 +11,36 @@ export async function POST(request: Request) {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
         messages: [
-          { role: "system", content: "You are a helpful assistant for Farmcred users. Answer questions clearly and concisely." },
+          { role: "system", content: "You are a helpful assistant for Farmcred users." },
           { role: "user", content: message },
         ],
-        max_tokens: 100,
+        max_tokens: 150,
         temperature: 0.7,
       }),
     });
 
     const data = await response.json();
+    console.log("OpenAI status:", response.status);
+    console.log("OpenAI response:", data);
 
-    const reply = data.choices?.[0]?.message?.content?.trim() || "Sorry, I couldn’t understand your message.";
+    if (!response.ok) {
+      return NextResponse.json(
+        { reply: `OpenAI error: ${data.error?.message || "Unknown error"}` },
+        { status: 500 }
+      );
+    }
+
+    const reply = data.choices?.[0]?.message?.content?.trim() || "No response.";
 
     return NextResponse.json({ reply });
-  } catch (error) {
-    console.error("Chatbot error:", error);
-    return NextResponse.json({ reply: "Something went wrong. Try again later." }, { status: 500 });
+  } catch (error:any) {
+    console.error("OpenAI error:", error);
+    return NextResponse.json({ reply: "Something went wrong." }, { status: 500 });
   }
 }

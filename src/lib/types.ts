@@ -19,6 +19,9 @@ export interface FarmerProfile {
   created_at: string;
   updated_at: string;
   investment_status: "available" | "non-available" ;
+  receive_level_notifications: boolean;
+  receive_sms_notifications: boolean;
+  receive_email_notifications: boolean;
 }
 
 export interface FarmerOverview {
@@ -86,6 +89,7 @@ export interface TransferInput {
 }
 
 export interface ChartData {
+  period: string;
   month: string;
   income: number;
   expenses: number;

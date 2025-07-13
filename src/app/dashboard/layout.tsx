@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Navbar from "@/components/dashboard/Navbar";
+import { usePathname, useRouter } from "next/navigation";
 import ProtectedRoute from "@/components/Security/ProtectedRoute";
 import { useFarmerProfile } from "@/hooks/useFarmerData";
 import { useAuth } from "@/contexts/AuthContext";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/dashboard/farmer-sidebar";
+import { SiteHeader } from "@/components/dashboard/famsite-header";
+import { Toaster } from "sonner";
 
 export default function DashboardLayout({
   children,
@@ -15,6 +18,7 @@ export default function DashboardLayout({
   const { data: profile, loading, error } = useFarmerProfile();
   const { isAuth, loading: authLoading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (error) {
@@ -57,17 +61,24 @@ export default function DashboardLayout({
 
   return (
   
-      <ProtectedRoute>
-        <div className="flex flex-col">
-          <header className="p-4">
-            <Navbar
-              username={loading ? "Loading..." : profile?.full_name}
-              id={profile?.id || 0}
-            />
-          </header>
-          <main className="flex-1 p-4">{children}</main>
-        </div>
-      </ProtectedRoute>
-
-  );
+     <ProtectedRoute>
+           <SidebarProvider
+             style={
+               {
+                 "--sidebar-width": "calc(var(--spacing) * 62)",
+                 "--header-height": "calc(var(--spacing) * 14)",
+               } as React.CSSProperties
+             }
+           >
+             <AppSidebar variant="inset" />
+             <SidebarInset>
+               <SiteHeader name={profile?.full_name} text={pathname} />
+               <Toaster position="top-right" richColors />
+               <main className="flex-1 bg-background">
+                 <div className="w-full px-4 py-6 mx-auto">{children}</div>
+               </main>
+             </SidebarInset>
+           </SidebarProvider>
+         </ProtectedRoute>
+       );
 }

@@ -20,7 +20,7 @@ export function SiteHeader({ name, text }: SiteHeaderProps) {
   const currentSegment = pathSegments[pathSegments.length - 1]; // get the last part
   const formattedPath = formatPathSegment(currentSegment || "");
 
-  const isInvestor = pathname === '/investor'
+  const isFarmer = pathname === '/dashboard'
 
   return (
     <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
@@ -31,7 +31,7 @@ export function SiteHeader({ name, text }: SiteHeaderProps) {
           className="mx-2 data-[orientation=vertical]:h-8"
         />
         <h1 className="text-[#158f20] font-[Plus Jakarta Sans] text-2xl font-semibold tracking-tighter">
-         {isInvestor ? `Welcome, ${name}` : formattedPath || text} 
+         {isFarmer ? `Welcome, ${name}` : formattedPath || text} 
         </h1>
        
       </div>

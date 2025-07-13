@@ -4,15 +4,15 @@ import * as React from "react";
 import Image from "next/image";
 import {
   Banknote,
-  BookOpenText,
+  BanknoteArrowUp,
+  BookOpenCheck,
   HelpCircle,
   HomeIcon,
   Settings,
-  UserRoundSearch,
 } from "lucide-react";
-import { NavMain } from "./nav-main";
-import { NavSecondary } from "./nav-secondary";
-import { NavUser } from "./nav-user";
+import { NavMain } from "./famnav-main";
+import { NavSecondary } from "./famnav-secondary";
+import { NavUser } from "./famnav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -20,45 +20,45 @@ import {
   SidebarHeader,
 } from "@/components/ui/sidebar";
 import {  usePathname } from "next/navigation";
-import { useInvestorProfile } from "@/hooks/useInvestorData";
+import { useFarmerProfile } from "@/hooks/useFarmerData";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
 
-  const { data, loading, error } = useInvestorProfile();
+  const { data, loading, error } = useFarmerProfile();
 
   const navMain = [
     {
       title: "Home",
-      url: "/investor",
+      url: "/dashboard",
       icon: HomeIcon,
     },
     {
-      title: "Browse Farmer",
-      url: "/investor/browse-farmers",
-      icon: UserRoundSearch,
-    },
-    {
-      title: "Investments",
-      url: "/investor/investments",
+      title: "Transactions",
+      url: "/dashboard/transactions",
       icon: Banknote,
     },
     {
-      title: "Reviews",
-      url: "/investor/reviews",
-      icon: BookOpenText,
+      title: "Trust Breakdown",
+      url: "/dashboard/trust-breakdown",
+      icon: BookOpenCheck,
+    },
+    {
+      title: "Transfers",
+      url: "/dasboard/transfers",
+      icon: BanknoteArrowUp,
     },
   ];
 
   const navSecondary = [
     {
       title: "Settings",
-      url: "/investor/settings",
+      url: "/dasboard/settings",
       icon: Settings,
     },
     {
       title: "Get Help",
-      url: "/investor/settings/get-help",
+      url: "/dashboard/settings/get-help",
       icon: HelpCircle,
     },
   ];

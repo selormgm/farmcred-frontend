@@ -21,7 +21,7 @@ export function FarmerOverview() {
   }
 
   return (
-    <div className="w-full px-4 mt-2 text-[#158f20]">
+    <div className="w-full px-6 mt-2 text-[#158f20]">
       <div className="flex flex-col lg:flex-row gap-4">
         {/* Total Income + Actions */}
         <div className="flex gap-4 flex-[2] min-w-[300px]">

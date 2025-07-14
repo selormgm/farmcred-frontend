@@ -152,7 +152,7 @@ function TransactionTableRow({
   return (
     <TableRow
       className={`hover:bg-transparent ${
-        !isLast ? "border-b border-gray-100" : "border-none"
+        !isLast ? "border-b border-gray-200" : "border-none"
       }`}
     >
       <TableCell

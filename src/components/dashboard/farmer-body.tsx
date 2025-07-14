@@ -1,4 +1,4 @@
-import { Link } from "lucide-react";
+import Link from "next/link";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import TransferHistory from "./TransferHistory";
@@ -6,6 +6,7 @@ import TransactionHistory from "./TransactionHistory";
 import { useFarmerProfile } from "@/hooks/useFarmerData";
 import IncomeChartCard from "./IncomeTransaction";
 import ExpensesChartCard from "./ExpenseTransaction";
+import { FarmerInsightCard } from "./FarmerInsight";
 
 export function FarmerBody() {
   const { data: profile, loading, error } = useFarmerProfile();
@@ -22,25 +23,12 @@ export function FarmerBody() {
   console.log(profile);
 
   return (
-    <div className="flex-1 w-full px-4 mt-2">
+    <div className="flex-1 w-full px-6 mt-2">
       <div className="flex flex-col gap-4">
         {/* Insights and Charts Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-[350px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Insight Card */}
-          <Card className="p-4 h-full flex flex-col justify-between bg-[#eff3e4] dark:bg-card border rounded-[12px]">
-            <CardHeader className="p-0">
-              <CardTitle className="text-sm font-medium  text-[#158f20]">
-                Quick Insights
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="px-0 text-sm text-[#157148] flex-1 flex items-center">
-              <ul className="list-disc list-inside space-y-1">
-                <li>Highest income in Week 4</li>
-                <li>Expenses dropped last week</li>
-                <li>Transfers up by 12%</li>
-              </ul>
-            </CardContent>
-          </Card>
+          <FarmerInsightCard />
 
           {/* Income Chart (already has its own card wrapper) */}
           <IncomeChartCard />
@@ -60,7 +48,7 @@ export function FarmerBody() {
               <Link href="/dashboard/transfers">
                 <Button
                   variant="ghost"
-                  className="text-gray-400 hover:text-[#157148] h-auto p-1 font-medium"
+                  className="text-gray-400 hover:text-[#157148] h-auto p-1 font-medium text-sm"
                 >
                   View More
                 </Button>
@@ -80,7 +68,7 @@ export function FarmerBody() {
               <Link href="/dashboard/transactions">
                 <Button
                   variant="ghost"
-                  className="text-gray-400 hover:text-[#157148] h-auto p-1 font-medium"
+                  className="text-gray-400 hover:text-[#157148] h-auto p-1 font-medium text-sm"
                 >
                   View More
                 </Button>

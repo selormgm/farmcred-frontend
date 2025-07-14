@@ -52,12 +52,12 @@ export default function MyAccount() {
 
       <div className="mb-6">
         <label className="block mb-1 font-medium text-[#158f20]">Email</label>
-        <Input value={profile.full_name} disabled className="bg-gray-100 dark:bg-background max-w-sm" />
+        <Input value={profile.email} disabled className="bg-gray-100 dark:bg-background max-w-sm" />
       </div>
 
       <div className="mb-6">
         <label className="block mb-1 font-medium text-[#158f20]">User ID</label>
-        <Input value={profile.id || profile.id} disabled className="bg-gray-100 dark:bg-background max-w-sm" />
+        <Input value={profile.account_id || profile.id} disabled className="bg-gray-100 dark:bg-background max-w-sm" />
       </div>
 
       <div className="mb-6">

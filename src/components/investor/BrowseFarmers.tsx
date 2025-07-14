@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogClose,
+  DialogFooter,
 } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,15 @@ import { useFarmerDetails } from "@/hooks/useInvestorData";
 import { InvestorFarmers } from "@/lib/types";
 import { useState } from "react";
 import FarmerProfile from "./FarmerProfileDialog";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { InvestorDialogContent } from "./InvestmentDialog";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface BrowseFarmersProps {
   tablelength: number;
@@ -36,6 +46,7 @@ const BrowseFarmers = ({
   search,
   filter = "all",
 }: BrowseFarmersProps) => {
+  const { t } = useLanguage();
   const { data: farmerListData, loading, error } = useFarmerList();
   const length = tablelength;
   const farmers: InvestorFarmers[] = Array.isArray(farmerListData)
@@ -45,7 +56,7 @@ const BrowseFarmers = ({
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="text-[#157148]">Loading available farmers...</div>
+        <div className="text-[#157148]">{t("loading_farmers")}</div>
       </div>
     );
   }
@@ -54,7 +65,7 @@ const BrowseFarmers = ({
     return (
       <div className="flex items-center justify-center p-8">
         <div className="text-red-600">
-          Failed to load available farmers: {error}
+          {t("error_loading_farmers")}: {error}
         </div>
       </div>
     );
@@ -63,7 +74,7 @@ const BrowseFarmers = ({
   if (!farmers || farmers.length === 0) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="text-gray-500">No farmers available</div>
+        <div className="text-gray-500">{t("no_farmers_available")}</div>
       </div>
     );
   }
@@ -108,54 +119,24 @@ const BrowseFarmers = ({
     <Table>
       <TableHeader>
         <TableRow className="border-b border-gray-200 hover:bg-transparent">
-          <TableHead
-            className="text-base font-normal text-card-foreground h-auto py-3"
-            style={{ letterSpacing: "-0.06em" }}
-          >
-            Farmer ID
-          </TableHead>
-          <TableHead
-            className="text-base font-normal text-card-foreground h-auto py-3"
-            style={{ letterSpacing: "-0.06em" }}
-          >
-            Name
-          </TableHead>
-          <TableHead
-            className="text-base font-normal text-card-foreground h-auto py-3"
-            style={{ letterSpacing: "-0.06em" }}
-          >
-            Region
-          </TableHead>
-          <TableHead
-            className="text-base font-normal text-card-foreground h-auto py-3"
-            style={{ letterSpacing: "-0.06em" }}
-          >
-            Trust Score
-          </TableHead>
-          <TableHead
-            className="text-base font-normal text-card-foreground h-auto py-3"
-            style={{ letterSpacing: "-0.06em" }}
-          >
-            Produce
-          </TableHead>
-          <TableHead
-            className="text-base font-normal text-card-foreground h-auto py-3"
-            style={{ letterSpacing: "-0.06em" }}
-          >
-            Phone Number
-          </TableHead>
-          <TableHead
-            className="text-base font-normal text-card-foreground h-auto py-3"
-            style={{ letterSpacing: "-0.06em" }}
-          >
-            Investment Status
-          </TableHead>
-          <TableHead
-            className="text-base font-normal text-card-foreground h-auto py-3"
-            style={{ letterSpacing: "-0.06em" }}
-          >
-            Action
-          </TableHead>
+          {[
+            "farmer_id",
+            "name",
+            "region",
+            "trust_score",
+            "produce",
+            "phone_number",
+            "investment_status",
+            "action",
+          ].map((label) => (
+            <TableHead
+              key={label}
+              className="text-base font-normal text-card-foreground h-auto py-3"
+              style={{ letterSpacing: "-0.06em" }}
+            >
+              {t(label)}
+            </TableHead>
+          ))}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -177,7 +158,9 @@ interface FarmersTableRowProps {
 }
 
 function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
-  const [open, setOpen] = useState(false);
+  const { t } = useLanguage();
+  const [openDetails, setOpenDetails] = useState(false);
+  const [openInvest, setOpenInvest] = useState(false);
   const { data: fullProfile, loading } = useFarmerDetails(farmers.account_id);
 
   return (
@@ -205,7 +188,7 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
         {farmers.region}
       </TableCell>
       <TableCell
-        className="text-base font-normal py-3 text-[#05402E]"
+        className="text-base font-normal py-3 text-[#05402E]  dark:text-green-700"
         style={{ letterSpacing: "-0.06em" }}
       >
         {farmers.trust_score_percent}%
@@ -224,39 +207,53 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
         ))}
       </TableCell>
       <TableCell
-        className="text-base font-normal text-[#05402E] py-3"
+        className="text-base font-normal text-[#05402E]  dark:text-green-700 py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
         {farmers.phone_number}
       </TableCell>
       <TableCell className="py-3">
         <span
-          className={`px-3 py-1 rounded-full text-xs font-medium ${
-            farmers.investment_status === "accepted"
-              ? "bg-green-100 text-[#158f20]"
-              : farmers.investment_status === "declined"
-              ? "bg-red-100 text-red-700"
-              : "bg-gray-100 text-gray-700"
-          }`}
+          className={`px-3 py-1 rounded-full text-xs font-medium
+      ${
+        farmers.investment_status === "accepted"
+          ? "bg-green-100 text-[#158f20] dark:bg-green-900 dark:text-green-300"
+          : farmers.investment_status === "declined"
+          ? "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
+          : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+      }`}
         >
-          {farmers.investment_status || "No investment"}
+          {farmers.investment_status || t("no_investment")}
         </span>
       </TableCell>
 
       <TableCell className="py-3">
-        <Button
-          variant="ghost"
-          size="sm"
-          className="h-8 w-8 p-0"
-          onClick={() => setOpen(true)}
-        >
-          <MoreVertical className="h-4 w-4 text-[#157148]" />
-        </Button>
-        <Dialog open={open} onOpenChange={setOpen}>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+              <MoreVertical className="h-4 w-4 text-[#157148]" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="flex flex-col w-40 gap-1">
+            <DropdownMenuItem onClick={() => setOpenDetails(true)}>
+              {t("view_details")}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setOpenInvest(true)}>
+             {t("invest_in_farmer")}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <Dialog open={openDetails} onOpenChange={setOpenDetails}>
           <FarmerProfile
             farmer={farmers}
             fullProfile={fullProfile}
-            onClose={() => setOpen(false)}
+            onClose={() => setOpenDetails(false)}
+          />
+        </Dialog>
+        <Dialog open={openInvest} onOpenChange={setOpenInvest}>
+          <InvestorDialogContent
+            farmer={farmers}
+            onClose={() => setOpenInvest(false)}
           />
         </Dialog>
       </TableCell>

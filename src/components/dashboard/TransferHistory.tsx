@@ -43,7 +43,7 @@ const TransferHistory = () => {
                 <p className="font-medium text-l text-[#157148] mb-0.5">
                   {recipientName}
                 </p>
-                <p className="text-sm text-[#157148]">
+                <p className="text-sm text-[#158f20]">
                   {new Date(transfer.date)
                     .toLocaleDateString("en-GB", {
                       day: "numeric",
@@ -56,7 +56,7 @@ const TransferHistory = () => {
 
               {/* Amount */}
               <div className="text-right flex-shrink-0">
-                <p className="font-normal text-xl text-[#157148]">
+                <p className="font-semibold text-lg text-[#158f20]">
                   GH₵ {transfer.amount}
                 </p>
               </div>

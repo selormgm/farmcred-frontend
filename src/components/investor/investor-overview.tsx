@@ -12,8 +12,8 @@ import {
 
 export function SectionCards() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
-      <Card className="bg-[#eff3e4]">
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 w-full">
+      <Card className="bg-[#eff3e4] dark:bg-card p-5 h-[220px] flex flex-col justify-between">
         <CardHeader>
           <CardDescription className="text-[#157148]">
             Total Investments
@@ -37,7 +37,7 @@ export function SectionCards() {
           </div>
         </CardFooter>
       </Card>
-      <Card className="bg-[#eff3e4]">
+      <Card className="bg-[#eff3e4] dark:bg-card p-5 h-[220px] flex flex-col justify-between">
         <CardHeader>
           <CardDescription className="text-[#157148]">
             New Farmers
@@ -61,7 +61,7 @@ export function SectionCards() {
           </div>
         </CardFooter>
       </Card>
-      <Card className="bg-[#eff3e4]">
+      <Card className="bg-[#eff3e4] dark:bg-card p-5 h-[220px] flex flex-col justify-between">
         <CardHeader>
           <CardDescription className="text-[#157148]">
             Active Farmers
@@ -83,7 +83,7 @@ export function SectionCards() {
           <div className="text-muted-foreground">Engagement exceed targets</div>
         </CardFooter>
       </Card>
-      <Card className="bg-[#eff3e4]">
+      <Card className="bg-[#eff3e4] dark:bg-card p-5 h-[220px] flex flex-col justify-between">
         <CardHeader>
           <CardDescription className="text-[#157148]">
             Return On Investments

@@ -1,6 +1,7 @@
 export interface FarmerProfile {
   id: number;
   account_id: number;
+  email: string;
   full_name: string;
   phone_number: string;
   country: string;
@@ -17,7 +18,10 @@ export interface FarmerProfile {
   loans: string[];
   created_at: string;
   updated_at: string;
-  investment_status: "accepted" | "declined" | "pending";
+  investment_status: "available" | "non-available" ;
+  receive_level_notifications: boolean;
+  receive_sms_notifications: boolean;
+  receive_email_notifications: boolean;
 }
 
 export interface FarmerOverview {
@@ -85,6 +89,7 @@ export interface TransferInput {
 }
 
 export interface ChartData {
+  period: string;
   month: string;
   income: number;
   expenses: number;
@@ -121,6 +126,8 @@ export interface InvestorProfile{
   farmers: string[];
   farmers_reviewed: number;
   farmers_funded: number;
+  email: string;
+  bio: string;
 }
 
 export interface InvestorReview{

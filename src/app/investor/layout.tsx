@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import ProtectedRoute from "@/components/Security/ProtectedRoute";
 import { useInvestorProfile } from "@/hooks/useInvestorData";
 import { useAuth } from "@/contexts/AuthContext";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/investor/investor-sidebar";
+import { SiteHeader } from "@/components/investor/site-header";
+import { Toaster } from "sonner";
 
 export default function InvestorLayout({
   children,
@@ -16,6 +18,7 @@ export default function InvestorLayout({
   const { data: profile, loading, error } = useInvestorProfile();
   const { isAuth, loading: authLoading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (error) {
@@ -68,10 +71,10 @@ export default function InvestorLayout({
       >
         <AppSidebar variant="inset" />
         <SidebarInset>
-          <main className="flex-1 min-h-screen bg-background">
-            <div className="w-full px-4 py-6 mx-auto">
-              {children}
-            </div>
+          <SiteHeader name={profile?.full_name} text={pathname} />
+          <Toaster position="top-right" richColors />
+          <main className="flex-1 bg-background">
+            <div className="w-full px-4 py-6 mx-auto">{children}</div>
           </main>
         </SidebarInset>
       </SidebarProvider>

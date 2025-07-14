@@ -11,6 +11,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function BrowseFarmersPage() {
   const [search, setSearch] = useState("");
@@ -19,17 +20,15 @@ export default function BrowseFarmersPage() {
   >("all");
   const [open, setOpen] = useState(false);
 
+  const { t } =useLanguage();
   const { data: farmers, loading, error } = useFarmerList();
 
   return (
-    <div className="mx-24">
+    <div className="px-6 lg:px-24 py-6">
       <div className=" flex items-center justify-center mb-4 flex-col gap-4">
-        <span className="font-[Plus Jakarta Sans] text-5xl font-semibold text-[#158F20] ">
-          Browse Farmers
-        </span>
         <div className="relative w-full max-w-lg">
           <Input
-            placeholder="Search..."
+            placeholder={t("search_placeholder")}
             className="pl-10"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -43,13 +42,13 @@ export default function BrowseFarmersPage() {
             variant={filter === "all" ? "default" : "secondary"}
             onClick={() => setFilter("all")}
           >
-            All
+            {t("all")}
           </Button>
           <Button
             variant={filter === "region" ? "default" : "secondary"}
             onClick={() => setFilter("region")}
           >
-            Region
+            {t("region")}
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -58,15 +57,15 @@ export default function BrowseFarmersPage() {
                   filter.includes("trust score") ? "default" : "secondary"
                 }
               >
-                Trust Score
+                {t("trust_score")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem onClick={() => setFilter("trust score > 60")}>
-                Above 60
+                {t("trust_above_60")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setFilter("trust score < 60")}>
-                Below 60
+                {t("trust_below_60")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -75,7 +74,7 @@ export default function BrowseFarmersPage() {
             variant={filter === "crops" ? "default" : "secondary"}
             onClick={() => setFilter("crops")}
           >
-            Crops
+            {t("crops")}
           </Button>
         </div>
       </div>

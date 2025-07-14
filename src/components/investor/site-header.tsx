@@ -1,9 +1,26 @@
-import { useInvestorProfile } from "@/hooks/useInvestorData";
 import { SidebarTrigger } from "../ui/sidebar";
 import { Separator } from "../ui/separator";
+import { usePathname } from "next/navigation"
 
-export function SiteHeader() {
-  const { data: overview } = useInvestorProfile();
+interface SiteHeaderProps {
+  name?: string;
+  text: string;
+}
+
+// Utility function to format path segment
+function formatPathSegment(segment: string) {
+  return segment
+    .replace(/-/g, " ") // replace hyphens with space
+    .replace(/\b\w/g, (char) => char.toUpperCase()); // capitalize first letter of each word
+}
+
+export function SiteHeader({ name, text }: SiteHeaderProps) {
+  const pathname = usePathname();
+  const pathSegments = pathname.split("/").filter(Boolean); // remove empty strings
+  const currentSegment = pathSegments[pathSegments.length - 1]; // get the last part
+  const formattedPath = formatPathSegment(currentSegment || "");
+
+  const isInvestor = pathname === '/investor'
 
   return (
     <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
@@ -14,11 +31,9 @@ export function SiteHeader() {
           className="mx-2 data-[orientation=vertical]:h-8"
         />
         <h1 className="text-[#158f20] font-[Plus Jakarta Sans] text-2xl font-semibold tracking-tighter">
-          Welcome
+         {isInvestor ? `Welcome, ${name}` : formattedPath || text} 
         </h1>
-        <span className="text-[#158f20] font-[Plus Jakarta Sans] text-2xl font-semibold tracking-tighter">
-          {overview?.full_name ?? "Investor"}
-        </span>
+       
       </div>
     </header>
   );

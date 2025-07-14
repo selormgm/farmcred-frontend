@@ -1,6 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useTheme } from "next-themes";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -9,79 +13,92 @@ import {
   SelectItem,
   SelectValue,
 } from "@/components/ui/select";
-import { LogOut } from "lucide-react";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useState, useEffect } from "react";
 import { logout } from "@/lib/services/authService";
-import { useTheme } from "next-themes";
+import { LogOut } from "lucide-react";
+import router from "next/router";
 
-export default function Settings() {
+export default function SettingsPage() {
   const { setTheme, theme } = useTheme();
-
   const { language, setLanguage, t } = useLanguage();
+
+  const [darkMode, setDarkMode] = useState(theme === "dark");
+
+  useEffect(() => {
+    // Sync theme with switch state
+    setTheme(darkMode ? "dark" : "light");
+  }, [darkMode, setTheme]);
 
   function handleLanguageChange(value: "en" | "twi" | "fr") {
     setLanguage(value);
   }
 
-  function handleLogout() {
-    logout();
-  }
+  const handleLogout = () => {
+    try {
+      logout();
+
+      router.push("/login");
+
+      console.log("Logged out successfully");
+    } catch (error) {
+      console.error("Error during logout:", error);
+      router.push("/login");
+    }
+  };
 
   return (
-    <div className="bg-white dark:bg-background">
-      <div className="mb-6 flex items-center justify-between max-w-3xl border-b pb-2">
-        <label className="text-[#158F20] block mb-2 font-medium">
-          {t("Theme")}
-        </label>
-        <Select value={theme} onValueChange={setTheme}>
-          <SelectTrigger className="border-none shadow-none text-[#158F20]">
-            <SelectValue
-              placeholder={
-                theme === "light"
-                  ? t("Light")
-                  : theme === "dark"
-                  ? t("Dark")
-                  : t("System")
-              }
-            />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="light">{t("light")}</SelectItem>
-            <SelectItem value="dark">{t("dark")}</SelectItem>
-            <SelectItem value="system">{t("System")}</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+    <div className="space-y-6 px-6 py-8">
+      <h1 className="text-2xl font-bold text-[#158f20]">
+        {t("general_settings")}
+      </h1>
 
-      <div className="mb-6 flex items-center justify-between max-w-3xl border-b pb-2">
-        <label className="block mb-2 font-medium text-[#158F20]">
-          {t("language")}
-        </label>
-        <Select value={language} onValueChange={handleLanguageChange}>
-          <SelectTrigger className="border-none shadow-none text-[#158F20]">
-            <SelectValue placeholder={t("language")} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="en">{t("english")}</SelectItem>
-            <SelectItem value="twi">{t("twi")}</SelectItem>
-            <SelectItem value="fr">{t("french")}</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      {/* Theme */}
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("appearance")}</CardTitle>
+        </CardHeader>
+        <CardContent className="flex items-center justify-between">
+          <Label htmlFor="theme-toggle">{t("dark_mode")}</Label>
+          <Switch
+            id="theme-toggle"
+            checked={darkMode}
+            onCheckedChange={setDarkMode}
+          />
+        </CardContent>
+      </Card>
 
-      <div className="mt-8 flex items-center justify-between max-w-3xl border-b pb-2">
-        <label className="block mb-2 font-medium text-[#158F20]">
-          {t("logoutDevice")}
-        </label>
-        <Button
-          variant="ghost"
-          className="text-destructive flex items-center gap-2"
-          onClick={handleLogout}
-        >
-          <LogOut className="w-4 h-4" />
-          {t("logout")}
-        </Button>
-      </div>
+      {/* Language */}
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("language")}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Select value={language} onValueChange={handleLanguageChange}>
+            <SelectTrigger className="w-[200px] capitalize">
+              <SelectValue placeholder={t("language")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="en">{t("english")}</SelectItem>
+              <SelectItem value="fr">{t("french")}</SelectItem>
+              <SelectItem value="twi">{t("twi")}</SelectItem>
+            </SelectContent>
+          </Select>
+        </CardContent>
+      </Card>
+
+      {/* Export */}
+      <Card>
+        <CardContent>
+          <Button
+            variant="ghost"
+            className="text-destructive flex items-center gap-2"
+            onClick={handleLogout}
+          >
+            <LogOut className="w-4 h-4" />
+            {t("logout")}
+          </Button>{" "}
+        </CardContent>
+      </Card>
     </div>
   );
 }

@@ -113,9 +113,8 @@ export default function TrustBreakdown() {
   return (
     <div className="space-y-6 p-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#158f20] to-[#0f6b18] rounded-2xl p-8 text-white">
-        <h1 className="text-3xl font-bold mb-2">Trust Overview</h1>
-        <p className="text-green-100">
+      <div>
+        <p className="text-xl font-semibold mb-2 text-[#158f20]">
           Comprehensive trust score breakdown and analysis
         </p>
       </div>
@@ -419,17 +418,6 @@ export default function TrustBreakdown() {
             </div>
           </CardContent>
         </Card>
-      </div>
-
-      {/* Action Button */}
-      <div className="text-center pt-6">
-        <Button
-          className="bg-[#158f20] hover:bg-[#0f6b18] text-white px-8 py-3 rounded-xl"
-          onClick={() => window.history.back()}
-        >
-          View Full History
-          <ArrowRight className="w-4 h-4 ml-2" />
-        </Button>
       </div>
     </div>
   );

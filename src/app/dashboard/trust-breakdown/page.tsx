@@ -49,7 +49,7 @@ export default function TrustBreakdown() {
   const safeOverview = {
     ...overview,
     trust_score_percent: overview.trust_score_percent || 0,
-    current_month_income: overview.current_month_income || 0,
+    total_income_current_month: overview.total_income_current_month || 0,
     total_loans: overview.total_loans || 0,
     on_time_loans: overview.on_time_loans || 0,
     missed_loans: overview.missed_loans || 0,
@@ -313,7 +313,7 @@ export default function TrustBreakdown() {
                 Monthly Income
               </span>
               <span className="font-bold text-[#158f20]">
-                GH₵{safeOverview.current_month_income.toLocaleString()}
+                GH₵{safeOverview.total_income_current_month.toLocaleString()}
               </span>
             </div>
             <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">

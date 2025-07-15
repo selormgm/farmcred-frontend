@@ -31,8 +31,8 @@ export interface FarmerOverview {
   total_income_last_12_months: number;
   total_expenses: number;
   trust_level_stars: number;
-  current_month_income: number;
-  current_month_expenses: number;
+  total_income_current_month: number;
+  total_expenses_current_month: number;
   total_loans: number;
   on_time_loans: number;
   missed_loans: number;

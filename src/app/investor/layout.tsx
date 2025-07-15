@@ -73,7 +73,7 @@ export default function InvestorLayout({
         <SidebarInset>
           <SiteHeader name={profile?.full_name} text={pathname} />
           <Toaster position="top-right" richColors />
-          <main className="flex-1 bg-background">
+          <main className="flex-1">
             <div className="w-full px-4 py-6 mx-auto">{children}</div>
           </main>
         </SidebarInset>

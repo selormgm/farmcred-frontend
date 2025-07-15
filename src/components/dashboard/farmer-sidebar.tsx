@@ -45,7 +45,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     },
     {
       title: "Transfers",
-      url: "/dasboard/transfers",
+      url: "/dashboard/transfers",
       icon: BanknoteArrowUp,
     },
   ];

@@ -71,7 +71,7 @@ export default function DashboardLayout({
         <AppSidebar variant="inset" />
         <SidebarInset>
           <SiteHeader name={profile?.full_name} text={pathname} />
-          <main className="flex-1 bg-background">
+          <main className="flex-1 ">
             <div className="w-full px-4 py-6 mx-auto">{children}</div>
           </main>
         </SidebarInset>

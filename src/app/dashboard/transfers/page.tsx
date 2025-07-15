@@ -68,10 +68,7 @@ export default function TransferHistoryPage() {
 
   return (
     <div className="mx-24">
-      <div className=" flex items-center justify-center mb-4 flex-col gap-4">
-        <span className="font-[Plus Jakarta Sans] text-5xl font-semibold text-[#158F20]">
-          Transfers
-        </span>
+      <div className=" flex items-center justify-center mb-2 flex-col gap-4">
         <div className="relative w-full max-w-lg">
           <Input
             placeholder="Search..."

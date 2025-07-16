@@ -19,7 +19,7 @@ import {
   SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar";
-import {  usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useFarmerProfile } from "@/hooks/useFarmerData";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -45,7 +45,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     },
     {
       title: "Transfers",
-      url: "/dasboard/transfers",
+      url: "/dashboard/transfers",
       icon: BanknoteArrowUp,
     },
   ];

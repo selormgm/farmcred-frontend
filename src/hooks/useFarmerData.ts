@@ -123,3 +123,17 @@ export function useUpdateProfile() {
 
   return { updateProfile, loading, error };
 }
+
+export function useDeleteFarmerAccount() {
+  const deleteAccount = async () => {
+    try {
+      await deleteAccount();
+      return true;
+    } catch (error: any) {
+      console.error("Delete failed:", error.message);
+      throw error;
+    }
+  };
+
+  return { deleteAccount };
+}

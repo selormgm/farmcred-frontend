@@ -158,3 +158,17 @@ export function useUpdateFarmerList() {
 
   return { updateFarmerList, loading, error };
 }
+
+export function useDeleteInvestorAccount() {
+  const deleteAccount = async () => {
+    try {
+      await deleteAccount();
+      return true;
+    } catch (error: any) {
+      console.error("Delete failed:", error.message);
+      throw error;
+    }
+  };
+
+  return { deleteAccount };
+}

@@ -221,7 +221,8 @@ function TransferTableRow({ transfer, isLast }: TransferTableRowProps) {
             <DialogDescription>
               <div className="space-y-2">
                 <div>
-                  <strong className="text-[#158f20]">Transfer ID:</strong> {transfer.transfer_id}
+                  <strong className="text-[#158f20]">Transfer ID:</strong>{" "}
+                  {transfer.transfer_id}
                 </div>
                 <div>
                   <strong className="text-[#158f20]">Farmer:</strong>{" "}
@@ -253,7 +254,16 @@ function TransferTableRow({ transfer, isLast }: TransferTableRowProps) {
                 </div>
                 <div>
                   <strong className="text-[#158f20]">Created At:</strong>{" "}
-                  {transfer.created_at}
+                  {new Date(transfer.created_at).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })}{" "}
+                  at{" "}
+                  {new Date(transfer.created_at).toLocaleTimeString("en-US", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </div>
               </div>
             </DialogDescription>

@@ -22,6 +22,8 @@ export interface FarmerProfile {
   receive_level_notifications: boolean;
   receive_sms_notifications: boolean;
   receive_email_notifications: boolean;
+  password: string;
+  showPassword: boolean;
 }
 
 export interface FarmerOverview {
@@ -31,8 +33,8 @@ export interface FarmerOverview {
   total_income_last_12_months: number;
   total_expenses: number;
   trust_level_stars: number;
-  current_month_income: number;
-  current_month_expenses: number;
+  total_income_current_month: number;
+  total_expenses_current_month: number;
   total_loans: number;
   on_time_loans: number;
   missed_loans: number;
@@ -128,6 +130,8 @@ export interface InvestorProfile{
   farmers_funded: number;
   email: string;
   bio: string;
+  password: string;
+  showPassword: boolean;
 }
 
 export interface InvestorReview{

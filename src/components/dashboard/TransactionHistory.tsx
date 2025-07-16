@@ -33,7 +33,6 @@ const TransactionHistory = ({
   tablelength,
   search,
   filter = "all",
-
 }: TransactionHistoryProps) => {
   const { data: transactions, loading, error } = useFarmerTransactions();
   const length = tablelength;
@@ -245,7 +244,22 @@ function TransactionTableRow({
                 </div>
                 <div>
                   <strong className="text-[#158f20]">Created At:</strong>{" "}
-                  {transaction.created_at}
+                  {new Date(transaction.created_at).toLocaleDateString(
+                    "en-GB",
+                    {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    }
+                  )}{" "}
+                  at{" "}
+                  {new Date(transaction.created_at).toLocaleTimeString(
+                    "en-US",
+                    {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    }
+                  )}
                 </div>
               </div>
             </DialogDescription>

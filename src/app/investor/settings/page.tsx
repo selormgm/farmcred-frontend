@@ -55,7 +55,7 @@ export default function SettingsPage() {
 
 
   return (
-    <div className="space-y-6 px-6 py-8">
+    <div className="space-y-6 px-6 py-8 max-w-6xl">
       <h1 className="text-2xl font-bold text-[#158f20]">{t("general_settings")}</h1>
 
       {/* Theme */}

@@ -22,6 +22,8 @@ export interface FarmerProfile {
   receive_level_notifications: boolean;
   receive_sms_notifications: boolean;
   receive_email_notifications: boolean;
+  password: string;
+  showPassword: boolean;
 }
 
 export interface FarmerOverview {
@@ -128,6 +130,8 @@ export interface InvestorProfile{
   farmers_funded: number;
   email: string;
   bio: string;
+  password: string;
+  showPassword: boolean;
 }
 
 export interface InvestorReview{

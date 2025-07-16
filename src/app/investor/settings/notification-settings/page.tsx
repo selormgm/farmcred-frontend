@@ -13,7 +13,7 @@ export default function NotificationSettingsPage() {
   const [smsEnabled, setSmsEnabled] = useState(false);
 
   return (
-    <div className="space-y-6 px-6 py-8">
+    <div className="space-y-6 px-6 py-8 max-w-6xl">
       {/* Delivery Methods */}
       <Card>
         <CardHeader>

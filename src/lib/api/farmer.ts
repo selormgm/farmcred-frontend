@@ -75,4 +75,15 @@ export const farmerService = {
     const response = await apiClient.get('/api/farmer/trust-breakdown/');
     return response.data;
   },
+
+// Delete Account
+async deleteFarmerAccount(): Promise<boolean> {
+  try {
+    await apiClient.delete('/api/delete-account/');
+    return true;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || "Failed to delete account");
+  }
+},
 };
+

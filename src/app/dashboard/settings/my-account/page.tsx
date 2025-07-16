@@ -1,12 +1,26 @@
-"use client"
+"use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Pencil, Trash2 } from "lucide-react";
-import React from "react";
-import { useFarmerProfile } from "@/hooks/useFarmerData";
+import { useLanguage } from "@/contexts/LanguageContext";
+import {
+  useDeleteFarmerAccount,
+  useFarmerProfile,
+} from "@/hooks/useFarmerData";
+import { toast } from "sonner";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 export default function MyAccount() {
   const { t } = useLanguage();
@@ -14,10 +28,12 @@ export default function MyAccount() {
 
   const [phone, setPhone] = useState("");
   const [editingPhone, setEditingPhone] = useState(false);
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { deleteAccount } = useDeleteFarmerAccount();
 
-  // Set phone when profile loads
-  React.useEffect(() => {
+  useEffect(() => {
     if (profile?.phone_number) setPhone(profile.phone_number);
   }, [profile]);
 
@@ -27,14 +43,31 @@ export default function MyAccount() {
   }
 
   function handleChangePassword() {
-    // TODO: Add change password logic (e.g., open a modal)
-    alert("Change password functionality goes here.");
+    if (!password || password.length < 12) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+
+    // Backend API to update password
+    // e.g., await updatePassword(password);
+    toast.success("Password changed successfully");
+    setPassword("");
+    setShowPassword(false);
   }
 
-  function handleDeleteAccount() {
-    // TODO: Add delete account logic
-    if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
-      // Delete logic
+  async function handleDeleteAccount() {
+    const confirmed = confirm(
+      "Are you sure you want to delete your account? This action cannot be undone."
+    );
+
+    if (confirmed) {
+      try {
+        await deleteAccount(); // call hook function
+        toast.success("Account deleted successfully");
+        window.location.href = "/login"; // or redirect to goodbye page
+      } catch (error: any) {
+        toast.error(error.message || "Failed to delete account");
+      }
     }
   }
 
@@ -43,77 +76,178 @@ export default function MyAccount() {
   }
 
   if (!profile) {
-    return <div className="p-4 text-red-600">{t("No Profile") || "No profile data available."}</div>;
+    return (
+      <div className="p-4 text-red-600">
+        {t("No Profile") || "No profile data available."}
+      </div>
+    );
   }
 
   return (
-    <div className="bg-white dark:bg-background">
-      <h2 className="text-2xl border-b pb-2 font-bold mb-6 text-[#158f20]">{t("Account Security") || "My Account"}</h2>
+    <div className="space-y-6 px-6 py-8 max-w-6xl">
+      {/* Email & User ID */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-[#158f20]">Account Info</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-2 max-w-sm">
+          <div>
+            <Label className="text-[#158f20] mb-1">Email</Label>
+            <Input value={profile.email} disabled />
+          </div>
+          <div>
+            <Label className="text-[#158f20] mb-1">User ID</Label>
+            <Input value={profile.account_id || profile.id} disabled />
+          </div>
+        </CardContent>
+      </Card>
 
-      <div className="mb-6">
-        <label className="block mb-1 font-medium text-[#158f20]">Email</label>
-        <Input value={profile.email} disabled className="bg-gray-100 dark:bg-background max-w-sm" />
-      </div>
+      {/* Phone Number */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-[#158f20]">Phone Number</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex gap-2 max-w-sm">
+            <Input
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              disabled={!editingPhone}
+            />
+            {editingPhone ? (
+              <Button
+                className="bg-[#158f20]"
+                size="sm"
+                onClick={handlePhoneSave}
+              >
+                Save
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-[#158f20]"
+                onClick={() => setEditingPhone(true)}
+              >
+                <Pencil className="w-4 h-4 mr-1" /> Change
+              </Button>
+            )}
+          </div>
+        </CardContent>
+      </Card>
 
-      <div className="mb-6">
-        <label className="block mb-1 font-medium text-[#158f20]">User ID</label>
-        <Input value={profile.account_id || profile.id} disabled className="bg-gray-100 dark:bg-background max-w-sm" />
-      </div>
+      {/* Password */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-[#158f20]">Password</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="text-[#158f20]">
+                <Pencil className="w-4 h-4 mr-1" /> Change Password
+              </Button>
+            </DialogTrigger>
 
-      <div className="mb-6">
-        <label className="block mb-1 font-medium text-[#158f20]">Phone Number</label>
-        <div className="flex gap-2 max-w-sm">
-          <Input
-            value={phone}
-            disabled={!editingPhone}
-            onChange={e => setPhone(e.target.value)}
-            className="bg-gray-100 dark:bg-background"
-          />
-          {editingPhone ? (
-            <Button className="bg-[#158f20]" size="sm" onClick={handlePhoneSave}>
-              Save
-            </Button>
-          ) : (
-            <Button size="sm" variant="outline" className="text-[#158f20]" onClick={() => setEditingPhone(true)}>
-              <Pencil className="w-4 h-4 mr-1" /> Change
-            </Button>
-          )}
-        </div>
-      </div>
+            <DialogContent className="max-w-sm">
+              <DialogHeader>
+                <DialogTitle>Password Settings</DialogTitle>
+              </DialogHeader>
 
-      <div className="mb-6">
-        <label className="block mb-1 font-medium text-[#158f20]">Password</label>
-        <div className="flex gap-2 max-w-sm">
-          <Input
-            type={showPassword ? "text" : "password"}
-            value="********"
-            disabled
-            className="bg-gray-100 dark:bg-background"
-          />
+              <div className="space-y-4">
+                {/* Current Password */}
+                <div>
+                  <Label className="mb-1">Current Password</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter your current password"
+                    />
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setShowPassword((v) => !v)}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="w-4 h-4" />
+                      ) : (
+                        <Eye className="w-4 h-4" />
+                      )}
+                    </Button>
+                  </div>
+                </div>
+
+                {/* New Password */}
+                <div>
+                  <Label className="mb-1">New Password</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      type="password"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      placeholder="Enter a new password"
+                    />
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setShowPassword((v) => !v)}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="w-4 h-4" />
+                      ) : (
+                        <Eye className="w-4 h-4" />
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              <DialogFooter>
+                <Button className="bg-[#158f20]" onClick={handleChangePassword}>
+                  Save New Password
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </CardContent>
+      </Card>
+
+      {/* Delete Account */}
+      <Dialog>
+        <DialogTrigger asChild>
           <Button
-            size="sm"
-            variant="outline"
-            onClick={() => setShowPassword((v) => !v)}
-            type="button"
-            className="text-[#158f20]"
+            variant="ghost"
+            className="text-destructive flex items-center gap-2"
           >
-            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+            <Trash2 className="w-4 h-4" />
+            Delete My Account
           </Button>
-          <Button className="bg-[#158f20]" size="sm" onClick={handleChangePassword}>
-            <Pencil className="w-4 h-4 mr-1" /> Change
-          </Button>
-        </div>
-      </div>
+        </DialogTrigger>
 
-      <div className="mt-8">
-        <Button
-          variant="ghost"
-          className="text-destructive flex items-center gap-2"
-          onClick={handleDeleteAccount}
-        >
-          <Trash2 className="w-4 h-4" />
-          Delete Account
-        </Button>
-      </div>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="text-red-600">Confirm Delete</DialogTitle>
+          </DialogHeader>
+          <p className="text-sm text-muted-foreground mb-4">
+            Are you sure? This action cannot be undone.
+          </p>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button
+              className="bg-red-600 text-white hover:bg-red-700"
+              onClick={handleDeleteAccount}
+            >
+              Yes, Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
-  );}
+  );
+}

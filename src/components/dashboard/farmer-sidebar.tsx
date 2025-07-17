@@ -6,6 +6,7 @@ import {
   Banknote,
   BanknoteArrowUp,
   BookOpenCheck,
+  HandCoins,
   HelpCircle,
   HomeIcon,
   Settings,
@@ -48,6 +49,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       url: "/dashboard/transfers",
       icon: BanknoteArrowUp,
     },
+    {
+      title: "Loans",
+      url: "/dashboard/loans",
+      icon: HandCoins,
+    },
+
   ];
 
   const navSecondary = [

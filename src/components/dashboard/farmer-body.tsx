@@ -40,7 +40,7 @@ export function FarmerBody() {
         {/* Transfer & Transaction History Row */}
         <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_2fr] gap-4 h-[320px]">
           {/* Transfer History*/}
-          <Card className="p-6 h-full flex flex-col w-full bg-[#eff3e4] dark:bg-card border rounded-[12px]">
+          <Card className="p-6 h-full flex flex-col w-full dark:bg-card border rounded-[12px] border-[#eff3e4]">
             <CardHeader className="flex flex-row items-center justify-between p-0 pb-4">
               <CardTitle className="text-sm font-medium  text-[#158f20]">
                 Transfer History
@@ -60,7 +60,7 @@ export function FarmerBody() {
           </Card>
 
           {/* Transaction History*/}
-          <Card className=" p-6 h-full flex flex-col w-full bg-[#eff3e4] dark:bg-card border rounded-[12px]">
+          <Card className=" p-6 h-full flex flex-col w-full dark:bg-card border rounded-[12px] border-[#eff3e4]">
             <CardHeader className="flex flex-row items-center justify-between p-0 pb-4">
               <CardTitle className="text-sm font-medium  text-[#158f20]">
                 Transaction History

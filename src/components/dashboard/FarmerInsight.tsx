@@ -65,7 +65,7 @@ export function FarmerInsightCard() {
   }, [api]);
 
   return (
-    <Card className="w-full bg-[#eff3e4] dark:bg-card rounded-[12px] border">
+    <Card className="w-full dark:bg-card rounded-[12px] border border-[#eff3e4]">
       <CardHeader>
         <CardTitle className="text-sm font-medium text-[#158f20]">
           Quick Insights

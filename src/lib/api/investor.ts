@@ -4,6 +4,8 @@ import {
   InvestorFarmers,
   ReviewInput,
   FarmerProfile,
+  InvestorLoans,
+  ApiFilters,
 } from "@/lib/types";
 
 import apiClient from "../axios";
@@ -67,6 +69,21 @@ export const investorService = {
     const response = await apiClient.put("/api/investor/farmers/", data);
     return response.data;
   },
+
+  //Investor loans
+  async getInvestorLoans(filters?: ApiFilters): Promise<InvestorLoans[]> {
+  const params = new URLSearchParams();
+  if (filters) {
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) params.append(key, value);
+    }
+  );
+  }
+     const response = await apiClient.get('/api/investor/loans/');
+    return response.data;
+  },
+
+
 
   // Delete Account
 async deleteInvestorAccount(): Promise<boolean> {

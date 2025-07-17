@@ -58,6 +58,11 @@ export function useFarmerTrustBreakdown() {
   return useApiCall(() => farmerService.getTrustBreakdown());
 }
 
+// Farmer Loans Hook
+export function useFarmerLoans(filters?: ApiFilters) {
+  return useApiCall(() => farmerService.getLoans(filters), [filters]);
+}
+
 export function useCreateTransaction() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

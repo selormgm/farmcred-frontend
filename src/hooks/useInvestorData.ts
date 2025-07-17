@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { investorService } from "@/lib/api/investor";
-import { InvestorReview, FarmerProfile, InvestorFarmers, InvestorProfile, ReviewInput } from "@/lib/types";
+import { InvestorReview, FarmerProfile, InvestorFarmers, InvestorProfile, ReviewInput, ApiFilters } from "@/lib/types";
 
 function useApiCall<T>(apiCall: () => Promise<T>, dependencies: any[] = []) {
   const [data, setData] = useState<T | null>(null);
@@ -171,4 +171,9 @@ export function useDeleteInvestorAccount() {
   };
 
   return { deleteAccount };
+}
+
+//Investor Loans Hook
+export function useInvestorLoans(filters?: ApiFilters) {  
+  return useApiCall(() => investorService.getInvestorLoans(filters), [filters]);
 }

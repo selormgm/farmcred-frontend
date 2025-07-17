@@ -1,3 +1,5 @@
+import { Interface } from "readline";
+
 export interface FarmerProfile {
   id: number;
   account_id: number;
@@ -109,6 +111,25 @@ export interface TrustBreakdown {
   }>;
 }
 
+export interface FarmerLoans{
+      id: number;
+      lender_full_name: string;
+      farmer_full_name: string;
+      amount: number,
+      date_taken: string;
+      due_date: string;
+      date_repaid: string;
+      status:'pending' | 'approved' | 'repaid' | 'declined' | 'active';
+      on_time: boolean;
+      interest_rate: number;
+      repayment_period_months: number;
+      is_active: boolean;
+      created_at: string;
+      updated_at: string;
+      farmer: number;
+      lender: number;
+}
+
 export interface ApiFilters {
   category?: string;
   status?: string;
@@ -160,4 +181,80 @@ export interface InvestorFarmers{
 export interface ReviewInput{
   detail: string;
   review_id: number;
+}
+
+export interface InvestorLoans{
+      id: number;
+      lender_full_name: string;
+      farmer_full_name: string;
+      amount: number,
+      date_taken: string;
+      due_date: string;
+      date_repaid: string;
+      status:'pending' | 'approved' | 'repaid' | 'declined' | 'active';
+      on_time: boolean;
+      interest_rate: number;
+      repayment_period_months: number;
+      is_active: boolean;
+      created_at: string;
+      updated_at: string;
+      farmer: number;
+      lender: number;
+}
+
+export interface BuyerProfile{
+    account_id: number;
+    full_name: string;
+    phone_number: number;
+    email: string;
+    country: string;
+    region: string;
+    receive_level_notifications: boolean;
+    receive_sms_notifications: boolean;
+    receive_email_notifications: boolean;
+}
+
+export interface BuyerTransaction{
+  id: number;
+  account_party_full_name: string;
+  buyer_full_name: string;
+  farmer_full_name: string;
+  name: string;
+  date: string;
+  category: string;
+  status: 'income' | 'expense';
+  amount: number;
+  desccription: string;
+  created_at: string;
+  updated_at: string;
+  account_party: number;
+  buyer: number;
+}
+
+export interface LenderProfile{
+    id: number;
+    full_name: string;
+    email: string;
+    phone_number: number;
+    total_loans_issued_by_platform: number;
+    total_repayments_received_by_platform: number;
+  }
+
+export interface LenderLoans{
+    id: number;
+    lender_full_name: string;
+    farmer_full_name: string;
+    amount: number,
+    date_taken: string;
+    due_date: string;
+    date_repaid: string;
+    status:'pending' | 'approved' | 'repaid' | 'declined' | 'active';
+    on_time: boolean;
+    interest_rate: number;
+    repayment_period_months: number;
+    is_active: boolean;
+    created_at: string;
+    updated_at: string;
+    farmer: number;
+    lender: number;
 }

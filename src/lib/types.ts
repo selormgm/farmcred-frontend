@@ -258,3 +258,16 @@ export interface LenderLoans{
     farmer: number;
     lender: number;
 }
+
+export interface FarmerProduct {
+  dateAdded: string | number | Date;
+  imageUrl: string;
+  name: string;
+  price: number;
+}
+
+export interface FarmerProductInput {
+  image: File | null;
+  name: string;
+  price: number;
+}

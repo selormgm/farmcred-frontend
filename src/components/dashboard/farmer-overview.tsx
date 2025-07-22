@@ -44,7 +44,7 @@ export function FarmerOverview() {
             <CardTitle className="text-sm font-medium  text-[#158f20]">
               My Products
             </CardTitle>
-            <CardContent>
+            <CardContent className="px-4 mt-auto">
               <FarmerProduct />
             </CardContent>
           </Card>

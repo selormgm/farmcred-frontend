@@ -1,5 +1,5 @@
 import { useFarmerProducts } from "@/hooks/useFarmerProducts";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarImage } from "../ui/avatar";
 
 const FarmerProduct = () => {
   const { products, loading, error } = useFarmerProducts();
@@ -10,7 +10,7 @@ const FarmerProduct = () => {
 
   return (
     <div className="space-y-1.5">
-      {(products || []).slice(0, 3).map((product, index) => {
+      {(products || []).slice(0, 4).map((product, index) => {
         const productName = product.name || "Unnamed Product";
         const initial = productName.charAt(0).toUpperCase();
 
@@ -19,25 +19,13 @@ const FarmerProduct = () => {
             {/* Avatar */}
             <Avatar className="h-12 w-12 flex-shrink-0 border border-[#E1E3E0] rounded-full">
               <AvatarImage src={product.imageUrl} alt={product.name} />
-              <AvatarFallback className="text-white bg-[#72BF01] text-lg font-bold">
-                {initial}
-              </AvatarFallback>
             </Avatar>
 
             {/* Product Details */}
-            <div className="flex justify-between items-center flex-1 border-b border-[#E1E3E0] py-2">
+            <div className="flex justify-between items-center flex-1 border-b border-[#E1E3E0] py-3">
               <div className="min-w-0">
                 <p className="font-medium text-l text-[#157148] mb-0.5">
                   {productName}
-                </p>
-                <p className="text-sm text-[#158f20]">
-                  {new Date(product.dateAdded)
-                    .toLocaleDateString("en-GB", {
-                      day: "numeric",
-                      month: "long",
-                      year: "numeric",
-                    })
-                    .replace(",", "")}
                 </p>
               </div>
 

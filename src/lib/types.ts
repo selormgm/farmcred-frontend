@@ -271,3 +271,31 @@ export interface FarmerProductInput {
   name: string;
   price: number;
 }
+
+
+export interface LoanQualificationResponse {
+  message: string;
+  max_qualified_amount: number;
+  default_interest_rate: number;
+}
+
+export interface LoanRequestResponse {
+  message: string;
+  loan_id: number;
+  repayment_period_months: number;
+  interest_rate: number;
+}
+
+export interface LoanRequestPayload {
+  amount: number;
+}
+
+export interface RepaymentConfirmationPayload {
+  loan_id: number;
+  amount_confirmed: number;
+}
+
+export interface RepaymentConfirmationResponse {
+  message: string;
+  confirmation_id?: string;
+}

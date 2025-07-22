@@ -87,8 +87,7 @@ export const farmerService = {
   }
   const response = await apiClient.get(`/api/farmer/loans/?${params.toString()}`);
   return response.data;
-}
-,
+},
 
 // Delete Account
 async deleteFarmerAccount(): Promise<boolean> {
@@ -100,4 +99,5 @@ async deleteFarmerAccount(): Promise<boolean> {
   }
 },
 };
+
 

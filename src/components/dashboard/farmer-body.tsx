@@ -10,7 +10,6 @@ import { FarmerInsightCard } from "./FarmerInsight";
 
 export function FarmerBody() {
   const { data: profile, loading, error } = useFarmerProfile();
-  const tablelength = 3;
   if (error) {
     console.error("Failed to fetch data:", error);
   }
@@ -20,6 +19,8 @@ export function FarmerBody() {
   if (!profile) {
     return <div className="p-4">No data available.</div>;
   }
+  const { overview, transactions, transfers } = profile;
+
   console.log(profile);
 
   return (
@@ -28,7 +29,11 @@ export function FarmerBody() {
         {/* Insights and Charts Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Insight Card */}
-          <FarmerInsightCard />
+          <FarmerInsightCard
+            overview={overview}
+            transactions={transactions}
+            transfers={transfers}
+          />
 
           {/* Income Chart (already has its own card wrapper) */}
           <IncomeChartCard />

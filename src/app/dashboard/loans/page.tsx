@@ -33,6 +33,8 @@ export default function LoanPage() {
   const [loans, setLoans] = useState<Loan[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const hasActiveLoan = loans.some((loan) => loan.status === "active" || loan.status === "pending");
 
   useEffect(() => {
     setLoading(true);
@@ -65,6 +67,23 @@ export default function LoanPage() {
   if (error) {
     return <div className="p-4 text-red-600">{error}</div>;
   }
+
+  const fetchLoansAgain = () => {
+    setLoading(true);
+    farmerService
+      .getLoans()
+      .then((data) => {
+        setLoans(data);
+        setLoading(false);
+      })
+      .catch((err: any) => {
+        setError(
+          err.response?.data?.detail || err.message || "An error occurred"
+        );
+        setLoading(false);
+      });
+  };
+
   return (
     <div className="p-4 space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-2">
@@ -86,12 +105,27 @@ export default function LoanPage() {
           </Button>
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="default" size="sm">
+              <Button
+                variant="default"
+                size="sm"
+                disabled={hasActiveLoan}
+                className={`${
+                  hasActiveLoan
+                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    : "bg-[#158f20] text-white hover:bg-[#10741b]"
+                }`}
+              >
                 <PlusCircle className="w-4 h-4 mr-1" />
                 Request Loan
               </Button>
             </DialogTrigger>
-            <RequestLoanModal />
+            <RequestLoanModal
+              onSuccess={() => {
+                fetchLoansAgain();
+                setDialogOpen(false);
+              }}
+              loans={loans}
+            />
           </Dialog>
         </div>
       </div>

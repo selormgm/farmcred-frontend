@@ -13,27 +13,42 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useRequestLoan } from "@/hooks/useFarmerLoan";
 
-export function RequestLoanModal({ onSuccess }: { onSuccess?: () => void }) {
-  const [amount, setAmount] = useState("");
-  const [purpose, setPurpose] = useState("");
-  const [duration, setDuration] = useState("");
-  const {
-    requestLoan,
-    loading,
-    error
-  } = useRequestLoan();
+interface Loan {
+  id: number;
+  amount: number;
+  due_date: string;
+  status: "pending" | "approved" | "repaid" | "declined" | "active";
+}
 
-const handleSubmit = async () => {
-  try {
-    await requestLoan({
-      amount: Number(amount),
-    });
-    toast.success("Loan requested successfully!");
-    onSuccess?.(); // optional callback
-  } catch (err) {
-    toast.error(error || "Loan request failed");
-  }
-};
+interface Props {
+  onSuccess?: () => void;
+  loans: Loan[];
+}
+
+export function RequestLoanModal({ onSuccess, loans }: Props) {
+  const [amount, setAmount] = useState("");
+  const { requestLoan, loading, error } = useRequestLoan();
+
+  const handleSubmit = async () => {
+    if (
+      loans.some(
+        (loan) => loan.status === "active" || loan.status === "pending"
+      )
+    ) {
+      toast.error("You already have a pending or active loan.");
+      return;
+    }
+    try {
+      await requestLoan({
+        amount: Number(amount),
+      });
+      toast.success("Loan requested successfully!");
+      onSuccess?.(); // optional callback
+      setAmount(""); // Reset amount after submission
+    } catch (err) {
+      toast.error(error || "Loan request failed");
+    }
+  };
 
   return (
     <DialogContent className="sm:max-w-[480px]">
@@ -52,33 +67,12 @@ const handleSubmit = async () => {
             onChange={(e) => setAmount(e.target.value)}
           />
         </div>
-
-        <div className="grid gap-2">
-          <Label htmlFor="purpose">Purpose</Label>
-          <Input
-            id="purpose"
-            placeholder="What is the loan for?"
-            value={purpose}
-            onChange={(e) => setPurpose(e.target.value)}
-          />
-        </div>
-
-        <div className="grid gap-2">
-          <Label htmlFor="duration">Duration (months)</Label>
-          <Input
-            id="duration"
-            type="number"
-            placeholder="e.g. 6"
-            value={duration}
-            onChange={(e) => setDuration(e.target.value)}
-          />
-        </div>
       </div>
 
       <DialogFooter>
         <Button
           onClick={handleSubmit}
-          disabled={loading}
+          disabled={loading || !amount || Number(amount) <= 0}
           className="bg-[#158f20] text-white hover:bg-[#10741b]"
         >
           {loading ? "Submitting..." : "Submit Request"}

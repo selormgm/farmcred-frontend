@@ -298,8 +298,6 @@ export interface LoanRequestResponse {
 
 export interface LoanRequestPayload {
   amount: number;
-  purpose?: string;
-  duration?: number; // in months
 }
 
 export interface RepaymentConfirmationPayload {

@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/carousel";
 import { generateFarmerInsights } from "@/lib/helper-logic";
 import {
-  FarmerLoans,
   FarmerOverview,
   Transaction,
   Transfer,

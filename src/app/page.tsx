@@ -1,19 +1,14 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { isAuthenticated } from '@/lib/services/authService';
+import HeroSection from '@/components/landing/Hero';
+import { FarmCredNavbar } from '@/components/landing/Navbar';
 
 export default function Home() {
-  const router = useRouter();
+  return(
+    <>
+    <FarmCredNavbar />
+    <HeroSection />
+    </>
 
-  useEffect(() => {
-    if (isAuthenticated()) {
-      router.push('/dashboard');
-    } else {
-      router.push('/login');
-    }
-  }, [router]);
-
-  return <div>Redirecting...</div>;
+  );
 }

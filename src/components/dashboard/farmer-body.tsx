@@ -3,25 +3,39 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import TransferHistory from "./TransferHistory";
 import TransactionHistory from "./TransactionHistory";
-import { useFarmerProfile } from "@/hooks/useFarmerData";
+import {
+  useFarmerProfile,
+  useFarmerTransactions,
+  useFarmerTransfers,
+  useFarmerOverview,
+} from "@/hooks/useFarmerData";
 import IncomeChartCard from "./IncomeTransaction";
 import ExpensesChartCard from "./ExpenseTransaction";
 import { FarmerInsightCard } from "./FarmerInsight";
 
 export function FarmerBody() {
-  const { data: profile, loading, error } = useFarmerProfile();
-  if (error) {
-    console.error("Failed to fetch data:", error);
+  const {
+    data: profile,
+    loading: profileLoading,
+    error: profileError,
+  } = useFarmerProfile();
+  const { data: overview, loading: overviewLoading } = useFarmerOverview();
+  const { data: transactions, loading: transactionsLoading } =
+    useFarmerTransactions();
+  const { data: transfers, loading: transfersLoading } = useFarmerTransfers();
+
+  const loading =
+    profileLoading ||
+    overviewLoading ||
+    transactionsLoading ||
+    transfersLoading;
+
+  if (profileError) {
+    console.error("Failed to fetch data:", profileError);
   }
   if (loading) {
     return <div className="p-4">Loading...</div>;
   }
-  if (!profile) {
-    return <div className="p-4">No data available.</div>;
-  }
-  const { overview, transactions, transfers } = profile;
-
-  console.log(profile);
 
   return (
     <div className="flex-1 w-full px-6 mt-2">
@@ -29,11 +43,26 @@ export function FarmerBody() {
         {/* Insights and Charts Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Insight Card */}
-          <FarmerInsightCard
-            overview={overview}
-            transactions={transactions}
-            transfers={transfers}
-          />
+          {overview && transactions && transfers ? (
+            <FarmerInsightCard
+              overview={overview}
+              transactions={transactions}
+              transfers={transfers}
+            />
+          ) : (
+            <Card className="w-full dark:bg-card rounded-[12px] border border-[#eff3e4]">
+              <CardHeader>
+                <CardTitle className="text-sm font-medium text-[#158f20]">
+                  Quick Insights
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex-1 flex flex-col justify-center items-center p-8">
+                <p className="text-sm text-muted-foreground text-center">
+                  Loading insights...
+                </p>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Income Chart (already has its own card wrapper) */}
           <IncomeChartCard />

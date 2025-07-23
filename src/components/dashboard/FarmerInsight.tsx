@@ -12,7 +12,12 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { generateFarmerInsights } from "@/lib/helper-logic";
-import { FarmerLoans, FarmerOverview, Transaction, Transfer } from "@/lib/types";
+import {
+  FarmerLoans,
+  FarmerOverview,
+  Transaction,
+  Transfer,
+} from "@/lib/types";
 
 interface FarmerInsightCardProps {
   overview: FarmerOverview;
@@ -20,8 +25,40 @@ interface FarmerInsightCardProps {
   transfers: Transfer[];
 }
 
-export function FarmerInsightCard({ overview, transactions, transfers}: FarmerInsightCardProps) {
-const insights = generateFarmerInsights(overview, transactions, transfers);
+export function FarmerInsightCard({
+  overview,
+  transactions,
+  transfers,
+}: FarmerInsightCardProps) {
+  if (!overview || !Array.isArray(transactions) || !Array.isArray(transfers)) {
+    console.warn("Invalid data provided to FarmerInsightCard:", {
+      overview,
+      transactions,
+      transfers,
+    });
+    return (
+      <Card className="w-full dark:bg-card rounded-[12px] border border-[#eff3e4]">
+        <CardHeader>
+          <CardTitle className="text-sm font-medium text-[#158f20]">
+            Quick Insights
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flex-1 flex flex-col justify-center items-center p-8">
+          <p className="text-sm text-muted-foreground text-center">
+            Invalid data format for insights.
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  let insights: any[];
+  try {
+    insights = generateFarmerInsights(overview, transactions, transfers);
+  } catch (error) {
+    console.error("Error generating insights:", error);
+    insights = [];
+  }
 
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);

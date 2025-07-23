@@ -142,3 +142,49 @@ export function useDeleteFarmerAccount() {
 
   return { deleteAccount };
 }
+
+export function useToggleDiscoverability() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [ isDiscoverable, setIsDiscoverable] = useState<boolean | null>(null);
+
+  const toggleDiscoverability = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const result = await farmerService.toggleDiscoverability();
+      setIsDiscoverable(result.is_discoverable_by_investors);
+      return result;
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.detail || err.message || 'An error occured';
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { toggleDiscoverability, isDiscoverable, loading, error };
+}
+
+export function useShareStatsLogs() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const shareStatsLogs = async (recipientPhoneNumber: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const result = await farmerService.shareStatsLogs(recipientPhoneNumber);
+      return result;
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.detail || err.message || 'Failed to share stats logs';
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { shareStatsLogs, loading, error };
+}

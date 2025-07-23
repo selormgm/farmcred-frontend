@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { useFarmerLoan, useRequestLoan } from "@/hooks/useFarmerLoan";
+import { useRequestLoan } from "@/hooks/useFarmerLoan";
 
 export function RequestLoanModal({ onSuccess }: { onSuccess?: () => void }) {
   const [amount, setAmount] = useState("");

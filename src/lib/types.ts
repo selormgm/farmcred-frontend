@@ -1,4 +1,3 @@
-import { Interface } from "readline";
 
 export interface FarmerProfile {
   id: number;
@@ -20,7 +19,6 @@ export interface FarmerProfile {
   loans: string[];
   created_at: string;
   updated_at: string;
-  investment_status: "available" | "non-available" ;
   receive_level_notifications: boolean;
   receive_sms_notifications: boolean;
   receive_email_notifications: boolean;
@@ -31,18 +29,21 @@ export interface FarmerProfile {
 export interface FarmerOverview {
   id: number;
   full_name: string;
+  trust_level_stars: number;
   trust_score_percent: number;
   total_income_last_12_months: number;
   total_expenses: number;
-  trust_level_stars: number;
-  total_income_current_month: number;
-  total_expenses_current_month: number;
-  total_loans: number;
-  on_time_loans: number;
-  missed_loans: number;
-  produce: string[];
-  region: string;
-  country: string;
+  current_month_income: number;
+  current_month_expenses: number;
+  total_loans_taken: number;
+  active_loans: number;
+  overdue_loans: number;
+  months_active: number; // Number of months the farmer has been active
+  is_source_verified: boolean; // Indicates if the farmer's source of income is verified
+  source_verification_type: "Cooperative" | "Bank" | "Mobile Money"; // Type of source verification
+  date_paid: string; // Date of the payment
+  amount: number; // Amount of the payment
+  on_time: boolean; // Indicates if the payment was made on time
 }
 
 export interface Transaction {
@@ -130,6 +131,15 @@ export interface FarmerLoans{
       lender: number;
 }
 
+export interface FarmerDiscoverability {
+  is_discoverable_by_investors: boolean; // Indicates if the farmer is discoverable by investors
+  message: string; // Message indicating the current state or action taken    
+}
+
+export interface StatLogs{
+  message: string;
+}
+
 export interface ApiFilters {
   category?: string;
   status?: string;
@@ -166,16 +176,16 @@ export interface InvestorReview{
 }
 
 export interface InvestorFarmers{
-  account_id: number;
-  full_name:string;
-  phone_number: number;
-  country: string;
-  region: string;
-  produce: string[];
+  id: number;
+  full_name: string;
   trust_level_stars: number;
   trust_score_percent: number;
   total_income_last_12_months:number;
-  investment_status: "accepted" | "declined" | "pending";
+  current_month_income: number;
+  current_month_expenses: number;
+  total_loans_taken: number;
+  active_loans: number;
+  overdue_loans: number;
 }
 
 export interface ReviewInput{
@@ -288,6 +298,8 @@ export interface LoanRequestResponse {
 
 export interface LoanRequestPayload {
   amount: number;
+  purpose?: string;
+  duration?: number; // in months
 }
 
 export interface RepaymentConfirmationPayload {

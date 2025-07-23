@@ -6,6 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
+import { useToggleDiscoverability } from "@/hooks/useFarmerData";
 import {
   Select,
   SelectTrigger,
@@ -17,12 +18,33 @@ import { useState, useEffect } from "react";
 import { logout } from "@/lib/services/authService";
 import { LogOut } from "lucide-react";
 import router from "next/router";
+import { toast } from "sonner";
 
 export default function SettingsPage() {
   const { setTheme, theme } = useTheme();
   const { language, setLanguage, t } = useLanguage();
 
   const [darkMode, setDarkMode] = useState(theme === "dark");
+
+  // Toggle discoverability state
+  const {
+    toggleDiscoverability,
+    isDiscoverable,
+    loading: discoverabilityLoading,
+    error: toggleError,
+  } = useToggleDiscoverability();
+  const [discoverable, setDiscoverable] = useState(false);
+
+  // Optionally sync with state after toggle
+  const handleDiscoverabilityToggle = async () => {
+    try {
+      const data = await toggleDiscoverability();
+      setDiscoverable(data.is_discoverable_by_investors);
+      toast.success(data.message);
+    } catch (err: any) {
+      toast.error(err.message);
+    }
+  };
 
   useEffect(() => {
     // Sync theme with switch state
@@ -33,6 +55,7 @@ export default function SettingsPage() {
     setLanguage(value);
   }
 
+  // Handle logout
   const handleLogout = () => {
     try {
       logout();
@@ -82,7 +105,25 @@ export default function SettingsPage() {
         </CardContent>
       </Card>
 
-      {/* Export */}
+      {/* Discoverability Toggle */}
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("visibility_to_investors")}</CardTitle>
+        </CardHeader>
+        <CardContent className="flex items-center justify-between">
+          <Label htmlFor="discoverability-toggle">
+            {t("make_profile_visible")}
+          </Label>
+          <Switch
+            id="discoverability-toggle"
+            checked={discoverable}
+            disabled={discoverabilityLoading}
+            onCheckedChange={handleDiscoverabilityToggle}
+          />
+        </CardContent>
+      </Card>
+
+      {/* Logout */}
       <Card>
         <CardContent>
           <Button

@@ -9,7 +9,9 @@ import {
   ChartData, 
   TrustBreakdown,
   ApiFilters, 
-  FarmerLoans
+  FarmerLoans,
+  FarmerDiscoverability,
+  StatLogs
 } from '@/lib/types';
 
 import apiClient from '../axios';
@@ -86,6 +88,18 @@ export const farmerService = {
     });
   }
   const response = await apiClient.get(`/api/farmer/loans/?${params.toString()}`);
+  return response.data;
+},
+
+// Discoverability
+async toggleDiscoverability(): Promise<FarmerDiscoverability> {
+  const response = await apiClient.post(' /api/ussd-web/farmer/toggle-discoverability/');
+  return response.data;
+},
+
+//Share Stats Log
+async shareStatsLogs(recipientPhoneNumber: string): Promise<StatLogs> {
+  const response = await apiClient.post('/api/ussd-web/farmer/share-stats-logs/', { recipient_number: recipientPhoneNumber });
   return response.data;
 },
 

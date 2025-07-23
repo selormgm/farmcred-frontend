@@ -2,8 +2,6 @@ import { useFarmerOverview } from "@/hooks/useFarmerData";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import TrustStar from "./TrustStar";
 import { Progress } from "../ui/progress";
-import { BanknoteArrowDown, BanknoteArrowUp } from "lucide-react";
-import Link from "next/link";
 import FarmerProduct from "./farmer-product";
 
 export function FarmerOverview() {
@@ -80,3 +78,5 @@ export function FarmerOverview() {
     </div>
   );
 }
+
+

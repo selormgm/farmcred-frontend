@@ -42,6 +42,11 @@ export function useFarmerList() {
   return useApiCall(() => investorService.getFarmerList());
 }
 
+//Discoverable Farmers Hook
+export function useGetDiscoverableFarmers() {
+  return useApiCall(() => investorService.getDiscoverableFarmers());
+}
+
 //Investor Review Remark Hook
 export function useCreateReviewForFarmer() {
   const [loading, setLoading] = useState(false);

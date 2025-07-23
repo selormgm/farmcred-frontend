@@ -10,7 +10,6 @@ import { cn } from "@/lib/utils";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { RequestLoanModal } from "@/components/dashboard/RequestLoan";
 import { farmerService } from "@/lib/api/farmer";
-import { farmerLoanService } from "@/lib/api/farmerloan";
 
 interface Loan {
   id: number;

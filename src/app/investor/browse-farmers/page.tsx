@@ -2,7 +2,6 @@
 import BrowseFarmers from "@/components/investor/BrowseFarmers";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useFarmerList } from "@/hooks/useInvestorData";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import {
@@ -21,7 +20,6 @@ export default function BrowseFarmersPage() {
   const [open, setOpen] = useState(false);
 
   const { t } =useLanguage();
-  const { data: farmers, loading, error } = useFarmerList();
 
   return (
     <div className="px-6 lg:px-24 py-6">

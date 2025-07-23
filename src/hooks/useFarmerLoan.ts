@@ -75,7 +75,7 @@ export function useRequestLoan() {
   return { requestLoan, loading, error };
 }
 
-// Hook to confirm loan repayment
+// Hook to initiate loan repayment
 export function useConfirmLoanRepayment() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -84,7 +84,7 @@ export function useConfirmLoanRepayment() {
     try {
       setLoading(true);
       setError(null);
-      const response = await farmerLoanService.confrimLoanRepayment(payload);
+      const response = await farmerLoanService.initiateRepayment(payload);
       return response;
     } catch (err: any) {
       setError(err.response?.data?.detail || err.message || "An error occurred");

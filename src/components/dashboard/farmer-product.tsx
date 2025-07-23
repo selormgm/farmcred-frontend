@@ -18,7 +18,13 @@ const FarmerProduct = () => {
           <div key={index} className="flex items-center gap-4">
             {/* Avatar */}
             <Avatar className="h-12 w-12 flex-shrink-0 border border-[#E1E3E0] rounded-full">
-              <AvatarImage src={product.imageUrl} alt={product.name} />
+              <AvatarImage
+                src={product.imageUrl || "/images/placeholder.png"}
+                alt={product.name}
+                onError={(e) =>
+                  (e.currentTarget.src = "/images/placeholder.png")
+                }
+              />
             </Avatar>
 
             {/* Product Details */}

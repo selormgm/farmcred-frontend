@@ -1,4 +1,3 @@
-import { request } from "http";
 import apiClient from "../axios";
 import { LoanQualificationResponse, LoanRequestPayload, LoanRequestResponse, RepaymentConfirmationPayload, RepaymentConfirmationResponse } from "../types";
 
@@ -15,11 +14,10 @@ export const farmerLoanService = {
     const response = await apiClient.post('/api/ussd-web/farmer/request-loan/', payload);
     return response.data;
   },
-
-  //Confirm Loan
-  async confrimLoanRepayment(payload: RepaymentConfirmationPayload): Promise<RepaymentConfirmationResponse> {
-    const response = await apiClient.post('/api/ussd-web/farmer/confirm-loan-repayment/', payload);
+  
+  //Initiate Repayment
+  async initiateRepayment(payload: RepaymentConfirmationPayload): Promise<RepaymentConfirmationResponse> {
+    const response = await apiClient.post('/api/ussd-web/farmer/initiate-loan-repayment-confirmation/', payload);
     return response.data;
   },
-  
 };

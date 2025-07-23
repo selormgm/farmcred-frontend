@@ -69,12 +69,12 @@ export default function FarmerProfileDialogContent({
           <InfoItem
             icon={<Phone />}
             label={t("phone")}
-            value={profileData.phone_number}
+            value={fullProfile?.phone_number || "N/A"}
           />
           <InfoItem
             icon={<BookUser />}
             label={t("account_ID")}
-            value={farmer.account_id}
+            value={fullProfile?.id || farmer.id}
           />
 
           {fullProfile?.national_id && (
@@ -102,12 +102,12 @@ export default function FarmerProfileDialogContent({
           <InfoItem
             icon={<MapPin />}
             label={t("region")}
-            value={profileData.region}
+            value={fullProfile?.region || "N/A"}
           />
           <InfoItem
             icon={<Globe />}
             label={t("country")}
-            value={profileData.country}
+            value={fullProfile?.country || "N/A"}
           />
           <InfoItem
             icon={<ShieldCheck />}
@@ -128,34 +128,13 @@ export default function FarmerProfileDialogContent({
             />
           )}
 
-          {/* Investment Status */}
-          <div className="flex items-center gap-3">
-            <Landmark className="text-[#158f20] w-5 h-5" />
-            <div>
-              <p className="text-sm text-muted-foreground">
-                {t("investment_status")}
-              </p>
-              <span
-                className={`px-3 py-1 rounded-full text-xs font-medium ${
-                  farmer.investment_status === "accepted"
-                    ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
-                    : farmer.investment_status === "declined"
-                    ? "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
-                    : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
-                }`}
-              >
-                {t(farmer.investment_status || "no_investment")}
-              </span>
-            </div>
-          </div>
-
           {/* Produce */}
           <div className="flex items-center gap-3 col-span-1 sm:col-span-2">
             <Leaf className="text-[#158f20] w-5 h-5" />
             <div>
               <p className="text-sm text-muted-foreground">{t("produce")}</p>
               <div className="flex flex-wrap gap-2 mt-1">
-                {profileData.produce?.map((item, idx) => (
+                {fullProfile?.produce?.map((item, idx) => (
                   <span
                     key={idx}
                     className="px-3 py-1 rounded-full bg-green-100 text-[#158f20] text-xs font-medium"

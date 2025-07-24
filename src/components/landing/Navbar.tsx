@@ -25,9 +25,9 @@ export function FarmCredNavbar() {
             <Image
               src="/logo/farmcred-01.png"
               alt="FarmCred Logo"
-              width={180}
-              height={180}
-              className="object-contain"
+              width={200}
+              height={80}
+            className="h-20 w-auto object-contain"
             />
           </Link>
         </div>

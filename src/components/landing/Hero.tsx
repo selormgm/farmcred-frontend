@@ -40,7 +40,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative h-[84vh] w-full overflow-hidden">
+    <section className="relative h-[84vh] w-full overflow-hidden pb-24">
       {slides.map((slide, index) => (
         <div
           key={slide.id}
@@ -60,7 +60,7 @@ export default function HeroSection() {
 
           {/* Animated Content */}
           <div
-            className={`absolute bottom-12 left-8 right-8 flex ${
+            className={`absolute bottom-24 left-8 right-8 flex ${
               slide.position === "left" ? "justify-start" : "justify-end"
             }`}
           >

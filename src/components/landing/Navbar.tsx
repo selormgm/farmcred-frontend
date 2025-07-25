@@ -130,7 +130,7 @@ function ListItem({
       <NavigationMenuLink asChild>
         <Link
           href={href}
-          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#158f20]/10 hover:shadow-inner"
+          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#158f20]/10"
         >
           <div className="text-sm font-medium leading-none text-[#158f20]">
             {title}

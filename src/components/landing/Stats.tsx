@@ -1,5 +1,5 @@
 import CountUp from "react-countup";
-import { Card } from "@/components/ui/card"; // adjust based on your structure
+import { Card } from "@/components/ui/card"; 
 
 const impactStats = [
   { value: 100, suffix: "+", label: "Farmers Supported" },

@@ -1,9 +1,13 @@
 "use client";
 
+import FinalCTA from "@/components/landing/CallToAction";
+import Footer from "@/components/landing/Footer";
 import HeroSection from "@/components/landing/Hero";
 import HowItWorksSection from "@/components/landing/HowItWorks";
 import { FarmCredNavbar } from "@/components/landing/Navbar";
+import { MarketplacePreview } from "@/components/landing/ShopPreview";
 import ImpactStats from "@/components/landing/Stats";
+import TestimonialSection from "@/components/landing/Testimonials";
 
 export default function Home() {
   return (
@@ -78,6 +82,10 @@ export default function Home() {
       </div>
       <HowItWorksSection />
       <ImpactStats />
+      <TestimonialSection />
+      <MarketplacePreview />
+      <FinalCTA />
+      <Footer />
     </>
   );
 }

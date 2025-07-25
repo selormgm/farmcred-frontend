@@ -8,7 +8,10 @@ import {
   TransferInput,
   ChartData, 
   TrustBreakdown,
-  ApiFilters 
+  ApiFilters, 
+  FarmerLoans,
+  FarmerDiscoverability,
+  StatLogs
 } from '@/lib/types';
 
 import apiClient from '../axios';
@@ -76,6 +79,30 @@ export const farmerService = {
     return response.data;
   },
 
+  //Farmer loans
+  async getLoans(filters?: ApiFilters): Promise<FarmerLoans[]> {
+  const params = new URLSearchParams();
+  if (filters) {
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) params.append(key, value);
+    });
+  }
+  const response = await apiClient.get(`/api/farmer/loans/?${params.toString()}`);
+  return response.data;
+},
+
+// Discoverability
+async toggleDiscoverability(): Promise<FarmerDiscoverability> {
+  const response = await apiClient.post(' /api/ussd-web/farmer/toggle-discoverability/');
+  return response.data;
+},
+
+//Share Stats Log
+async shareStatsLogs(recipientPhoneNumber: string): Promise<StatLogs> {
+  const response = await apiClient.post('/api/ussd-web/farmer/share-stats-logs/', { recipient_number: recipientPhoneNumber });
+  return response.data;
+},
+
 // Delete Account
 async deleteFarmerAccount(): Promise<boolean> {
   try {
@@ -86,4 +113,5 @@ async deleteFarmerAccount(): Promise<boolean> {
   }
 },
 };
+
 

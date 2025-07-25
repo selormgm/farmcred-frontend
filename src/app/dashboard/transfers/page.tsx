@@ -21,7 +21,6 @@ import { handlePrintTransfersPDF } from "@/lib/helper-functions";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { Printer, Search } from "lucide-react";
 import { useState } from "react";
-import { BsPrinter } from "react-icons/bs";
 
 export default function TransferHistoryPage() {
   const [search, setSearch] = useState("");
@@ -114,7 +113,7 @@ export default function TransferHistoryPage() {
                 variant="secondary"
                 className=" hover:bg-[#157148] hover:text-white"
               >
-                <BsPrinter className="mr-0.5" />
+                <Printer className="mr-0.5" />
                 Print
               </Button>
             </DialogTrigger>

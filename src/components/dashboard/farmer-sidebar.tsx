@@ -6,9 +6,11 @@ import {
   Banknote,
   BanknoteArrowUp,
   BookOpenCheck,
+  HandCoins,
   HelpCircle,
   HomeIcon,
   Settings,
+  Wheat,
 } from "lucide-react";
 import { NavMain } from "./famnav-main";
 import { NavSecondary } from "./famnav-secondary";
@@ -39,6 +41,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       icon: Banknote,
     },
     {
+      title: "Products",
+      url: "/dashboard/products",
+      icon: Wheat,
+    },
+    {
       title: "Trust Breakdown",
       url: "/dashboard/trust-breakdown",
       icon: BookOpenCheck,
@@ -48,6 +55,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       url: "/dashboard/transfers",
       icon: BanknoteArrowUp,
     },
+    {
+      title: "Loans",
+      url: "/dashboard/loans",
+      icon: HandCoins,
+    },
+
   ];
 
   const navSecondary = [

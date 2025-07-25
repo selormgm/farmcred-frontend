@@ -4,6 +4,8 @@ import {
   InvestorFarmers,
   ReviewInput,
   FarmerProfile,
+  InvestorLoans,
+  ApiFilters,
 } from "@/lib/types";
 
 import apiClient from "../axios";
@@ -49,11 +51,13 @@ export const investorService = {
     return response.data;
   },
 
+  //All Farmers Connected to Investor
   async getFarmerList(): Promise<InvestorFarmers[]> {
     const response = await apiClient.get("/api/investor/farmers/");
     return response.data;
   },
 
+  //Shows full profile of one specific farmer(already invested in)
   async getDetailsforSpecificFarmer(pk: number): Promise<FarmerProfile> {
     const response = await apiClient.get(
       `/api/investor/farmers/${pk}/profile/`
@@ -61,12 +65,34 @@ export const investorService = {
     return response.data;
   },
 
+  //Update list of farmers associated with the investor
   async updateFarmerList(
     data: Partial<InvestorFarmers>
   ): Promise<InvestorFarmers> {
     const response = await apiClient.put("/api/investor/farmers/", data);
     return response.data;
   },
+
+  //Get discoverable farmers who can be viewed by investors
+  async getDiscoverableFarmers(): Promise<InvestorFarmers[]> {
+    const response = await apiClient.get("/api/ussd-web/investor/farmers/");
+    return response.data;
+  },
+
+  //Investor loans
+  async getInvestorLoans(filters?: ApiFilters): Promise<InvestorLoans[]> {
+  const params = new URLSearchParams();
+  if (filters) {
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) params.append(key, value);
+    }
+  );
+  }
+     const response = await apiClient.get('/api/investor/loans/');
+    return response.data;
+  },
+
+
 
   // Delete Account
 async deleteInvestorAccount(): Promise<boolean> {

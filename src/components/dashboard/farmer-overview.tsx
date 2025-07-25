@@ -2,8 +2,7 @@ import { useFarmerOverview } from "@/hooks/useFarmerData";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import TrustStar from "./TrustStar";
 import { Progress } from "../ui/progress";
-import { BanknoteArrowDown, BanknoteArrowUp } from "lucide-react";
-import Link from "next/link";
+import FarmerProduct from "./farmer-product";
 
 export function FarmerOverview() {
   const { data: overview, loading, error } = useFarmerOverview();
@@ -24,10 +23,9 @@ export function FarmerOverview() {
     <div className="w-full px-6 mt-2 text-[#158f20]">
       <div className="flex flex-col lg:flex-row gap-4">
         {/* Total Income + Actions */}
-        <div className="flex gap-4 flex-[2] min-w-[300px]">
+        <div className="flex flex-wrap gap-4 w-full">
           {/* Total Income */}
-          <Card className="flex-1 bg-[#eff3e4] dark:bg-card p-4 rounded-[12px] border flex flex-col justify-between">
-            {/* Wallet Icon */}
+          <Card className="flex-[1.5] dark:bg-card p-4 rounded-[12px] border flex flex-col justify-between">
             <CardTitle className="text-sm font-medium  text-[#158f20]">
               Total Income
             </CardTitle>
@@ -40,27 +38,19 @@ export function FarmerOverview() {
           </Card>
 
           {/* Send Money */}
-          <Link href="/dashboard/transfers/send" className="w-[120px]">
-            <Card className="h-full bg-[#eff3e4] dark:bg-card p-3 rounded-[12px] border flex flex-col items-center justify-between hover:shadow-md transition-all">
-              <BanknoteArrowUp className="w-14 h-14 mb-2 text-[#158f20]" />
-              <span className="text-[#158f20] text-sm font-medium">Send</span>
-            </Card>
-          </Link>
-
-          {/* Receive Money */}
-          <Link href="/dashboard/transfers/receive" className="w-[120px]">
-            <Card className="h-full bg-[#eff3e4] dark:bg-card p-3 rounded-[12px] border flex flex-col items-center justify-between hover:shadow-md transition-all">
-              <BanknoteArrowDown className="w-14 h-14 mb-2 text-[#158f20]" />
-              <span className="text-[#158f20] text-sm font-medium">
-                Receive
-              </span>
-            </Card>
-          </Link>
+          <Card className="flex-[1.2] dark:bg-card p-4 rounded-[12px] border flex flex-col justify-between">
+            <CardTitle className="text-sm font-medium  text-[#158f20]">
+              My Products
+            </CardTitle>
+            <CardContent className="px-4 mt-auto">
+              <FarmerProduct />
+            </CardContent>
+          </Card>
 
           {/* Right: Trust Level + Trust Score */}
           <div className="flex flex-col gap-4 flex-1 min-w-[250px]">
             {/* Trust Level */}
-            <Card className="bg-[#eff3e4] dark:bg-card p-4 rounded-[12px] border">
+            <Card className="dark:bg-card p-4 rounded-[12px] border">
               <CardTitle className="text-sm font-medium mb-2 text-[#158f20]">
                 Trust Level
               </CardTitle>
@@ -70,12 +60,12 @@ export function FarmerOverview() {
             </Card>
 
             {/* Trust Score */}
-            <Card className="bg-[#eff3e4] dark:bg-card p-4 rounded-[12px] border">
+            <Card className="dark:bg-card p-4 rounded-[12px] border">
               <CardTitle className="text-sm font-medium mb-2 text-[#158f20]">
                 Trust Score
               </CardTitle>
               <CardContent className="text-[#158f20] text-3xl font-semibold px-0">
-                {overview.trust_score_percent}%
+                {Math.round(overview.trust_score_percent)}%
                 <Progress
                   value={overview.trust_score_percent}
                   className="w-full h-[7px] rounded-full overflow-hidden mt-2"
@@ -88,3 +78,5 @@ export function FarmerOverview() {
     </div>
   );
 }
+
+

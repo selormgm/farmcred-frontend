@@ -1,3 +1,4 @@
+
 export interface FarmerProfile {
   id: number;
   account_id: number;
@@ -18,7 +19,6 @@ export interface FarmerProfile {
   loans: string[];
   created_at: string;
   updated_at: string;
-  investment_status: "available" | "non-available" ;
   receive_level_notifications: boolean;
   receive_sms_notifications: boolean;
   receive_email_notifications: boolean;
@@ -29,18 +29,21 @@ export interface FarmerProfile {
 export interface FarmerOverview {
   id: number;
   full_name: string;
+  trust_level_stars: number;
   trust_score_percent: number;
   total_income_last_12_months: number;
   total_expenses: number;
-  trust_level_stars: number;
-  total_income_current_month: number;
-  total_expenses_current_month: number;
-  total_loans: number;
-  on_time_loans: number;
-  missed_loans: number;
-  produce: string[];
-  region: string;
-  country: string;
+  current_month_income: number;
+  current_month_expenses: number;
+  total_loans_taken: number;
+  active_loans: number;
+  overdue_loans: number;
+  months_active: number; // Number of months the farmer has been active
+  is_source_verified: boolean; // Indicates if the farmer's source of income is verified
+  source_verification_type: "Cooperative" | "Bank" | "Mobile Money"; // Type of source verification
+  date_paid: string; // Date of the payment
+  amount: number; // Amount of the payment
+  on_time: boolean; // Indicates if the payment was made on time
 }
 
 export interface Transaction {
@@ -109,6 +112,34 @@ export interface TrustBreakdown {
   }>;
 }
 
+export interface FarmerLoans{
+      id: number;
+      lender_full_name: string;
+      farmer_full_name: string;
+      amount: number,
+      date_taken: string;
+      due_date: string;
+      date_repaid: string;
+      status:'pending' | 'approved' | 'repaid' | 'declined' | 'active';
+      on_time: boolean;
+      interest_rate: number;
+      repayment_period_months: number;
+      is_active: boolean;
+      created_at: string;
+      updated_at: string;
+      farmer: number;
+      lender: number;
+}
+
+export interface FarmerDiscoverability {
+  is_discoverable_by_investors: boolean; // Indicates if the farmer is discoverable by investors
+  message: string; // Message indicating the current state or action taken    
+}
+
+export interface StatLogs{
+  message: string;
+}
+
 export interface ApiFilters {
   category?: string;
   status?: string;
@@ -145,19 +176,136 @@ export interface InvestorReview{
 }
 
 export interface InvestorFarmers{
-  account_id: number;
-  full_name:string;
-  phone_number: number;
-  country: string;
-  region: string;
-  produce: string[];
+  id: number;
+  full_name: string;
   trust_level_stars: number;
   trust_score_percent: number;
   total_income_last_12_months:number;
-  investment_status: "accepted" | "declined" | "pending";
+  current_month_income: number;
+  current_month_expenses: number;
+  total_loans_taken: number;
+  active_loans: number;
+  overdue_loans: number;
 }
 
 export interface ReviewInput{
   detail: string;
   review_id: number;
+}
+
+export interface InvestorLoans{
+      id: number;
+      lender_full_name: string;
+      farmer_full_name: string;
+      amount: number,
+      date_taken: string;
+      due_date: string;
+      date_repaid: string;
+      status:'pending' | 'approved' | 'repaid' | 'declined' | 'active';
+      on_time: boolean;
+      interest_rate: number;
+      repayment_period_months: number;
+      is_active: boolean;
+      created_at: string;
+      updated_at: string;
+      farmer: number;
+      lender: number;
+}
+
+export interface BuyerProfile{
+    account_id: number;
+    full_name: string;
+    phone_number: number;
+    email: string;
+    country: string;
+    region: string;
+    receive_level_notifications: boolean;
+    receive_sms_notifications: boolean;
+    receive_email_notifications: boolean;
+}
+
+export interface BuyerTransaction{
+  id: number;
+  account_party_full_name: string;
+  buyer_full_name: string;
+  farmer_full_name: string;
+  name: string;
+  date: string;
+  category: string;
+  status: 'income' | 'expense';
+  amount: number;
+  desccription: string;
+  created_at: string;
+  updated_at: string;
+  account_party: number;
+  buyer: number;
+}
+
+export interface LenderProfile{
+    id: number;
+    full_name: string;
+    email: string;
+    phone_number: number;
+    total_loans_issued_by_platform: number;
+    total_repayments_received_by_platform: number;
+  }
+
+export interface LenderLoans{
+    id: number;
+    lender_full_name: string;
+    farmer_full_name: string;
+    amount: number,
+    date_taken: string;
+    due_date: string;
+    date_repaid: string;
+    status:'pending' | 'approved' | 'repaid' | 'declined' | 'active';
+    on_time: boolean;
+    interest_rate: number;
+    repayment_period_months: number;
+    is_active: boolean;
+    created_at: string;
+    updated_at: string;
+    farmer: number;
+    lender: number;
+}
+
+export interface FarmerProduct {
+  dateAdded: string | number | Date;
+  imageUrl: string;
+  name: string;
+  price: number;
+}
+
+export interface FarmerProductInput {
+  image: File | null;
+  name: string;
+  price: number;
+}
+
+
+export interface LoanQualificationResponse {
+  message: string;
+  max_qualified_amount: number;
+  default_interest_rate: number;
+}
+
+export interface LoanRequestResponse {
+  message: string;
+  loan_id: number;
+  repayment_period_months: number;
+  interest_rate: number;
+}
+
+export interface LoanRequestPayload {
+  amount: number;
+}
+
+export interface RepaymentConfirmationPayload {
+  loan_id: number;
+  amount_confirmed: number;
+}
+
+export interface RepaymentConfirmationResponse {
+  message: string;
+  confirmation_id?: string;
 }

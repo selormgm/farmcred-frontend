@@ -33,6 +33,7 @@ import {
 } from "../ui/dropdown-menu";
 import { InvestorDialogContent } from "./InvestmentDialog";
 import { useLanguage } from "@/contexts/LanguageContext";
+import TrustStar from "../dashboard/TrustStar";
 
 interface BrowseFarmersProps {
   tablelength: number;
@@ -81,33 +82,17 @@ const BrowseFarmers = ({
 
   const filteredFarmers = farmers.filter((farmer: InvestorFarmers) => {
     const query = search?.toLowerCase() || "";
-    if (
-      filter === "region" &&
-      search &&
-      farmer.region.toLowerCase() !== query
-    ) {
-      return false;
-    }
     if (filter === "trust score > 60" && farmer.trust_score_percent <= 60) {
       return false;
     }
     if (filter === "trust score < 60" && farmer.trust_score_percent >= 60) {
       return false;
     }
-    if (
-      filter === "crop" &&
-      search &&
-      !farmer.produce.some((crop) => crop.toLowerCase().includes(query))
-    ) {
-      return false;
-    }
 
     if (search && filter === "all") {
       return (
         farmer.full_name.toLowerCase().includes(query) ||
-        farmer.account_id.toString().includes(query) ||
-        farmer.country.toLowerCase().includes(query) ||
-        farmer.region.toLowerCase().includes(query)
+        farmer.id.toString().includes(query)
       );
     }
     return true;
@@ -120,13 +105,12 @@ const BrowseFarmers = ({
       <TableHeader>
         <TableRow className="border-b border-gray-200 hover:bg-transparent">
           {[
-            "farmer_id",
-            "name",
-            "region",
-            "trust_score",
-            "produce",
-            "phone_number",
-            "investment_status",
+            "id",
+            "full_name",
+            "trust_level_stars",
+            "trust_score_percent",
+            "active_loans",
+            "overdue_loans",
             "action",
           ].map((label) => (
             <TableHead
@@ -142,7 +126,7 @@ const BrowseFarmers = ({
       <TableBody>
         {farmerData.map((farmer: InvestorFarmers, index: number) => (
           <FarmerTableRow
-            key={farmer.account_id}
+            key={farmer.id}
             farmers={farmer}
             isLast={index === farmerData.length - 1}
           />
@@ -161,7 +145,7 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
   const { t } = useLanguage();
   const [openDetails, setOpenDetails] = useState(false);
   const [openInvest, setOpenInvest] = useState(false);
-  const { data: fullProfile, loading } = useFarmerDetails(farmers.account_id);
+  const { data: fullProfile} = useFarmerDetails(farmers.id);
 
   return (
     <TableRow
@@ -173,7 +157,7 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
         className="text-base font-normal text-[#158F20] py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
-        {farmers.account_id}
+        {farmers.id}
       </TableCell>
       <TableCell
         className="text-base font-normal text-[#158F20] py-3"
@@ -185,7 +169,7 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
         className="text-base font-normal text-[#72BF01] py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
-        {farmers.region}
+        <TrustStar income={farmers.trust_level_stars} />
       </TableCell>
       <TableCell
         className="text-base font-normal py-3 text-[#05402E]  dark:text-green-700"
@@ -197,36 +181,14 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
         className="text-base font-normal py-3 flex gap-1 flex-wrap"
         style={{ letterSpacing: "-0.06em" }}
       >
-        {farmers.produce.map((item, index) => (
-          <span
-            key={index}
-            className="bg-[#158F20] items-center text-white text-xs px-2 py-1 rounded-full"
-          >
-            {item}
-          </span>
-        ))}
+        {farmers.active_loans}
       </TableCell>
       <TableCell
         className="text-base font-normal text-[#05402E]  dark:text-green-700 py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
-        {farmers.phone_number}
+        {farmers.overdue_loans}
       </TableCell>
-      <TableCell className="py-3">
-        <span
-          className={`px-3 py-1 rounded-full text-xs font-medium
-      ${
-        farmers.investment_status === "accepted"
-          ? "bg-green-100 text-[#158f20] dark:bg-green-900 dark:text-green-300"
-          : farmers.investment_status === "declined"
-          ? "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
-          : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
-      }`}
-        >
-          {farmers.investment_status || t("no_investment")}
-        </span>
-      </TableCell>
-
       <TableCell className="py-3">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

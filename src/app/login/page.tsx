@@ -53,15 +53,15 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-background">
-      <div className="fixed top-6 left-6 z-50">
-        <Image
-          src="/logo/farmcred-04.png"
-          alt="FarmCred Logo"
-          width={200}
-          height={80}
-          className="h-24 w-auto"
-          priority
-        />
+      <div className="fixed top-6 left-6 z-50 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl max-w-sm text-center shadow-xl">
+          <Image
+            src="/logo/farmcred-04.png"
+            alt="FarmCred Logo"
+            width={200}
+            height={80}
+            className="h-20 w-auto"
+            priority
+          />
       </div>
 
       <div className="grid lg:grid-cols-2 min-h-screen">

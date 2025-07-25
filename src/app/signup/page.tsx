@@ -81,13 +81,13 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Logo positioned at top left */}
-      <div className="fixed top-6 left-6 z-50">
+      <div className="fixed top-6 left-6 z-50 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl max-w-sm text-center shadow-xl">
         <Image
           src="/logo/farmcred-07.png"
           alt="FarmCred Logo"
           width={200}
           height={80}
-          className="h-24 w-auto"
+          className="h-20 w-auto"
           priority
         />
       </div>

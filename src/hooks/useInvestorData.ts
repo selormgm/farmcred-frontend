@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { investorService } from "@/lib/api/investor";
-import { InvestorReview, FarmerProfile, InvestorFarmers, InvestorProfile, ReviewInput } from "@/lib/types";
+import { InvestorReview, FarmerProfile, InvestorFarmers, InvestorProfile, ReviewInput, ApiFilters } from "@/lib/types";
 
 function useApiCall<T>(apiCall: () => Promise<T>, dependencies: any[] = []) {
   const [data, setData] = useState<T | null>(null);
@@ -40,6 +40,11 @@ export function useInvestorReview() {
 //Farmer List Hook
 export function useFarmerList() {
   return useApiCall(() => investorService.getFarmerList());
+}
+
+//Discoverable Farmers Hook
+export function useGetDiscoverableFarmers() {
+  return useApiCall(() => investorService.getDiscoverableFarmers());
 }
 
 //Investor Review Remark Hook
@@ -171,4 +176,9 @@ export function useDeleteInvestorAccount() {
   };
 
   return { deleteAccount };
+}
+
+//Investor Loans Hook
+export function useInvestorLoans(filters?: ApiFilters) {  
+  return useApiCall(() => investorService.getInvestorLoans(filters), [filters]);
 }

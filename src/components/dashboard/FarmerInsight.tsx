@@ -2,14 +2,6 @@
 
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
-import {
-  TrendingUp,
-  TrendingDown,
-  ArrowUpRight,
-  BadgeDollarSign,
-  PiggyBank,
-} from "lucide-react";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Carousel,
@@ -19,36 +11,54 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import { generateFarmerInsights } from "@/lib/helper-logic";
+import {
+  FarmerOverview,
+  Transaction,
+  Transfer,
+} from "@/lib/types";
 
-const farmerInsights = [
-  {
-    icon: BadgeDollarSign,
-    title: "Week 4 Peak Income",
-    message: "You earned the most during Week 4 — great job!",
-  },
-  {
-    icon: TrendingDown,
-    title: "Lower Expenses",
-    message: "Your expenses dropped 15% last week. Keep it up!",
-  },
-  {
-    icon: TrendingUp,
-    title: "Transfers Up",
-    message: "You've received 12% more transfers this month.",
-  },
-  {
-    icon: PiggyBank,
-    title: "Savings Boost",
-    message: "Your average balance is growing steadily.",
-  },
-  {
-    icon: ArrowUpRight,
-    title: "Income Trending Up",
-    message: "Your income has been increasing week over week.",
-  },
-];
+interface FarmerInsightCardProps {
+  overview: FarmerOverview;
+  transactions: Transaction[];
+  transfers: Transfer[];
+}
 
-export function FarmerInsightCard() {
+export function FarmerInsightCard({
+  overview,
+  transactions,
+  transfers,
+}: FarmerInsightCardProps) {
+  if (!overview || !Array.isArray(transactions) || !Array.isArray(transfers)) {
+    console.warn("Invalid data provided to FarmerInsightCard:", {
+      overview,
+      transactions,
+      transfers,
+    });
+    return (
+      <Card className="w-full dark:bg-card rounded-[12px] border border-[#eff3e4]">
+        <CardHeader>
+          <CardTitle className="text-sm font-medium text-[#158f20]">
+            Quick Insights
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flex-1 flex flex-col justify-center items-center p-8">
+          <p className="text-sm text-muted-foreground text-center">
+            Invalid data format for insights.
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  let insights: any[];
+  try {
+    insights = generateFarmerInsights(overview, transactions, transfers);
+  } catch (error) {
+    console.error("Error generating insights:", error);
+    insights = [];
+  }
+
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
@@ -65,7 +75,7 @@ export function FarmerInsightCard() {
   }, [api]);
 
   return (
-    <Card className="w-full bg-[#eff3e4] dark:bg-card rounded-[12px] border">
+    <Card className="w-full dark:bg-card rounded-[12px] border border-[#eff3e4]">
       <CardHeader>
         <CardTitle className="text-sm font-medium text-[#158f20]">
           Quick Insights
@@ -83,7 +93,7 @@ export function FarmerInsightCard() {
           className="w-full h-full"
         >
           <CarouselContent>
-            {farmerInsights.map((insight, index) => (
+            {insights.map((insight, index) => (
               <CarouselItem key={index} className="h-full">
                 <div className="flex flex-col h-full justify-center items-center gap-3 text-center px-4">
                   <insight.icon className="w-20 h-20 text-[#158f20]" />

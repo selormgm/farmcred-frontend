@@ -22,8 +22,8 @@ export interface FarmerProfile {
   receive_level_notifications: boolean;
   receive_sms_notifications: boolean;
   receive_email_notifications: boolean;
-  password: string;
-  showPassword: boolean;
+  password: string;//Access to password
+  showPassword: boolean;//Pasword visibility
 }
 
 export interface FarmerOverview {

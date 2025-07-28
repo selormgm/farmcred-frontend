@@ -25,15 +25,15 @@ export function FarmCredNavbar() {
             <Image
               src="/logo/farmcred-01.png"
               alt="FarmCred Logo"
-              width={200}
-              height={80}
-            className="h-20 w-auto object-contain"
+              width={160}
+              height={60}
+            className="h-16 w-auto object-contain"
             />
           </Link>
         </div>
 
         <div className="flex-1 flex justify-center">
-          <NavigationMenu className="w-full justify-center text-[#158f20] hover:text-[#05402E]">
+          <NavigationMenu className="w-full justify-center text-[#158f20]">
             <NavigationMenuList className="flex items-center gap-4 w-full justify-center">
               {/* Farmers */}
               <NavigationMenuItem>
@@ -111,7 +111,7 @@ export function FarmCredNavbar() {
 
         <div className="flex-shrink-0">
           <Link href="/login">
-            <Button variant="default">Login</Button>
+            <Button variant="default" className="bg-gradient-to-br from-[#128f20] to-[#72BF01] text-white hover:opacity-90 shadow-lg">Login</Button>
           </Link>
         </div>
       </div>

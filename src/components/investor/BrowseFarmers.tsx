@@ -105,13 +105,13 @@ const BrowseFarmers = ({
       <TableHeader>
         <TableRow className="border-b border-gray-200 hover:bg-transparent">
           {[
-            "id",
-            "full_name",
-            "trust_level_stars",
-            "trust_score_percent",
-            "active_loans",
-            "overdue_loans",
-            "action",
+            "ID",
+            "Full Name",
+            "Trust Level Stars",
+            "Trust Score Percent",
+            "Active Loans",
+            "Overdue Loans",
+            "Action",
           ].map((label) => (
             <TableHead
               key={label}
@@ -166,25 +166,25 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
         {farmers.full_name}
       </TableCell>
       <TableCell
-        className="text-base font-normal text-[#72BF01] py-3"
+        className="text-base font-normal py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
-        <TrustStar income={farmers.trust_level_stars} />
+        <TrustStar income={farmers.trust_level_stars} size="text-sm"/>
       </TableCell>
       <TableCell
-        className="text-base font-normal py-3 text-[#05402E]  dark:text-green-700"
+        className="text-base font-normal py-3 text-[#158f20] dark:text-green-700"
         style={{ letterSpacing: "-0.06em" }}
       >
-        {farmers.trust_score_percent}%
+        {Math.round(farmers.trust_score_percent)}%
       </TableCell>
       <TableCell
-        className="text-base font-normal py-3 flex gap-1 flex-wrap"
+        className="text-base font-normal py-3 text-[#158f20]  dark:text-green-700"
         style={{ letterSpacing: "-0.06em" }}
       >
         {farmers.active_loans}
       </TableCell>
       <TableCell
-        className="text-base font-normal text-[#05402E]  dark:text-green-700 py-3"
+        className="text-base font-normal text-[#158f20]  dark:text-green-700 py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
         {farmers.overdue_loans}

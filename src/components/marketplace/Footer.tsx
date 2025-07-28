@@ -34,9 +34,6 @@ export default function Footer() {
               <Link href="/farmers">Farmers</Link>
             </li>
             <li>
-              <Link href="/loans">Loans</Link>
-            </li>
-            <li>
               <Link href="/invest">Invest</Link>
             </li>
           </ul>

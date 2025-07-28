@@ -34,7 +34,7 @@ export default function IncomeChartCard() {
   })).slice(-6);
 
   return (
-    <Card className="w-full dark:bg-card rounded-[12px] border border-[#eff3e4]">
+    <Card className="w-full dark:bg-card rounded-[12px]">
       <CardHeader>
         <CardTitle className="text-sm font-medium  text-[#158f20]">Income (Last 6 Weeks)</CardTitle>
       </CardHeader>

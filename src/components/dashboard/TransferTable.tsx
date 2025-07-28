@@ -163,7 +163,7 @@ function TransferTableRow({ transfer, isLast }: TransferTableRowProps) {
         {transfer.transfer_id}
       </TableCell>
       <TableCell
-        className="text-base font-normal text-[#05402E] py-3"
+        className="text-base font-normal text-[#72BF01] py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
         {new Date(transfer.date).toLocaleDateString("en-GB", {
@@ -215,7 +215,7 @@ function TransferTableRow({ transfer, isLast }: TransferTableRowProps) {
         </Button>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent className="text-[#158f20]">
-            <DialogTitle className="text-[#157148]">
+            <DialogTitle className="text-[#72BF01]">
               Transfer Details
             </DialogTitle>
             <DialogDescription>

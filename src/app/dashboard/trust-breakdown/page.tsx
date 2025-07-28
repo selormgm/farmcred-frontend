@@ -164,10 +164,10 @@ export default function TrustBreakdown() {
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Profile Card */}
-        <Card className="lg:col-span-1 bg-gradient-to-br from-[#eff3e4] to-white border-1 ">
+        <Card className="lg:col-span-1 bg-[#eff3e4] dark:bg-card">
           <CardHeader className="text-center pb-4">
             <div className="mx-auto mb-4">
-              <Avatar className="w-24 h-24 border-4 border-white ">
+              <Avatar className="w-24 h-24 border-4 border-white dark:border-gray-200">
                 <AvatarImage src="/placeholder-avatar.jpg" />
                 <AvatarFallback className="bg-[#158f20] text-white text-2xl font-bold">
                   {safeProfile.full_name
@@ -186,9 +186,9 @@ export default function TrustBreakdown() {
             <div className="flex items-center justify-center gap-1 mt-2">
               <Badge
                 variant="secondary"
-                className="bg-green-100 text-[#158f20] border-green-200"
+                className="bg-green-100 text-[#158f20] border-green-200 dark:bg-green-900 dark:text-green-300 dark:border-none"
               >
-                <div className="w-2 h-2 rounded-full bg-[#158f20] mr-1"></div>
+                <div className="w-2 h-2 rounded-full bg-[#158f20] dark:bg-green-300 mr-1"></div>
                 Active
               </Badge>
             </div>
@@ -198,17 +198,17 @@ export default function TrustBreakdown() {
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-sm">
                 <MapPin className="w-4 h-4 text-[#158f20]" />
-                <span className="text-gray-600">{safeProfile.region}</span>
+                <span className="text-gray-600 dark:text-gray-200">{safeProfile.region}</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Phone className="w-4 h-4 text-[#158f20]" />
-                <span className="text-gray-600">
+                <span className="text-gray-600 dark:text-gray-200">
                   {safeProfile.phone_number}
                 </span>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Wheat className="w-4 h-4 text-[#158f20]" />
-                <span className="text-gray-600">
+                <span className="text-gray-600 dark:text-gray-200">
                   {safeProfile.produce.length > 0
                     ? safeProfile.produce.join(", ")
                     : "Not specified"}
@@ -216,18 +216,18 @@ export default function TrustBreakdown() {
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Calendar className="w-4 h-4 text-[#158f20]" />
-                <span className="text-gray-600">
+                <span className="text-gray-600 dark:text-gray-200">
                   Farmer ID: {safeProfile.account_id}
                 </span>
               </div>
             </div>
 
             {/* Trust Level */}
-            <div className="bg-white rounded-xl p-4 border border-green-100">
+            <div className="bg-white dark:bg-accent dark:border-none rounded-xl p-4 border border-green-100">
               <div className="flex flex-col items-center justify-center text-center">
-                <p className="text-sm text-gray-500 mb-2">Trust Level</p>
+                <p className="text-sm text-gray-500 dark:text-gray-200 mb-2">Trust Level</p>
                 <TrustStar income={safeProfile.trust_level_stars} />
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="text-xs text-gray-400 dark:text-gray-200 mt-1">
                   {Math.round(safeProfile.trust_level_stars)}/5 stars
                 </p>
               </div>
@@ -278,7 +278,7 @@ export default function TrustBreakdown() {
                     <span className="text-xl font-boldFarmer ID text-[#158f20]">
                       {Math.round(safeOverview.trust_score_percent)}%
                     </span>
-                    <span className="text-xs font-medium text-gray-500 mt-1">
+                    <span className="text-xs font-medium text-gray-500 dark:text-gray-200 mt-1">
                       {trustLevel.label}
                     </span>
                   </div>
@@ -292,9 +292,9 @@ export default function TrustBreakdown() {
 
               {/* Metrics */}
               <div className="space-y-4">
-                <div className="bg-green-50 rounded-xl p-4">
+                <div className="bg-green-50 dark:bg-accent rounded-xl p-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-600">
+                    <span className="text-sm font-medium text-gray-600 dark:text-gray-200">
                       Repayments Made
                     </span>
                     <Info className="w-4 h-4 text-[#158f20]" />
@@ -305,9 +305,9 @@ export default function TrustBreakdown() {
                   <Progress value={onTimePaymentRate} className="h-2 mt-2" />
                 </div>
 
-                <div className="bg-green-50 rounded-xl p-4">
+                <div className="bg-green-50 dark:bg-accent rounded-xl p-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-600">
+                    <span className="text-sm font-medium text-gray-600 dark:text-gray-200">
                       On-time Payments
                     </span>
                     <CheckCircle className="w-4 h-4 text-[#158f20]" />
@@ -315,15 +315,15 @@ export default function TrustBreakdown() {
                   <div className="text-2xl font-bold text-[#158f20]">
                     {onTimePaymentRate}%
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">
+                  <div className="text-xs text-gray-500 dark:text-gray-200 mt-1">
                     {safeOverview.active_loans} of{" "}
                     {safeOverview.total_loans_taken} payments
                   </div>
                 </div>
 
-                <div className="bg-green-50 rounded-xl p-4">
+                <div className="bg-green-50 dark:bg-accent rounded-xl p-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-600">
+                    <span className="text-sm font-medium text-gray-600 dark:text-gray-200">
                       Late Payments
                     </span>
                     <Clock className="w-4 h-4 text-[#158f20]" />
@@ -331,7 +331,7 @@ export default function TrustBreakdown() {
                   <div className="text-2xl font-bold text-[#158f20]">
                     {safeOverview.overdue_loans}
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">
+                  <div className="text-xs text-gray-500 dark:text-gray-200 mt-1">
                     Payment delays recorded
                   </div>
                 </div>
@@ -352,32 +352,32 @@ export default function TrustBreakdown() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
-              <span className="text-sm font-medium text-gray-600">
+            <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-accent  rounded-lg">
+              <span className="text-sm font-medium text-gray-600 dark:text-gray-200">
                 Monthly Income
               </span>
               <span className="font-bold text-[#158f20]">
                 GH₵{safeOverview.current_month_income.toLocaleString()}
               </span>
             </div>
-            <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-              <span className="text-sm font-medium text-gray-600">
+            <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-accent rounded-lg">
+              <span className="text-sm font-medium text-gray-600 dark:text-gray-200">
                 Consistency
               </span>
               <Badge
                 variant="secondary"
-                className="bg-green-100 text-[#158f20]"
+                className="bg-green-100 text-[#158f20] dark:bg-green-900 dark:text-green-300"
               >
                 {safeOverview.months_active} months active
               </Badge>
             </div>
-            <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
-              <span className="text-sm font-medium text-gray-600">
+            <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-accent rounded-lg">
+              <span className="text-sm font-medium text-gray-600 dark:text-gray-200">
                 Source Verified
               </span>
               <Badge
                 variant="secondary"
-                className="bg-green-100 text-[#158f20]"
+                className="bg-green-100 text-[#158f20] dark:bg-green-900 dark:text-green-300"
               >
                 {safeOverview.is_source_verified
                   ? `Yes – via ${safeOverview.source_verification_type}`
@@ -398,11 +398,11 @@ export default function TrustBreakdown() {
           <CardContent>
             {safeOverview.amount > 0 && safeOverview.date_paid !== "N/A" ? (
               <div className="space-y-3">
-                <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
+                <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-accent rounded-lg">
                   <CheckCircle className="w-5 h-5 text-[#158f20]" />
                   <div className="flex-1">
                     <div className="font-medium text-sm">Recent Payment</div>
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-gray-500 dark:text-gray-200">
                       {formatDistanceToNow(new Date(safeOverview.date_paid), {
                         addSuffix: true,
                       })}{" "}
@@ -418,8 +418,8 @@ export default function TrustBreakdown() {
                 <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg opacity-60">
                   <CheckCircle className="w-5 h-5 text-gray-400" />
                   <div className="flex-1">
-                    <div className="font-medium text-sm">Previous Payment</div>
-                    <div className="text-xs text-gray-400">
+                    <div className="font-medium text-sm dark:text-gray-200">Previous Payment</div>
+                    <div className="text-xs text-gray-400 dark:text-gray-200">
                       No previous payment data
                     </div>
                   </div>
@@ -427,7 +427,7 @@ export default function TrustBreakdown() {
                 </div>
               </div>
             ) : (
-              <div className="text-sm text-gray-500 text-center">
+              <div className="text-sm text-gray-500 dark:text-gray-200 text-center">
                 No payment record found
               </div>
             )}
@@ -459,7 +459,7 @@ export default function TrustBreakdown() {
                     placeholder="Enter recipient phone"
                     value={recipientNumber}
                     onChange={(e) => setRecipientNumber(e.target.value)}
-                    className="w-full p-2 border border-gray-200 rounded-md"
+                    className="w-full p-2 rounded-md"
                   />
                   <Button
                     onClick={handleShare}
@@ -488,12 +488,12 @@ export default function TrustBreakdown() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4">
+            <div className="bg-green-100 dark:bg-accent rounded-xl p-4">
               <div className="text-center mb-4">
                 <div className="text-2xl font-bold text-[#158f20] mb-2">
                   {trustLevel.label}
                 </div>
-                <div className="text-sm text-gray-600 leading-relaxed">
+                <div className="text-sm text-gray-600 dark:text-gray-200 leading-relaxed">
                   Consistently reliable in repayments, with verified earnings
                   and strong farming output
                 </div>

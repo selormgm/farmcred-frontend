@@ -182,7 +182,7 @@ export default function MarketplaceGridPage() {
                 </h2>
                 <p className="text-sm text-gray-500 line-clamp-2">
                   {product.description}
-                </p>
+                </p>   
                 <p className="text-sm text-gray-500">
                   Sold by:{" "}
                   <span className="text-[#05402E] font-semibold">

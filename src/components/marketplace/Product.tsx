@@ -4,8 +4,13 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { toast } from "sonner";
+import { useCartStore } from "@/lib/store/cartStore";
+import { useRouter } from "next/navigation";
 
 export default function MarketplaceGridPage() {
+  const router = useRouter();
+  const { addToCart, isInCart } = useCartStore();
   const [sortBy, setSortBy] = useState("default");
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
@@ -104,12 +109,41 @@ export default function MarketplaceGridPage() {
     setCurrentPage(1);
   }, [sortBy]);
 
+  const handleAddToCart = (product: {
+    id: number;
+    name: string;
+    image: string;
+    price: number;
+    quantity: number;
+    description: string;
+    farmerName: string;
+  }) => {
+    if (!isInCart(product.id)) {
+      addToCart({
+        id: product.id,
+        name: product.name,
+        image: product.image,
+        price: product.price,
+        quantity: 1,
+        farmerName: product.farmerName || "Umknown Farmer",
+        description: product.description
+      });
+
+      toast.success(`${product.name} added to cart`, {
+        action: {
+          label: "View Cart",
+          onClick: () => router.push("/marketplace/cart"),
+        },
+      });
+    }
+  };
+
   return (
     <section className="py-6">
       <div className="container mx-auto space-y-8 px-4 sm:px-6 lg:px-8">
         {/* Header and Sort Dropdown */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <h2 className="text-2xl font-bold text-[#157148]">Marketplace</h2>
+          <h2 className="text-2xl font-bold text-[#158f20]">Marketplace</h2>
           <div className="flex items-center gap-3">
             <select
               value={sortBy}
@@ -157,7 +191,7 @@ export default function MarketplaceGridPage() {
                 </p>
               </div>
               <div className="flex flex-wrap px-4 pb-4 gap-2">
-                <Link href={`/buy/${product.id}`}>
+                <Link href={`/marketplace/buy/${product.id}`}>
                   <Button
                     size="lg"
                     className="bg-gradient-to-br from-[#128f20] to-[#72BF01] text-white hover:opacity-90 shadow-lg"
@@ -165,15 +199,15 @@ export default function MarketplaceGridPage() {
                     Buy
                   </Button>
                 </Link>
-                <Link href={`/cart/add/${product.id}`}>
                   <Button
                     size="lg"
                     variant="outline"
+                    disabled= {isInCart(product.id)}
+                    onClick={() => handleAddToCart(product.id)}
                     className="text-[#158f20] hover:bg-white hover:opacity-90 shadow-lg hover:text-[#05402E]"
                   >
-                    Add to Cart
+                  {isInCart(product.id) ? "Added" : "Add to Cart"}
                   </Button>{" "}
-                </Link>
               </div>
             </div>
           ))}

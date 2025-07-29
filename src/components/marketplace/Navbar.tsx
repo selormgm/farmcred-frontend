@@ -60,7 +60,7 @@ export function MarketplaceNavbar() {
             placeholder="Search for produce..."
             className="bg-white border border-gray-300 focus:ring-[#158f20] focus:border-[#72bf01] rounded-md px-4 py-2 w-[200px] md:w-[250px]"
           />
-          <Link href="/cart" className="group">
+          <Link href="/marketplace/cart" className="group">
             <div className="p-1 rounded-md border border-gray-300 bg-white transition-colors group-hover:border-[#158f20]">
               <ShoppingCart className="w-6 h-6 text-[#158f20] group-hover:text-[#05402E]" />
             </div>

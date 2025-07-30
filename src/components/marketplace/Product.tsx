@@ -8,83 +8,73 @@ import { toast } from "sonner";
 import { useCartStore } from "@/lib/store/cartStore";
 import { useRouter } from "next/navigation";
 
+type Product = {
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+  description: string;
+  farmerName: string;
+  category: "Grains" | "Tubers" | "Vegetables" | "Fruits";
+};
+
+const allProducts: Product[] = [
+  {
+    id: 1,
+    name: "Organic Tomatoes",
+    image: "/images/freshtomatoes.jpg",
+    price: 25.0,
+    description: "Fresh from the farm in Volta Region",
+    farmerName: "Kwame Okoro",
+    category: "Vegetables",
+  },
+  {
+    id: 2,
+    name: "Yellow Maize",
+    image: "/images/freshmaize.jpg",
+    price: 50.0,
+    description: "Grown without chemicals in Bono East",
+    farmerName: "Ama Mensah",
+    category: "Grains",
+  },
+  {
+    id: 3,
+    name: "Sweet Cassava",
+    image: "/images/freshmaize.jpg",
+    price: 40.0,
+    description: "Harvested this week in Eastern Region",
+    farmerName: "Yaw Boateng",
+    category: "Tubers",
+  },
+  {
+    id: 4,
+    name: "Pineapples",
+    image: "/images/freshtomatoes.jpg",
+    price: 60.0,
+    description: "Juicy pineapples from Central Region",
+    farmerName: "Akua Sarpong",
+    category: "Fruits",
+  },
+];
+
 export default function MarketplaceGridPage() {
   const router = useRouter();
   const { addToCart, isInCart } = useCartStore();
+
   const [sortBy, setSortBy] = useState("default");
+  const [categoryFilter, setCategoryFilter] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
-  const products = [
-    {
-      id: 1,
-      name: "Organic Tomatoes",
-      image: "/images/freshtomatoes.jpg",
-      price: 25.0,
-      description: "Fresh from the farm in Volta Region",
-      farmerName: "Kwame Okoro",
-    },
-    {
-      id: 2,
-      name: "Yellow Maize",
-      image: "/images/freshmaize.jpg",
-      price: 50.0,
-      description: "Grown without chemicals in Bono East",
-    },
-    {
-      id: 3,
-      name: "Yellow Maize",
-      image: "/images/freshmaize.jpg",
-      price: 50.0,
-      description: "Grown without chemicals in Bono East",
-    },
-    {
-      id: 4,
-      name: "Yellow Maize",
-      image: "/images/freshmaize.jpg",
-      price: 50.0,
-      description: "Grown without chemicals in Bono East",
-    },
-    {
-      id: 5,
-      name: "Yellow Maize",
-      image: "/images/freshmaize.jpg",
-      price: 50.0,
-      description: "Grown without chemicals in Bono East",
-    },
-    {
-      id: 6,
-      name: "Yellow Maize",
-      image: "/images/freshmaize.jpg",
-      price: 50.0,
-      description: "Grown without chemicals in Bono East",
-    },
-    {
-      id: 7,
-      name: "Yellow Maize",
-      image: "/images/freshmaize.jpg",
-      price: 50.0,
-      description: "Grown without chemicals in Bono East",
-    },
-    {
-      id: 8,
-      name: "Yellow Maize",
-      image: "/images/freshmaize.jpg",
-      price: 50.0,
-      description: "Grown without chemicals in Bono East",
-    },
-    {
-      id: 9,
-      name: "Yellow Maize",
-      image: "/images/freshmaize.jpg",
-      price: 50.0,
-      description: "Grown without chemicals in Bono East",
-    },
-  ];
+  const [activeChat, setActiveChat] = useState<Product | null>(null);
+
+  const filteredProducts = useMemo(() => {
+    return categoryFilter === "All"
+      ? allProducts
+      : allProducts.filter((p) => p.category === categoryFilter);
+  }, [categoryFilter]);
+
   const sortedProducts = useMemo(() => {
-    if (!products) return [];
-
-    const sorted = [...products];
-
+    const sorted = [...filteredProducts];
     switch (sortBy) {
       case "alphabetical":
         return sorted.sort((a, b) => a.name.localeCompare(b.name));
@@ -95,40 +85,20 @@ export default function MarketplaceGridPage() {
       default:
         return sorted;
     }
-  }, [products, sortBy]);
+  }, [filteredProducts, sortBy]);
 
   const totalPages = Math.ceil(sortedProducts.length / pageSize);
 
   const paginatedProducts = useMemo(() => {
-    const startIndex = (currentPage - 1) * pageSize;
-    return sortedProducts.slice(startIndex, startIndex + pageSize);
+    const start = (currentPage - 1) * pageSize;
+    return sortedProducts.slice(start, start + pageSize);
   }, [sortedProducts, currentPage]);
 
-  // 3. RESET PAGE WHEN SORTING CHANGES
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [sortBy]);
+  useEffect(() => setCurrentPage(1), [sortBy, categoryFilter]);
 
-  const handleAddToCart = (product: {
-    id: number;
-    name: string;
-    image: string;
-    price: number;
-    quantity: number;
-    description: string;
-    farmerName: string;
-  }) => {
+  const handleAddToCart = (product: Product) => {
     if (!isInCart(product.id)) {
-      addToCart({
-        id: product.id,
-        name: product.name,
-        image: product.image,
-        price: product.price,
-        quantity: 1,
-        farmerName: product.farmerName || "Umknown Farmer",
-        description: product.description
-      });
-
+      addToCart({ ...product, quantity: 1 });
       toast.success(`${product.name} added to cart`, {
         action: {
           label: "View Cart",
@@ -141,14 +111,35 @@ export default function MarketplaceGridPage() {
   return (
     <section className="py-6">
       <div className="container mx-auto space-y-8 px-4 sm:px-6 lg:px-8">
-        {/* Header and Sort Dropdown */}
+        {/* Header and Filters */}
+        <h2 className="text-2xl font-bold text-[#158f20]">Marketplace</h2>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <h2 className="text-2xl font-bold text-[#158f20]">Marketplace</h2>
-          <div className="flex items-center gap-3">
+          {/* Category buttons */}
+          <div className="flex flex-wrap gap-2">
+            {["All", "Grains", "Tubers", "Vegetables", "Fruits"].map(
+              (category) => (
+                <Button
+                  key={category}
+                  variant={categoryFilter === category ? "default" : "outline"}
+                  onClick={() => setCategoryFilter(category)}
+                  className={`text-sm px-4 py-1.5 ${
+                    categoryFilter === category
+                      ? "bg-[#158f20] text-white"
+                      : "text-[#158f20] border-[#158f20]"
+                  }`}
+                >
+                  {category}
+                </Button>
+              )
+            )}
+          </div>
+
+          {/* Sorting dropdown */}
+          <div>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="w-44 sm:w-52 border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#72BF01]"
+              className="w-44 border border-gray-300 rounded-md px-3 py-2 text-sm"
             >
               <option value="default">Sort by</option>
               <option value="alphabetical">Alphabetical (A–Z)</option>
@@ -159,11 +150,11 @@ export default function MarketplaceGridPage() {
         </div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {paginatedProducts.map((product) => (
             <div
               key={product.id}
-              className="w-full border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow"
+              className="border rounded-lg bg-white shadow hover:shadow-md transition-shadow"
             >
               <div className="relative w-full aspect-[4/3]">
                 <Image
@@ -176,117 +167,121 @@ export default function MarketplaceGridPage() {
                   GH₵ {product.price}
                 </div>
               </div>
-              <div className="p-4 lg:p-3 space-y-2">
-                <h2 className="text-base md:text-lg font-semibold text-[#157148] truncate">
+              <div className="p-4 space-y-2">
+                <h2 className="text-base font-semibold text-[#157148] truncate">
                   {product.name}
                 </h2>
                 <p className="text-sm text-gray-500 line-clamp-2">
                   {product.description}
-                </p>   
+                </p>
                 <p className="text-sm text-gray-500">
                   Sold by:{" "}
                   <span className="text-[#05402E] font-semibold">
-                    {product.farmerName || "Unknown Farmer"}
+                    {product.farmerName}
                   </span>
                 </p>
               </div>
               <div className="flex flex-wrap px-4 pb-4 gap-2">
                 <Link href={`/marketplace/buy/${product.id}`}>
-                  <Button
-                    size="lg"
-                    className="bg-gradient-to-br from-[#128f20] to-[#72BF01] text-white hover:opacity-90 shadow-lg"
-                  >
+                  <Button className="bg-gradient-to-br from-[#128f20] to-[#72BF01] text-white hover:opacity-90 shadow-lg">
                     Buy
                   </Button>
                 </Link>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    disabled= {isInCart(product.id)}
-                    onClick={() => handleAddToCart(product.id)}
-                    className="text-[#158f20] hover:bg-white hover:opacity-90 shadow-lg hover:text-[#05402E]"
-                  >
+                <Button
+                  variant="outline"
+                  disabled={isInCart(product.id)}
+                  onClick={() => handleAddToCart(product)}
+                  className="text-[#158f20] hover:bg-white hover:opacity-90 shadow-lg hover:text-[#05402E]"
+                >
                   {isInCart(product.id) ? "Added" : "Add to Cart"}
-                  </Button>{" "}
+                </Button>
+                <Button
+                  variant="ghost"
+                  onClick={() => setActiveChat(product)}
+                  className="text-[#158f20] underline"
+                >
+                  Inquire to Buy
+                </Button>
               </div>
             </div>
           ))}
         </div>
 
         {/* Pagination */}
-        <div className="flex flex-wrap justify-center items-center gap-2 mt-6">
-          {/* Previous Button */}
+        <div className="flex justify-center gap-2 mt-6">
           <Button
             variant="outline"
             size="sm"
-            className="text-sm px-3 py-1.5"
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
             disabled={currentPage === 1}
           >
             Previous
           </Button>
-
-          {/* Dynamic Page Buttons */}
-          {(() => {
-            const pageButtons = [];
-            const maxVisible = 5;
-            const half = Math.floor(maxVisible / 2);
-            let start = Math.max(currentPage - half, 1);
-            let end = Math.min(start + maxVisible - 1, totalPages);
-
-            if (end - start < maxVisible - 1) {
-              start = Math.max(end - maxVisible + 1, 1);
-            }
-
-            if (start > 1) {
-              pageButtons.push(
-                <span key="start-ellipsis" className="px-2 text-gray-400">
-                  ...
-                </span>
-              );
-            }
-
-            for (let i = start; i <= end; i++) {
-              pageButtons.push(
-                <Button
-                  key={i}
-                  variant={currentPage === i ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setCurrentPage(i)}
-                  className={`w-9 h-9 p-0 text-sm ${
-                    currentPage === i ? "bg-[#158f20] text-white" : ""
-                  }`}
-                >
-                  {i}
-                </Button>
-              );
-            }
-
-            if (end < totalPages) {
-              pageButtons.push(
-                <span key="end-ellipsis" className="px-2 text-gray-400">
-                  ...
-                </span>
-              );
-            }
-
-            return pageButtons;
-          })()}
-
-          {/* Next Button */}
+          {[...Array(totalPages)].map((_, i) => (
+            <Button
+              key={i + 1}
+              size="sm"
+              variant={currentPage === i + 1 ? "default" : "outline"}
+              onClick={() => setCurrentPage(i + 1)}
+              className={currentPage === i + 1 ? "bg-[#158f20] text-white" : ""}
+            >
+              {i + 1}
+            </Button>
+          ))}
           <Button
             variant="outline"
             size="sm"
-            className="text-sm px-3 py-1.5"
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
+            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
             disabled={currentPage === totalPages}
           >
             Next
           </Button>
         </div>
       </div>
+      {activeChat && (
+        <div className="fixed top-0 right-0 w-full sm:max-w-md h-full bg-white shadow-xl border-l z-50 flex flex-col">
+          <div className="flex justify-between items-center p-4 border-b">
+            <h3 className="text-lg font-semibold">
+              Chat with {activeChat.farmerName}
+            </h3>
+            <button
+              onClick={() => setActiveChat(null)}
+              className="text-gray-500 hover:text-red-600 text-xl"
+            >
+              &times;
+            </button>
+          </div>
+          <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            <div className="text-sm text-gray-600">
+              Ask about: {activeChat.name}
+            </div>
+            <div className="bg-gray-100 p-3 rounded-md text-sm">
+              👨🏾 Buyer: Is this still available?
+            </div>
+            <div className="bg-green-100 p-3 rounded-md text-sm self-end">
+              👩🏾‍🌾 {activeChat.farmerName}: Yes, it's fresh!
+            </div>
+          </div>
+          <div className="p-4 border-t">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                toast.info("Mock message sent!");
+              }}
+              className="flex gap-2"
+            >
+              <input
+                type="text"
+                placeholder="Type your message..."
+                className="flex-1 border rounded-md px-3 py-2 text-sm"
+              />
+              <Button type="submit" className="bg-[#158f20] text-white">
+                Send
+              </Button>
+            </form>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

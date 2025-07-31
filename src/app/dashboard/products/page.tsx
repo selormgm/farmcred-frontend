@@ -78,7 +78,7 @@ export default function ProductPage() {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="w-48 border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#72BF01]"
+            className="w-48 border dark:bg-card rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#72BF01]"
           >
             <option value="default">Sort by</option>
             <option value="alphabetical">Alphabetical (A–Z)</option>
@@ -136,11 +136,11 @@ export default function ProductPage() {
       </div>
 
       {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 ">
         {sortedProducts.map((product) => (
           <div
             key={product.name}
-            className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow relative"
+            className="border rounded-lg overflow-hidden bg-white dark:bg-card shadow-sm hover:shadow-md transition-shadow relative"
           >
             <img
               src={product.imageUrl || "/images/placeholder.png"}
@@ -149,7 +149,7 @@ export default function ProductPage() {
               onError={(e) => (e.currentTarget.src = "/images/placeholder.png")}
             />
             <div className="p-4 space-y-1">
-              <h2 className="text-md font-semibold text-[#157148] truncate">
+              <h2 className="text-md font-semibold text-[#158f20] truncate">
                 {product.name}
               </h2>
               <p className="text-sm text-gray-500">
@@ -166,13 +166,13 @@ export default function ProductPage() {
             </div>
             <div className="absolute top-2 right-2 flex gap-2">
               <button
-                className="p-1 bg-white border rounded-full hover:bg-gray-100"
+                className="p-1 bg-white border rounded-full hover:bg-gray-100 dark:bg-card"
                 onClick={() => handleEdit(product)}
               >
                 <Pencil className="h-4 w-4 text-blue-600" />
               </button>
               <button
-                className="p-1 bg-white border rounded-full hover:bg-gray-100"
+                className="p-1 bg-white border rounded-full hover:bg-gray-100 dark:bg-card"
                 onClick={() => handleDeleteClick(product)}
               >
                 <Trash2 className="h-4 w-4 text-red-600" />
@@ -215,7 +215,7 @@ export default function ProductPage() {
 
       {/* Empty State */}
       {sortedProducts.length === 0 && (
-        <p className="text-center text-gray-500">
+        <p className="text-center text-gray-500 dark:text-white">
           You haven't added any products yet.
         </p>
       )}

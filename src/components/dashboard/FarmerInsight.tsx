@@ -36,7 +36,7 @@ export function FarmerInsightCard({
       transfers,
     });
     return (
-      <Card className="w-full dark:bg-card rounded-[12px] border border-[#eff3e4]">
+      <Card className="w-full dark:bg-card rounded-[12px]">
         <CardHeader>
           <CardTitle className="text-sm font-medium text-[#158f20]">
             Quick Insights
@@ -75,7 +75,7 @@ export function FarmerInsightCard({
   }, [api]);
 
   return (
-    <Card className="w-full dark:bg-card rounded-[12px] border border-[#eff3e4]">
+    <Card className="w-full dark:bg-card rounded-[12px]">
       <CardHeader>
         <CardTitle className="text-sm font-medium text-[#158f20]">
           Quick Insights

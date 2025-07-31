@@ -161,7 +161,7 @@ function TransactionTableRow({
         {transaction.name}
       </TableCell>
       <TableCell
-        className="text-base font-normal text-[#05402E] py-3"
+        className="text-base font-normal text-[#72BF01] py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
         {new Date(transaction.date).toLocaleDateString("en-GB", {

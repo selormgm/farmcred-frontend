@@ -85,9 +85,9 @@ export default function SignupPage() {
         <Image
           src="/logo/farmcred-07.png"
           alt="FarmCred Logo"
-          width={200}
-          height={80}
-          className="h-20 w-auto"
+          width={160}
+          height={60}
+          className="h-16 w-auto object-contain"
           priority
         />
       </div>

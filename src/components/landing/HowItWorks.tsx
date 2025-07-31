@@ -11,7 +11,7 @@ const slides = [
     id: "farmers",
     title: "For Farmers",
     icon: Tractor,
-    link: "dashboard/read-more",
+    link: "about/readmore/farmers",
     description:
       "Upload produce, access affordable loans, and connect directly with verified buyers.",
   },
@@ -19,7 +19,7 @@ const slides = [
     id: "investors",
     title: "For Investors",
     icon: Coins,
-    link: "investor/read-more",
+    link: "about/readmore/investors",
     description:
       "Support trusted farmers, track loan performance, and earn meaningful, sustainable returns.",
   },
@@ -27,7 +27,7 @@ const slides = [
     id: "platform",
     title: "We Power It",
     icon: Shield,
-    link: "lender/read-more",
+    link: "about/readmore/lenders",
     description:
       "Powered by AI trust scoring, smart contracts, and transparent repayment tracking.",
   },

@@ -157,8 +157,10 @@ export interface InvestorProfile{
   created_at: number;
   updated_at: number;
   farmers: string[];
-  farmers_reviewed: number;
-  farmers_funded: number;
+  farmers_reviewed: number; //farmers invested in and reviewed 
+  farmers_funded: number; // farmers funded
+  total_investments: number; //total amount invested
+  return_on_investments:number; // calculated price on how much an investor gets after investing 
   email: string;
   bio: string;
   password: string;

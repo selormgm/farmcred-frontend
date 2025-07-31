@@ -42,19 +42,14 @@ const products = [
 export function MarketplacePreview() {
   return (
     <section
-      className="relative py-4 px-4 md:px-4 lg:px-64 bg-cover bg-center"
-      style={{ backgroundImage: "url('/images/hero4.jpg')" }}
+      className="relative py-4 px-4 md:px-4 lg:px-96 bg-cover bg-center"
     >
-      {/* Overlay mask */}
-      <div className="absolute inset-0 bg-white/10 backdrop-blur-sm border border-white/20 z-0" />
-
-      {/* Content on top of overlay */}
-      <div className="relative z-10">
-        <div className="text-center mb-8">
-          <h2 className="text-4xl font-semibold text-white">
-            Shop Fresh{" "}
-            <span className="bg-gradient-to-br from-[#e0f89f] to-white bg-clip-text text-transparent font-semibold">
-              Produce
+      <div className="relative">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-semibold text-[#05402E]">
+            Discover Fresh,{" "}
+            <span className="bg-gradient-to-br from-[#128f20] to-[#72BF01] bg-clip-text text-transparent font-semibold">
+              Local Produce
             </span>{" "}
           </h2>
           <div className="w-16 h-1.5 bg-[#158f20] mx-auto my-4 rounded" />
@@ -65,7 +60,7 @@ export function MarketplacePreview() {
             const ProductCard = (
             <div
               key={index}
-              className="relative group aspect-square w-full max-w-[300px] mx-auto cursor-pointer overflow-hidden rounded-2xl"
+              className="relative group w-full max-w-[300px] mx-auto cursor-pointer overflow-hidden rounded-full"
             >
               <img
                 src={product.image}

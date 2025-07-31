@@ -77,8 +77,8 @@ export default function HeroSection() {
                   <Link href={slide.cta1.link}>
                     <Button
                       size="lg"
-                      className="bg-[#158f20] hover:bg-green-700 text-white"
-                    >
+                      className="bg-gradient-to-br from-[#128f20] to-[#72BF01] hover:opacity-90 shadow-lg hover:bg-green-700 text-white"
+                    > 
                       {slide.cta1.label}
                     </Button>
                   </Link>
@@ -86,7 +86,7 @@ export default function HeroSection() {
                     <Button
                       size="lg"
                       variant="outline"
-                      className="text-[#158f20] border-white hover:bg-white/80 hover:text-[#157148]"
+                      className="text-[#158f20] hover:bg-white hover:opacity-90 shadow-lg hover:text-[#05402E]"
                     >
                       {slide.cta2.label}
                     </Button>

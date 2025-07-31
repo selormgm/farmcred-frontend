@@ -25,7 +25,7 @@ export default function FinalCTA() {
             <Button
               size="lg"
               variant="outline"
-              className="border-[#3B7918] text-[#158f20] hover:bg-white hover:text-black"
+              className="text-[#158f20] hover:bg-white hover:opacity-90 shadow-lg hover:text-[#05402E]"
             >
               Join as Investor
             </Button>

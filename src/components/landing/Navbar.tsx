@@ -18,7 +18,7 @@ import { Button } from "../ui/button";
 export function FarmCredNavbar() {
   return (
     <div className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-md border-b border-white/20">
-      <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center w-full">
+      <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
         {/* Logo / Home */}
         <div className="flex-shrink-0">
           <Link href="/" className="flex items-center space-x-2">
@@ -66,7 +66,7 @@ export function FarmCredNavbar() {
                       Fresh, verified farm products sourced directly from the
                       field.
                     </ListItem>
-                    <ListItem href="/about" title="How It Works">
+                    <ListItem href="/about/buyers" title="How It Works">
                       Learn how FarmCred ensures quality and reliability.
                     </ListItem>
                   </ul>
@@ -87,7 +87,7 @@ export function FarmCredNavbar() {
                       Support farmers and earn returns with transparency.
                     </ListItem>
                     <ListItem
-                      href="/about/opportunities"
+                      href="/about/investors"
                       title="Investment Opportunities"
                     >
                       View available farming projects and growth reports.

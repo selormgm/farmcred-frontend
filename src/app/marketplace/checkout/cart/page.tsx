@@ -28,7 +28,7 @@ export default function CartCheckoutPage() {
     fulfillmentMethod === "delivery" ? subtotal + DELIVERY_FEE : subtotal;
 
   const handleConfirm = () => {
-    router.push("/marketplace/orders/history"); // Redirect after placing order
+    router.push("/marketplace/orders"); // Redirect after placing order
   };
 
   return (

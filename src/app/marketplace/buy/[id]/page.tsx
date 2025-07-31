@@ -1,41 +1,51 @@
+"use client";
+
+import { useState } from "react";
 import Footer from "@/components/marketplace/Footer";
 import { MarketplaceNavbar } from "@/components/marketplace/Navbar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import Image from "next/image";
+import { dummyProducts } from "@/mock/products";
 
-const dummyProducts = [
-  {
-    id: "1",
-    name: "Fresh Tomatoes",
-    image: "/images/freshtomatoes.jpg",
-    price: 25.0,
-    description: "Juicy and organic tomatoes.",
-    quantity: "1kg",
-    farmer: "Kwame Okoro",
-    delivery: "24-48 hours",
-  },
-  {
-    id: "2",
-    name: "Organic Mangoes",
-    image: "/images/freshmangoes.jpg",
-    price: 30.0,
-    description: "Sweet, ripe mangoes.",
-    quantity: "5pcs",
-    farmer: "Ama Farms",
-    delivery: "1-2 days",
-  },
-];
+type Product = {
+  id: string;
+  name: string;
+  image: string;
+  price: number;
+  description: string;
+  quantity: string;
+  farmer: string;
+  delivery: string;
+  stock: number;
+};
 
-export default function BuyPage({ params }: { params: { id: string } }) {
+function getDeliveryDateRange(days: string) {
+  const [min, max] = days.match(/\d+/g)?.map(Number) || [1, 2];
+  const today = new Date();
+  const formatter = new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+  });
+
+  const start = new Date(today);
+  start.setDate(today.getDate() + min);
+
+  const end = new Date(today);
+  end.setDate(today.getDate() + max);
+
+  return `${formatter.format(start)} – ${formatter.format(end)}`;
+}
+
+export default function BuyPage() {
+  const [fulfillmentMethod, setFulfillmentMethod] = useState<
+    "delivery" | "pickup"
+  >("delivery");
+
+  const params = useParams();
   const product = dummyProducts.find((p) => p.id === params.id);
-
   if (!product) return notFound();
-
-  const metadata = {
-    title: "Buy - " + product.name,
-  };
 
   return (
     <>
@@ -58,9 +68,21 @@ export default function BuyPage({ params }: { params: { id: string } }) {
             <p className="text-green-600 text-xl font-semibold">
               GH₵ {product.price}
             </p>
+            {product.stock > 5 ? (
+              <p className="text-sm text-green-600">In stock</p>
+            ) : (
+              <p className="text-sm text-red-600">
+                Only {product.stock} left — order soon!
+              </p>
+            )}
             <p className="text-sm">Quantity: {product.quantity}</p>
             <p className="text-sm">Farmer: {product.farmer}</p>
             <p className="text-sm">Delivery: {product.delivery}</p>
+            <p className="text-sm text-gray-600">
+              Expected Delivery: {getDeliveryDateRange(product.delivery)}
+            </p>
+
+           
           </div>
         </div>
 
@@ -78,6 +100,7 @@ export default function BuyPage({ params }: { params: { id: string } }) {
             selected method. Once confirmed, your order will be processed.
           </p>
         </div>
+
         <div className="pt-6">
           <Link href={`/marketplace/checkout/${product.id}`}>
             <Button

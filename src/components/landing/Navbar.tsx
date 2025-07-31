@@ -87,7 +87,7 @@ export function FarmCredNavbar() {
                       Support farmers and earn returns with transparency.
                     </ListItem>
                     <ListItem
-                      href="/about#opportunities"
+                      href="/about/opportunities"
                       title="Investment Opportunities"
                     >
                       View available farming projects and growth reports.

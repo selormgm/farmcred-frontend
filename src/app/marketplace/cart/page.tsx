@@ -1,28 +1,16 @@
+"use client";
+
 import Footer from "@/components/marketplace/Footer";
 import { MarketplaceNavbar } from "@/components/marketplace/Navbar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-
-const cartItems = [
-  {
-    id: "1",
-    name: "Fresh Tomatoes",
-    image: "/images/freshtomatoes.jpg",
-    price: 25.0,
-    quantity: 2,
-  },
-  {
-    id: "2",
-    name: "Organic Mangoes",
-    image: "/images/freshmangoes.jpg",
-    price: 30.0,
-    quantity: 1,
-  },
-];
+import { useCartStore } from "@/lib/store/cartStore";
 
 export default function CartPage() {
-  const totalPrice = cartItems.reduce(
+  const { cart, removeFromCart, updateQuantity } = useCartStore();
+
+  const totalPrice = cart.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
@@ -33,12 +21,12 @@ export default function CartPage() {
       <main className="max-w-6xl mx-auto px-4 pt-24 pb-56 space-y-10">
         <h1 className="text-3xl font-bold">Your Cart</h1>
 
-        {cartItems.length === 0 ? (
+        {cart.length === 0 ? (
           <p className="text-gray-600">Your cart is empty.</p>
         ) : (
           <div className="grid md:grid-cols-3 gap-8">
             <div className="md:col-span-2 space-y-6">
-              {cartItems.map((item) => (
+              {cart.map((item) => (
                 <div
                   key={item.id}
                   className="flex items-center gap-4 border-b pb-4"
@@ -52,14 +40,34 @@ export default function CartPage() {
                   />
                   <div className="flex-1">
                     <h2 className="text-lg font-semibold">{item.name}</h2>
-                    <p className="text-sm text-gray-500">
-                      Quantity: {item.quantity}
-                    </p>
+                    <div className="flex items-center gap-2 text-sm">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => updateQuantity(item.id, -1)}
+                        disabled={item.quantity <= 1}
+                      >
+                        −
+                      </Button>
+                      <span>{item.quantity}</span>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => updateQuantity(item.id, 1)}
+                      >
+                        +
+                      </Button>
+                    </div>
+
                     <p className="text-sm text-gray-700 font-semibold">
                       GH₵ {item.price * item.quantity}
                     </p>
                   </div>
-                  <Button variant="outline" size="sm">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => removeFromCart(item.id)}
+                  >
                     Remove
                   </Button>
                 </div>

@@ -7,6 +7,8 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { useCartStore } from "@/lib/store/cartStore";
 import { useRouter } from "next/navigation";
+import ChartDrawer from "@/components/marketplace/ChartDrawer";
+import { useSearchStore } from "@/lib/store/searchStore";
 
 type Product = {
   id: number;
@@ -40,7 +42,7 @@ const allProducts: Product[] = [
   {
     id: 3,
     name: "Sweet Cassava",
-    image: "/images/freshmaize.jpg",
+    image: "/images/freshsweetcassava.jpg",
     price: 40.0,
     description: "Harvested this week in Eastern Region",
     farmerName: "Yaw Boateng",
@@ -49,7 +51,7 @@ const allProducts: Product[] = [
   {
     id: 4,
     name: "Pineapples",
-    image: "/images/freshtomatoes.jpg",
+    image: "/images/freshpineapple.jpg",
     price: 60.0,
     description: "Juicy pineapples from Central Region",
     farmerName: "Akua Sarpong",
@@ -60,18 +62,26 @@ const allProducts: Product[] = [
 export default function MarketplaceGridPage() {
   const router = useRouter();
   const { addToCart, isInCart } = useCartStore();
-
   const [sortBy, setSortBy] = useState("default");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
   const [activeChat, setActiveChat] = useState<Product | null>(null);
+  const { query, setQuery } = useSearchStore();
 
   const filteredProducts = useMemo(() => {
-    return categoryFilter === "All"
-      ? allProducts
-      : allProducts.filter((p) => p.category === categoryFilter);
-  }, [categoryFilter]);
+    return allProducts.filter((p) => {
+      const matchesCategory =
+        categoryFilter === "All" || p.category === categoryFilter;
+
+      const queryText = query.toLowerCase();
+      const matchesQuery =
+        p.name.toLowerCase().includes(queryText) ||
+        p.farmerName.toLowerCase().includes(queryText);
+
+      return matchesCategory && matchesQuery;
+    });
+  }, [allProducts, categoryFilter, query]);
 
   const sortedProducts = useMemo(() => {
     const sorted = [...filteredProducts];
@@ -198,7 +208,7 @@ export default function MarketplaceGridPage() {
                 <Button
                   variant="ghost"
                   onClick={() => setActiveChat(product)}
-                  className="text-[#158f20] underline"
+                  className="text-[#158f20]"
                 >
                   Inquire to Buy
                 </Button>
@@ -238,50 +248,10 @@ export default function MarketplaceGridPage() {
           </Button>
         </div>
       </div>
-      {activeChat && (
-        <div className="fixed top-0 right-0 w-full sm:max-w-md h-full bg-white shadow-xl border-l z-50 flex flex-col">
-          <div className="flex justify-between items-center p-4 border-b">
-            <h3 className="text-lg font-semibold">
-              Chat with {activeChat.farmerName}
-            </h3>
-            <button
-              onClick={() => setActiveChat(null)}
-              className="text-gray-500 hover:text-red-600 text-xl"
-            >
-              &times;
-            </button>
-          </div>
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
-            <div className="text-sm text-gray-600">
-              Ask about: {activeChat.name}
-            </div>
-            <div className="bg-gray-100 p-3 rounded-md text-sm">
-              👨🏾 Buyer: Is this still available?
-            </div>
-            <div className="bg-green-100 p-3 rounded-md text-sm self-end">
-              👩🏾‍🌾 {activeChat.farmerName}: Yes, it's fresh!
-            </div>
-          </div>
-          <div className="p-4 border-t">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                toast.info("Mock message sent!");
-              }}
-              className="flex gap-2"
-            >
-              <input
-                type="text"
-                placeholder="Type your message..."
-                className="flex-1 border rounded-md px-3 py-2 text-sm"
-              />
-              <Button type="submit" className="bg-[#158f20] text-white">
-                Send
-              </Button>
-            </form>
-          </div>
-        </div>
-      )}
+      <ChartDrawer
+        activeChat={activeChat}
+        onClose={() => setActiveChat(null)}
+      />
     </section>
   );
 }

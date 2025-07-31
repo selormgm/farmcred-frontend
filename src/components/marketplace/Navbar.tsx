@@ -3,7 +3,6 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { ShoppingCart } from "lucide-react";
 import {
@@ -13,13 +12,15 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { useSearchStore } from "@/lib/store/searchStore";
 
 export function MarketplaceNavbar() {
   const navLinks = [
     { href: "/marketplace", label: "Marketplace" },
-    { href: "/orders", label: "My Orders" },
-    { href: "/about", label: "About" },
+    { href: "/marketplace/orders", label: "My Orders" },
+    { href: "/marketplace/about", label: "About" },
   ];
+  const { query, setQuery } = useSearchStore();
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-md border-b border-white/20">
@@ -58,6 +59,8 @@ export function MarketplaceNavbar() {
           <Input
             type="search"
             placeholder="Search for produce..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
             className="bg-white border border-gray-300 focus:ring-[#158f20] focus:border-[#72bf01] rounded-md px-4 py-2 w-[200px] md:w-[250px]"
           />
           <Link href="/marketplace/cart" className="group">

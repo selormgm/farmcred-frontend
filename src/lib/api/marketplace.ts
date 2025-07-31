@@ -1,4 +1,5 @@
 import apiClient from "../axios";
+import { SendMessageInput } from "../types";
 
 export const marketplaceService = {
   // --- Produce Listings ---
@@ -45,9 +46,9 @@ export const marketplaceService = {
     return res.data;
   },
 
-  async sendMessage(convoId: number, content: string) {
+  async sendMessage(convoId: number, data: SendMessageInput) {
     const res = await apiClient.post(`/api/marketplace/conversations/${convoId}/send-message/`, {
-      content,
+      data,
     });
     return res.data;
   },

@@ -56,14 +56,37 @@ export default function AdminLoginPage() {
 
       <div className="grid lg:grid-cols-2 min-h-screen">
         <div className="hidden lg:block relative">
-          <Image
-            src="/images/admin-login.jpg"
-            alt="Admin Login Background"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-[#eff3e4]/20" />
+          <div className="absolute inset-0">
+            <Image
+              src="/images/admin-login2.jpg"
+              alt="Admin Login Background"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+
+          <div className="absolute inset-0 bg-[#eff3e4]/20"></div>
+
+          <div className="absolute bottom-12 left-8 right-8 flex justify-center">
+            <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6 max-w-sm text-center shadow-xl">
+              <div className="space-y-4">
+                <h1 className="text-xl font-bold text-white drop-shadow-lg font-[Plus Jakarta Sans]">
+                  Welcome to FarmCred
+                </h1>
+                <p className="text-white/90 font-[Inter] text-sm leading-relaxed drop-shadow-md">
+                  Secure access to the FarmCred admin dashboard. Monitor users,
+                  manage loans, and track platform performance in one place.{" "}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute bottom-6 left-8 right-8 text-center">
+            <p className="text-white/90 font-[Inter] text-xs">
+              © {new Date().getFullYear()} FarmCred. All rights reserved.
+            </p>
+          </div>
         </div>
 
         <div className="flex flex-col justify-center px-6 py-8 sm:px-8 lg:px-12">
@@ -73,8 +96,7 @@ export default function AdminLoginPage() {
                 Welcome Administrator{" "}
               </h2>
               <p className="mt-2 text-md text-[#157148] font-[Inter]">
-                Secure access to the FarmCred admin dashboard. Monitor users,
-                manage loans, and track platform performance in one place.{" "}
+                Sign in to the admin dashboard
               </p>
             </div>
 

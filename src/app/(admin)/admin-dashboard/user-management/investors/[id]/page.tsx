@@ -55,7 +55,6 @@ function formatDate(dateStr: string) {
 export default function InvestorProfilePage() {
   const { id } = useParams();
 
-  // You could filter by id from a list if needed
   const investor = mockInvestor;
 
   return (

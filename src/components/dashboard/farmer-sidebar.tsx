@@ -60,7 +60,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       url: "/dashboard/loans",
       icon: HandCoins,
     },
-
   ];
 
   const navSecondary = [

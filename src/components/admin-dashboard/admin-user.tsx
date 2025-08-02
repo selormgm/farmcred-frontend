@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, CircleUser, LogOut } from "lucide-react";
+import { Bell, CircleUser, LogOut, Palette, ShieldCheck } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -102,15 +102,21 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
-                <Link href="/investor/settings/my-account">
+                <Link href="/admin-dashboard/settings/users">
                   <CircleUser />
-                  Account
+                  Users
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/investor/settings/notification-settings">
-                  <Bell />
-                  Notifications
+                <Link href="/admin-dashboard/settings/roles">
+                  <ShieldCheck />
+                  Roles and Permissions
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/admin-dashboard/settings/preferences">
+                  <Palette />
+                  Preferences
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>

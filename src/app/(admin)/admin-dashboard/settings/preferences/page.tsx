@@ -46,8 +46,7 @@ export default function AdminPreferencesPage() {
   };
 
   return (
-    <main className="space-y-6 px-6 py-8 max-w-6xl">
-      <h1 className="text-2xl font-bold">{t("admin_preferences")}</h1>
+    <main className="p-6 space-y-8 max-w-7xl mx-auto">
 
       {/* Theme */}
       <Card>

@@ -132,8 +132,7 @@ export default function ReportsAnalyticsPage() {
     <main className="p-6 space-y-8 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold">Reports & Analytics</h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-md text-muted-foreground">
             Preview, generate, or automate recurring report delivery.
           </p>
         </div>

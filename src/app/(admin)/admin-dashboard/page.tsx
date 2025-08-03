@@ -29,8 +29,6 @@ ChartJS.register(
 export default function AdminDashboard() {
   return (
     <main className="p-6 space-y-8">
-      <h1 className="text-2xl font-bold">FarmCred Admin Dashboard</h1>
-
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
         <SummaryCard icon={<Users />} label="Total Farmers" value="132" />
@@ -55,79 +53,90 @@ export default function AdminDashboard() {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
         {/* Monthly Loan Disbursement Chart */}
-        <Card className="shadow-sm">
+        <Card className="shadow-sm h-[350px] flex flex-col">
           <CardHeader>
             <CardTitle>Monthly Loan Disbursement Trend</CardTitle>
           </CardHeader>
-          <CardContent>
-            <Bar
-              data={{
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-                datasets: [
-                  {
-                    label: "Loan Disbursed (GH₵)",
-                    data: [5000, 7000, 6000, 8000, 10000, 9500, 12000],
-                    backgroundColor: "#158f20",
+          <CardContent className="relative flex-1">
+            <div className="absolute inset-0">
+              <Bar
+                data={{
+                  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+                  datasets: [
+                    {
+                      label: "Loan Disbursed (GH₵)",
+                      data: [5000, 7000, 6000, 8000, 10000, 9500, 12000],
+                      backgroundColor: "#158f20",
+                    },
+                  ],
+                }}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    legend: { display: false },
                   },
-                ],
-              }}
-              options={{
-                responsive: true,
-                plugins: {
-                  legend: { display: false },
-                },
-              }}
-            />
+                }}
+              />
+            </div>
           </CardContent>
         </Card>
 
         {/* Farmer Registration Growth Chart */}
-        <Card className="shadow-sm">
+        <Card className="shadow-sm h-[350px] flex flex-col">
           <CardHeader>
             <CardTitle>Farmer Registration Growth</CardTitle>
           </CardHeader>
-          <CardContent>
-            <Bar
-              data={{
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-                datasets: [
-                  {
-                    label: "New Farmers",
-                    data: [10, 15, 20, 18, 25, 30, 40],
-                    backgroundColor: "#72BF01",
+          <CardContent className="relative flex-1">
+            <div className="absolute inset-0">
+              <Bar
+                data={{
+                  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+                  datasets: [
+                    {
+                      label: "New Farmers",
+                      data: [10, 15, 20, 18, 25, 30, 40],
+                      backgroundColor: "#72BF01",
+                    },
+                  ],
+                }}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    legend: { display: false },
                   },
-                ],
-              }}
-              options={{
-                responsive: true,
-                plugins: {
-                  legend: { display: false },
-                },
-              }}
-            />
+                }}
+              />
+            </div>
           </CardContent>
         </Card>
 
         {/* Trust Level Distribution Pie Chart */}
-        <Card className="lg:col-span-2 shadow-sm">
+        <Card className="shadow-sm h-[350px] flex flex-col">
           <CardHeader>
             <CardTitle>Trust Level Distribution</CardTitle>
           </CardHeader>
-          <CardContent>
-            <Pie
-              data={{
-                labels: ["High Trust", "Medium Trust", "Low Trust"],
-                datasets: [
-                  {
-                    data: [60, 30, 10],
-                    backgroundColor: ["#158f20", "#72BF01", "#FF5252"],
-                  },
-                ],
-              }}
-              options={{ responsive: true }}
-            />
+          <CardContent className="relative flex-1">
+            <div className="absolute inset-0">
+              <Pie
+                data={{
+                  labels: ["High Trust", "Medium Trust", "Low Trust"],
+                  datasets: [
+                    {
+                      data: [60, 30, 10],
+                      backgroundColor: ["#158f20", "#72BF01", "#FF5252"],
+                    },
+                  ],
+                }}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                }}
+              />
+            </div>
           </CardContent>
         </Card>
       </div>

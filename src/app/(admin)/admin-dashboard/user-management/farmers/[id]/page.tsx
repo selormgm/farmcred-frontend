@@ -92,7 +92,7 @@ export default function FarmerProfilePage() {
       {/* Back Link */}
       <Button
         onClick={() => router.push("/admin-dashboard/user-management")}
-        className="flex items-center gap-2 text-sm text-muted-foreground hover:underline"
+        variant="link"
       >
         <ArrowLeft className="w-4 h-4" /> Back to User Management
       </Button>

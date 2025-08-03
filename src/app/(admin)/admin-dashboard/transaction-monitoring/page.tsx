@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -85,10 +86,9 @@ export default function TransactionMonitoringPage() {
   };
 
   return (
-    <main className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Transaction Monitoring</h1>
-        <div className="space-x-2">
+    <main className="p-6 space-y-8 max-w-7xl mx-auto">
+      <div className="flex justify-end">
+        <div className="flex space-x-2">
           <Button variant="outline" className="flex gap-2">
             <Download className="h-4 w-4" /> Export CSV
           </Button>
@@ -120,10 +120,6 @@ export default function TransactionMonitoringPage() {
             <SelectItem value="Repayment">Repayment</SelectItem>
           </SelectContent>
         </Select>
-
-        <Button variant="ghost" size="sm" className="text-muted-foreground">
-          <Filter className="h-4 w-4 mr-2" /> Advanced Filters
-        </Button>
       </div>
 
       <Card>

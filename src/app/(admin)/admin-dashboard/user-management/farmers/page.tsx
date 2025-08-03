@@ -1,3 +1,4 @@
+"use client"
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -90,9 +91,9 @@ export default function FarmersManagementPage() {
   }, [search]);
 
   return (
-    <main className="p-6 space-y-8">
+    <main className="p-6 space-y-8 max-w-7xl mx-auto">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Manage Farmers</h1>
+        <h1 className="text-2xl font-semibold text-[#158f20]">Manage Farmers</h1>
         <div className="flex gap-2">
           <Input
             placeholder="Search by name..."
@@ -100,9 +101,6 @@ export default function FarmersManagementPage() {
             onChange={(e) => setSearch(e.target.value)}
             className="w-64"
           />
-          <Button variant="outline">
-            <Search className="w-4 h-4 mr-2" /> Search
-          </Button>
         </div>
       </div>
 
@@ -128,7 +126,7 @@ export default function FarmersManagementPage() {
                 <Button size="sm" variant="outline">
                   View Profile
                 </Button>
-                <Button size="sm" variant="secondary">
+                <Button size="sm" variant="destructive">
                   Flag/Suspend
                 </Button>
               </div>

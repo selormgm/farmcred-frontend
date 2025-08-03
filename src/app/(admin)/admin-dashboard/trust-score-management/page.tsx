@@ -12,9 +12,7 @@ export default function TrustScoreManagementPage() {
   const [showFlagged, setShowFlagged] = useState(false);
 
   return (
-    <main className="p-6 space-y-8">
-      <h1 className="text-2xl font-bold">Trust Score Management</h1>
-
+    <main className="p-6 space-y-8 max-w-7xl mx-auto">
       {/* Overview Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         <SummaryCard

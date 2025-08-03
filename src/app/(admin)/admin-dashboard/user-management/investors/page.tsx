@@ -77,7 +77,7 @@ export default function InvestorListPage() {
   return (
     <main className="max-w-6xl mx-auto p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Manage Investors</h1>
+        <h1 className="text-2xl font-semibold text-[#158f20]">Manage Investors</h1>
         <div className="flex gap-2">
           <Input
             placeholder="Search by name..."
@@ -85,15 +85,12 @@ export default function InvestorListPage() {
             onChange={(e) => setSearch(e.target.value)}
             className="w-64"
           />
-          <Button variant="outline">
-            <Search className="w-4 h-4 mr-2" /> Search
-          </Button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {paginatedInvestors.map((investor) => (
-          <Card key={investor.id} className="shadow-md"> 
+          <Card key={investor.id} className="shadow-sm"> 
             <CardHeader>
               <CardTitle>{investor.full_name}</CardTitle>
               <p className="text-sm text-gray-500">{investor.email}</p>
@@ -109,7 +106,7 @@ export default function InvestorListPage() {
 
               <div className="flex gap-2">
                 <Link
-                  href={`/admin-dashboard/user-management/investor/${investor.id}/profile`}
+                  href={`/admin-dashboard/user-management/investors/${investor.id}`}
                 >
                   <Button size="sm" variant="outline">
                     View Profile

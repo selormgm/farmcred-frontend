@@ -1,43 +1,45 @@
+"use client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Input } from '@/components/ui/input';
-import { useState } from 'react';
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 const mockLogs = [
   {
-    admin: 'Kwame Admin',
-    action: 'Approved loan for Yaw Boateng',
-    timestamp: '2025-08-01 14:32',
+    admin: "Kwame Admin",
+    action: "Approved loan for Yaw Boateng",
+    timestamp: "2025-08-01 14:32",
   },
   {
-    admin: 'Ama Support',
-    action: 'Reset password for Ama Mensah',
-    timestamp: '2025-08-01 13:45',
+    admin: "Ama Support",
+    action: "Reset password for Ama Mensah",
+    timestamp: "2025-08-01 13:45",
   },
   {
-    admin: 'Kojo Super',
-    action: 'Flagged suspicious transaction #TXN1236',
-    timestamp: '2025-07-31 17:20',
+    admin: "Kojo Super",
+    action: "Flagged suspicious transaction #TXN1236",
+    timestamp: "2025-07-31 17:20",
   },
 ];
 
 export default function AdminActivityPage() {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
-  const filtered = mockLogs.filter((log) =>
-    log.admin.toLowerCase().includes(search.toLowerCase()) ||
-    log.action.toLowerCase().includes(search.toLowerCase())
+  const filtered = mockLogs.filter(
+    (log) =>
+      log.admin.toLowerCase().includes(search.toLowerCase()) ||
+      log.action.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <main className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Admin Activity Logs</h1>
-
+    <main className="p-6 space-y-8 max-w-7xl mx-auto">
       <Input
         placeholder="Search by admin or action..."
         value={search}

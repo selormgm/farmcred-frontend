@@ -56,9 +56,30 @@ const dummyLoans = [
     status: "completed",
     dueDate: "2025-06-15",
   },
+  {
+    id: 7,
+    farmer: "Esi Brown",
+    amount: "GH₵5,000",
+    status: "approved",
+    dueDate: "2025-11-10",
+  },
+  {
+    id: 8,
+    farmer: "Kojo Appiah",
+    amount: "GH₵8,500",
+    status: "pending",
+    dueDate: "2025-09-25",
+  },
+  {
+    id: 9,
+    farmer: "Abena Mensimah",
+    amount: "GH₵9,000",
+    status: "completed",
+    dueDate: "2025-06-15",
+  },
 ];
 
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 5;
 
 export default function LoanManagementPage() {
   const [tab, setTab] = useState("pending");
@@ -83,9 +104,7 @@ export default function LoanManagementPage() {
   };
 
   return (
-    <main className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Loan Management</h1>
-
+    <main className="p-6 space-y-8 max-w-7xl mx-auto">
       <Tabs
         value={tab}
         onValueChange={(value) => {
@@ -128,7 +147,7 @@ export default function LoanManagementPage() {
                 <p>Due Date: {loan.dueDate}</p>
                 {loan.status === "pending" && (
                   <div className="flex gap-2 pt-2">
-                    <Button size="sm">Approve</Button>
+                    <Button size="sm" variant="outline" >Approve</Button>
                     <Button size="sm" variant="destructive">
                       Reject
                     </Button>

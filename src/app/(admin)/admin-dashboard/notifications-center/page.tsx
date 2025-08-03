@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -5,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BellRing, Send } from "lucide-react";
+import { Send } from "lucide-react";
 
 const mockAnnouncements = [
   {
@@ -38,9 +39,7 @@ export default function NotificationCenter() {
   const [audience, setAudience] = useState("All");
 
   return (
-    <main className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Notification Center</h1>
-
+    <main className="p-6 space-y-8 max-w-7xl mx-auto">
       <Card>
         <CardHeader>
           <CardTitle>Send Announcement</CardTitle>

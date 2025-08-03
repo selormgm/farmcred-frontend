@@ -70,8 +70,6 @@ export default function FarmerDisputesPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-bold">Active Disputes</h1>
-
       {loading ? (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 3 }).map((_, idx) => (
@@ -79,7 +77,7 @@ export default function FarmerDisputesPage() {
           ))}
         </div>
       ) : disputes.length === 0 ? (
-        <p>No active disputes.</p>
+        <p className="text-sm text-muted-foreground">No active disputes.</p>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {disputes.map((order) => (

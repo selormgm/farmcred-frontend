@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { RequestLoanModal } from "@/components/dashboard/RequestLoan";
 import { farmerService } from "@/lib/api/farmer";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Loan {
   id: number;
@@ -34,7 +35,9 @@ export default function LoanPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const hasActiveLoan = loans.some((loan) => loan.status === "active" || loan.status === "pending");
+  const hasActiveLoan = loans.some(
+    (loan) => loan.status === "active" || loan.status === "pending"
+  );
 
   useEffect(() => {
     setLoading(true);
@@ -62,8 +65,62 @@ export default function LoanPage() {
     : 0;
 
   if (loading) {
-    return <div className="p-4">Loading loans...</div>;
+    return (
+      <div className="p-4 space-y-6">
+        {/* Header and View Buttons */}
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <Skeleton className="h-8 w-32" />
+          <div className="flex items-center gap-3">
+            <Skeleton className="h-8 w-20" />
+            <Skeleton className="h-8 w-20" />
+            <Skeleton className="h-8 w-36" />
+          </div>
+        </div>
+
+        {/* Summary Cards */}
+        <div className="grid gap-4 md:grid-cols-2">
+          <Card>
+            <CardHeader>
+              <Skeleton className="h-6 w-40" />
+            </CardHeader>
+            <CardContent>
+              <Skeleton className="h-8 w-32" />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <Skeleton className="h-6 w-40" />
+            </CardHeader>
+            <CardContent>
+              <Skeleton className="h-3 w-full mb-2" />
+              <Skeleton className="h-4 w-32" />
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Loan Cards */}
+        <div
+          className={`${
+            view === "grid"
+              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+              : "flex flex-col gap-4"
+          }`}
+        >
+          {[...Array(3)].map((_, i) => (
+            <Card key={i}>
+              <div className="space-y-3 p-4">
+                <Skeleton className="h-4 w-28" />
+                <Skeleton className="h-6 w-32" />
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-5 w-20" />
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
   }
+
   if (error) {
     return <div className="p-4 text-red-600">{error}</div>;
   }

@@ -1,39 +1,43 @@
 "use client";
 
+import { useState } from "react";
+import {
+  Printer,
+  Search,
+  List,
+  ArrowDownCircle,
+  ArrowUpCircle,
+} from "lucide-react";
 import TransactionHistory from "@/components/dashboard/TransactionHistory";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
+  Dialog,
+  DialogTrigger,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import {
   Select,
-  SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectContent,
+  SelectItem,
 } from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { useFarmerTransactions } from "@/hooks/useFarmerData";
 import { handlePrintPDF } from "@/lib/helper-functions";
-import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
-import { Printer, Search } from "lucide-react";
-import { useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export default function TransactionrHistoryPage() {
+export default function TransactionHistoryPage() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"all" | "income" | "expense">("all");
   const [downloadFormat, setDownloadFormat] = useState<"pdf" | "csv">("pdf");
   const [open, setOpen] = useState(false);
 
   const { data: transactions, loading, error } = useFarmerTransactions();
-
-  // Callback to receive filtered transactions from TransactionHistory
-  // function handleTransactions(filtered: any[]) {
-  //   setTransactions(filtered);
-  // }
 
   function handleExportCSV() {
     const csvRows = [
@@ -68,8 +72,9 @@ export default function TransactionrHistoryPage() {
   }
 
   return (
-    <div className="mx-24">
-      <div className=" flex items-center justify-center mb-2 flex-col gap-4">
+    <div className="mx-4 md:mx-24">
+      {/* Search Input */}
+      <div className="flex justify-center mb-6">
         <div className="relative w-full max-w-lg">
           <Input
             placeholder="Search..."
@@ -81,34 +86,36 @@ export default function TransactionrHistoryPage() {
         </div>
       </div>
 
-      <div className="flex items-center justify-between mb-4">
-        <div className="space-x-2">
-          <Button
-            variant={filter === "all" ? "default" : "secondary"}
-            onClick={() => setFilter("all")}
-          >
-            All
-          </Button>
-          <Button
-            variant={filter === "income" ? "default" : "secondary"}
-            onClick={() => setFilter("income")}
-          >
-            Income
-          </Button>
-          <Button
-            variant={filter === "expense" ? "default" : "secondary"}
-            onClick={() => setFilter("expense")}
-          >
-            Expense
-          </Button>
-        </div>
+      {/* Filter Tabs + Print Button */}
+      <div className="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
+        <Tabs
+          value={filter}
+          onValueChange={(v) => setFilter(v as any)}
+          className="w-full md:w-auto"
+        >
+          <TabsList className="grid grid-cols-3 w-full md:w-[320px]">
+            <TabsTrigger value="all">
+              <List className="w-4 h-4 mr-1" />
+              All
+            </TabsTrigger>
+            <TabsTrigger value="income">
+              <ArrowDownCircle className="w-4 h-4 mr-1" />
+              Income
+            </TabsTrigger>
+            <TabsTrigger value="expense">
+              <ArrowUpCircle className="w-4 h-4 mr-1" />
+              Expense
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button
               variant="secondary"
-              className=" hover:bg-[#157148] hover:text-white"
+              className="hover:bg-[#157148] hover:text-white"
             >
-              <Printer className="mr-0.5" />
+              <Printer className="mr-1" />
               Print
             </Button>
           </DialogTrigger>
@@ -135,7 +142,43 @@ export default function TransactionrHistoryPage() {
         </Dialog>
       </div>
 
-      <TransactionHistory tablelength={10} search={search} filter={filter} />
+      {/* Table in Card */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Transaction History</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {loading ? (
+            <div className="space-y-4">
+              {/* Table Header Skeleton */}
+              <div className="grid grid-cols-5 gap-4">
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-full" />
+              </div>
+
+              {/* 5 Row Skeletons */}
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="grid grid-cols-5 gap-4">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-full" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <TransactionHistory
+              tablelength={10}
+              search={search}
+              filter={filter}
+            />
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

@@ -9,6 +9,7 @@ import {
   HandCoins,
   HelpCircle,
   HomeIcon,
+  MessageCircle,
   Settings,
   Wheat,
 } from "lucide-react";
@@ -59,6 +60,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: "Loans",
       url: "/dashboard/loans",
       icon: HandCoins,
+    },
+    {
+      title: "Interactions",
+      url: "/dashboard/interactions",
+      icon: MessageCircle,
     },
   ];
 

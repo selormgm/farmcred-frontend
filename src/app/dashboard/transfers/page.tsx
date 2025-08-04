@@ -1,32 +1,42 @@
 "use client";
 
+import { useState } from "react";
+import { Printer, Search, List, CheckCircle, Clock, XCircle } from "lucide-react";
 import TransferTable from "@/components/dashboard/TransferTable";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
+  Dialog,
+  DialogTrigger,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import {
   Select,
-  SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectContent,
+  SelectItem,
 } from "@/components/ui/select";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useFarmerTransfers } from "@/hooks/useFarmerData";
 import { handlePrintTransfersPDF } from "@/lib/helper-functions";
-import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
-import { Printer, Search } from "lucide-react";
-import { useState } from "react";
 
 export default function TransferHistoryPage() {
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState<
-    "all" | "completed" | "pending" | "failed"
-  >("all");
+  const [filter, setFilter] = useState<"all" | "completed" | "pending" | "failed">("all");
   const [downloadFormat, setDownloadFormat] = useState<"pdf" | "csv">("pdf");
   const [open, setOpen] = useState(false);
 
@@ -66,8 +76,9 @@ export default function TransferHistoryPage() {
   }
 
   return (
-    <div className="mx-24">
-      <div className=" flex items-center justify-center mb-2 flex-col gap-4">
+    <div className="mx-4 md:mx-24">
+      {/* Search */}
+      <div className="flex items-center justify-center mb-6 flex-col gap-4">
         <div className="relative w-full max-w-lg">
           <Input
             placeholder="Search..."
@@ -79,69 +90,84 @@ export default function TransferHistoryPage() {
         </div>
       </div>
 
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <div className="space-x-2">
-            <Button
-              variant={filter === "all" ? "default" : "secondary"}
-              onClick={() => setFilter("all")}
-            >
-              All
-            </Button>
-            <Button
-              variant={filter === "completed" ? "default" : "secondary"}
-              onClick={() => setFilter("completed")}
-            >
-              Completed
-            </Button>
-            <Button
-              variant={filter === "pending" ? "default" : "secondary"}
-              onClick={() => setFilter("pending")}
-            >
-              Pending
-            </Button>
-            <Button
-              variant={filter === "failed" ? "default" : "secondary"}
-              onClick={() => setFilter("failed")}
-            >
-              Failed
-            </Button>
-          </div>
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-              <Button
-                variant="secondary"
-                className=" hover:bg-[#157148] hover:text-white"
-              >
-                <Printer className="mr-0.5" />
-                Print
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Choose Download Format</DialogTitle>
-              </DialogHeader>
-              <Select
-                value={downloadFormat}
-                onValueChange={(v) => setDownloadFormat(v as "pdf" | "csv")}
-              >
-                <SelectTrigger className="w-full mt-2">
-                  <SelectValue placeholder="Select format" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="pdf">PDF</SelectItem>
-                  <SelectItem value="csv">CSV</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button className="mt-4 w-full" onClick={handleDownload}>
-                Download
-              </Button>
-            </DialogContent>
-          </Dialog>
-        </div>
+      {/* Tabs + Print */}
+      <div className="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
+        <Tabs value={filter} onValueChange={(v) => setFilter(v as any)} className="w-full md:w-auto">
+          <TabsList className="grid grid-cols-4 w-full md:w-[420px]">
+            <TabsTrigger value="all">
+              <List className="w-4 h-4 mr-1" /> All
+            </TabsTrigger>
+            <TabsTrigger value="completed">
+              <CheckCircle className="w-4 h-4 mr-1" /> Completed
+            </TabsTrigger>
+            <TabsTrigger value="pending">
+              <Clock className="w-4 h-4 mr-1" /> Pending
+            </TabsTrigger>
+            <TabsTrigger value="failed">
+              <XCircle className="w-4 h-4 mr-1" /> Failed
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
 
-        <TransferTable tablelength={10} search={search} filter={filter} />
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <Button variant="secondary" className="hover:bg-[#157148] hover:text-white">
+              <Printer className="mr-1" />
+              Print
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Choose Download Format</DialogTitle>
+            </DialogHeader>
+            <Select
+              value={downloadFormat}
+              onValueChange={(v) => setDownloadFormat(v as "pdf" | "csv")}
+            >
+              <SelectTrigger className="w-full mt-2">
+                <SelectValue placeholder="Select format" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="pdf">PDF</SelectItem>
+                <SelectItem value="csv">CSV</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button className="mt-4 w-full" onClick={handleDownload}>
+              Download
+            </Button>
+          </DialogContent>
+        </Dialog>
       </div>
+
+      {/* Table in Card */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Transfer History</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {loading ? (
+            <div className="space-y-4">
+              {/* Header Skeleton */}
+              <div className="grid grid-cols-6 gap-4">
+                {[...Array(6)].map((_, i) => (
+                  <Skeleton key={i} className="h-4 w-full" />
+                ))}
+              </div>
+
+              {/* Row Skeletons */}
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="grid grid-cols-6 gap-4">
+                  {[...Array(6)].map((_, j) => (
+                    <Skeleton key={j} className="h-4 w-full" />
+                  ))}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <TransferTable tablelength={10} search={search} filter={filter} />
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

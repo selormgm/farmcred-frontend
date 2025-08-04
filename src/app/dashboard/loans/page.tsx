@@ -192,7 +192,7 @@ export default function LoanPage() {
           <CardHeader>
             <CardTitle>Total Loaned Amount</CardTitle>
           </CardHeader>
-          <CardContent className="text-2xl font-bold text-[#158f20]">
+          <CardContent className="text-2xl font-bold">
             GHS{" "}
             {totalLoaned.toLocaleString(undefined, {
               minimumFractionDigits: 2,

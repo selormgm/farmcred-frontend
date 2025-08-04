@@ -6,6 +6,7 @@ import {
   Banknote,
   BanknoteArrowUp,
   BookOpenCheck,
+  BookOpenText,
   HandCoins,
   HelpCircle,
   HomeIcon,
@@ -60,6 +61,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: "Loans",
       url: "/dashboard/loans",
       icon: HandCoins,
+    },
+    {
+      title: "Reviews",
+      url: "/dashboard/reviews",
+      icon: BookOpenText,
     },
     {
       title: "Interactions",

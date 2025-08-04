@@ -27,7 +27,6 @@ export function NavUser({
   user,
 }: {
   user: {
-    avatar: string | Blob | undefined;
     name: string;
     email: string;
   };
@@ -66,7 +65,6 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar>
-                <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="text-[#158f20] font-semibold border-1 border-[#158f20]">
                   {initial}
                 </AvatarFallback>

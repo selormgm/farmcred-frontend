@@ -72,7 +72,7 @@ export default function ProductPage() {
     <div className="p-6 space-y-6">
       {/* Header & Sort */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <h1 className="text-2xl font-bold text-[#157148]">My Products</h1>
+        <h1 className="text-2xl font-bold text-[#158f20]">My Products</h1>
 
         <div className="flex items-center gap-3">
           <select
@@ -124,7 +124,7 @@ export default function ProductPage() {
                 <div className="flex justify-end">
                   <Button
                     type="submit"
-                    className="bg-[#157148] text-white hover:bg-[#115c3a]"
+                    className="bg-[#158f20] text-white hover:bg-[#115c3a]"
                   >
                     {editingProduct ? "Update" : "Create"}
                   </Button>
@@ -149,7 +149,7 @@ export default function ProductPage() {
               onError={(e) => (e.currentTarget.src = "/images/placeholder.png")}
             />
             <div className="p-4 space-y-1">
-              <h2 className="text-md font-semibold text-[#158f20] truncate">
+              <h2 className="text-md font-semibold truncate">
                 {product.name}
               </h2>
               <p className="text-sm text-gray-500">
@@ -160,7 +160,7 @@ export default function ProductPage() {
                   year: "numeric",
                 })}
               </p>
-              <p className="text-[#158f20] font-bold text-right text-sm">
+              <p className="font-bold text-right text-sm">
                 GH₵ {product.price}
               </p>
             </div>

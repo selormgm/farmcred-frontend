@@ -27,7 +27,7 @@ const allOrders = [
   {
     id: "3",
     name: "Sweet Cassava",
-    image: "/images/freshmaize.jpg",
+    image: "/images/freshsweetcassava.jpg",
     price: 40,
     status: "Preparing",
     reviewed: false,
@@ -35,7 +35,7 @@ const allOrders = [
   {
     id: "4",
     name: "Pineapples",
-    image: "/images/freshtomatoes.jpg",
+    image: "/images/freshpineapple.jpg",
     price: 60,
     status: "Delivered",
     reviewed: true,
@@ -43,7 +43,7 @@ const allOrders = [
   {
     id: "5",
     name: "Plantain",
-    image: "/images/freshtomatoes.jpg",
+    image: "/images/freshplantain.jpg",
     price: 45,
     status: "Out for Delivery",
     reviewed: false,

@@ -18,7 +18,7 @@ export function MarketplaceNavbar() {
   const navLinks = [
     { href: "/marketplace", label: "Marketplace" },
     { href: "/marketplace/orders", label: "My Orders" },
-    { href: "/marketplace/about", label: "About" },
+    { href: "/about/marketplace", label: "About" },
   ];
   const { query, setQuery } = useSearchStore();
 

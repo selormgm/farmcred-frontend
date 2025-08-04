@@ -311,3 +311,23 @@ export interface RepaymentConfirmationResponse {
   message: string;
   confirmation_id?: string;
 }
+
+export interface MarketplaceListing{
+
+}
+
+export interface Conversation{
+
+}
+
+export interface Message{
+
+}
+
+export interface CreateListingInput{
+
+}
+
+export interface SendMessageInput{
+  
+}

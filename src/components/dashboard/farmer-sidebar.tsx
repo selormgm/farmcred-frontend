@@ -6,9 +6,11 @@ import {
   Banknote,
   BanknoteArrowUp,
   BookOpenCheck,
+  BookOpenText,
   HandCoins,
   HelpCircle,
   HomeIcon,
+  MessageCircle,
   Settings,
   Wheat,
 } from "lucide-react";
@@ -60,7 +62,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       url: "/dashboard/loans",
       icon: HandCoins,
     },
-
+    {
+      title: "Reviews",
+      url: "/dashboard/reviews",
+      icon: BookOpenText,
+    },
+    {
+      title: "Interactions",
+      url: "/dashboard/interactions",
+      icon: MessageCircle,
+    },
   ];
 
   const navSecondary = [

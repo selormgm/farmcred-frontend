@@ -9,6 +9,8 @@ import { useCartStore } from "@/lib/store/cartStore";
 import { useRouter } from "next/navigation";
 import ChartDrawer from "@/components/marketplace/ChartDrawer";
 import { useSearchStore } from "@/lib/store/searchStore";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Wheat, Leaf, Carrot, Apple, ListFilter } from "lucide-react";
 
 type Product = {
   id: number;
@@ -125,24 +127,38 @@ export default function MarketplaceGridPage() {
         <h2 className="text-2xl font-bold text-[#158f20]">Marketplace</h2>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           {/* Category buttons */}
-          <div className="flex flex-wrap gap-2">
-            {["All", "Grains", "Tubers", "Vegetables", "Fruits"].map(
-              (category) => (
-                <Button
-                  key={category}
-                  variant={categoryFilter === category ? "default" : "outline"}
-                  onClick={() => setCategoryFilter(category)}
-                  className={`text-sm px-4 py-1.5 ${
-                    categoryFilter === category
-                      ? "bg-[#158f20] text-white"
-                      : "text-[#158f20] border-[#158f20]"
-                  }`}
-                >
-                  {category}
-                </Button>
-              )
-            )}
-          </div>
+          {/* Category Tabs */}
+          <Tabs
+            defaultValue="All"
+            value={categoryFilter}
+            onValueChange={(val) => setCategoryFilter(val)}
+          >
+            <TabsList className="flex flex-wrap gap-2">
+              <TabsTrigger value="All" className="flex items-center gap-2">
+                <ListFilter className="w-4 h-4" />
+                All
+              </TabsTrigger>
+              <TabsTrigger value="Grains" className="flex items-center gap-2">
+                <Wheat className="w-4 h-4" />
+                Grains
+              </TabsTrigger>
+              <TabsTrigger value="Tubers" className="flex items-center gap-2">
+                <Leaf className="w-4 h-4" />
+                Tubers
+              </TabsTrigger>
+              <TabsTrigger
+                value="Vegetables"
+                className="flex items-center gap-2"
+              >
+                <Carrot className="w-4 h-4" />
+                Vegetables
+              </TabsTrigger>
+              <TabsTrigger value="Fruits" className="flex items-center gap-2">
+                <Apple className="w-4 h-4" />
+                Fruits
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
 
           {/* Sorting dropdown */}
           <div>

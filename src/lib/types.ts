@@ -17,6 +17,8 @@ export interface FarmerProfile {
   transactions: string[];
   transfers: string[];
   loans: string[];
+  total_loans: number;
+  active_investments: number;
   created_at: string;
   updated_at: string;
   receive_level_notifications: boolean;
@@ -151,20 +153,20 @@ export interface ApiFilters {
 export interface InvestorProfile{
   account: number;
   full_name:string;
-  phone_number: number;
-  country: string;
-  region: string;
-  created_at: number;
-  updated_at: number;
-  farmers: string[];
-  farmers_reviewed: number; //farmers invested in and reviewed 
-  farmers_funded: number; // farmers funded
+  phone_number?: number;
+  country?: string;
+  region?: string;
+  created_at: string;
+  updated_at?: number;
+  farmers?: string[];
+  farmers_reviewed?: number; //farmers invested in and reviewed 
+  farmers_funded?: number; // farmers funded
   total_investments: number; //total amount invested
-  return_on_investments:number; // calculated price on how much an investor gets after investing 
+  return_on_investments?:number; // calculated price on how much an investor gets after investing 
   email: string;
-  bio: string;
-  password: string;
-  showPassword: boolean;
+  bio?: string;
+  password?: string;
+  showPassword?: boolean;
 }
 
 export interface InvestorReview{
@@ -311,23 +313,176 @@ export interface RepaymentConfirmationResponse {
   message: string;
   confirmation_id?: string;
 }
-
-export interface MarketplaceListing{
-
-}
-
 export interface Conversation{
-
+  id: number;
+  buyerName: string;
 }
 
 export interface Message{
+  id: number;
+  sender: string;
+  content: string;
+  timestamp: string;
+}
+export interface Product {
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+  description: string;
+  farmerName: string;
+  category: "Grains" | "Tubers" | "Vegetables" | "Fruits";
+  quantity?: string;
+  delivery?: string;
+  stock?: number;
+};
 
+export interface BuyerOrders{
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+  status: "Delivered | Out for Delivery | Preparing";
 }
 
-export interface CreateListingInput{
+export interface FarmerOrder{
+  id: number;
+  product: string;
+  buyerName: string;
+  quantity: number;
+  price: number;
+  status: "paid" | "delivered" | "completed";
+};
 
+export interface Investments{
+  id: string;
+  farmerName: string;
+  status: "Active | Completed | Pending";
+  expectedReturn: number;
+  repaymentProgress: number;
 }
 
-export interface SendMessageInput{
-  
+export interface Loan {
+  id: number;
+  farmerName: string;
+  amount: number;
+  due_date: string;
+  status: "pending" | "approved" | "repaid" | "declined" | "active";
+  date_repaid?: string;
+  on_time?: boolean;
+}
+
+export interface Reviews{
+  id: number;
+  farmerName: string;
+  rating: number;
+  tags: string[];
+  comment: string;
+}
+
+export interface Comment{
+  id: number;
+  author: string;
+  content: string;
+  timestamp: string;
+}
+
+export interface TimelineEvent{
+  id: number;
+  action: string;
+  performed_by: string;
+  timestamp: string;
+};
+
+export interface DisputedOrder {
+  id: number;
+  produce_listing?: {
+    produce_type: string;
+  };
+  reason: string;
+  created_at: string;
+  resolution_status: string;
+  comments?: Comment[];
+  timeline?: TimelineEvent[];
+};
+
+export interface InvestmentReport{
+  id: number;
+  investor: string;
+  project: string;
+  amount: number;
+  returns: string;
+  status: string;
+  startDate: string;
+  endDate: string;
+  notes: string;
+  repayment: string;
+};
+
+export interface Announcement{
+  id: number;
+  title: string;
+  message: string;
+  audience:"All Users | Farmers | Investors"
+  status: "Delivered | Pending | Failed"
+  date: string;
+}
+
+export interface ReportOptions{
+  key: "monthly-platform | user-growth | loan-performance | investment-returns | trust-changes"
+  title: string;
+  description: string;
+  metric: string;
+}
+export interface ScheduledReport{
+  id: string;
+  reportKey: string;
+  frequency: "Daily" | "Weekly" | "Monthly";
+  time: string; // HH:MM
+  recipients: string;
+  enabled: boolean;
+  nextRun: string;
+};
+
+export interface Transactions{
+    id: string;
+    user: string;
+    amount: number;
+    type: "Loan Payout | Produce Sale | Repayment";
+    status: "Successful | Failed";
+    date: string;
+    flagged: boolean;
+}
+export interface InvestorDetail {
+  id: number;
+  full_name: string;
+  email: string;
+  phone_number: string;
+  total_investments: number;
+  created_at: string;
+  is_active: boolean;
+  investments: {
+    project: string;
+    amount: number;
+    date: string;
+  }[];
+}
+
+export interface Roles{
+    name: string;
+    permissions: string[];
+    active: boolean;
+}
+
+export interface Logs{
+    admin: string;
+    action: string;
+    timestamp: string;
+}
+
+export interface Admin{
+  id:number;
+  name:string;
+  email: string;
+  role:string;
 }

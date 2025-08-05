@@ -17,6 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { InvestmentReport } from "@/lib/types";
 
 const investments = [
   {
@@ -92,19 +93,6 @@ const investments = [
     repayment: "GH₵ 3,600 of GH₵ 12,780 returned",
   },
 ];
-
-type InvestmentReport = {
-  id: number;
-  investor: string;
-  project: string;
-  amount: number;
-  returns: string;
-  status: string;
-  startDate: string;
-  endDate: string;
-  notes: string;
-  repayment: string;
-};
 
 export default function InvestmentOversight() {
   const [search, setSearch] = useState("");

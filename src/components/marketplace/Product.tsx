@@ -11,16 +11,7 @@ import ChartDrawer from "@/components/marketplace/ChartDrawer";
 import { useSearchStore } from "@/lib/store/searchStore";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Wheat, Leaf, Carrot, Apple, ListFilter } from "lucide-react";
-
-type Product = {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  description: string;
-  farmerName: string;
-  category: "Grains" | "Tubers" | "Vegetables" | "Fruits";
-};
+import { Product } from "@/lib/types";
 
 const allProducts: Product[] = [
   {

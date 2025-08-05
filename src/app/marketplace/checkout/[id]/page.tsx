@@ -9,18 +9,6 @@ import { useState } from "react";
 import { dummyProducts } from "@/mock/products";
 import { useParams } from "next/navigation";
 
-type Product = {
-  id: string;
-  name: string;
-  image: string;
-  price: number;
-  description: string;
-  quantity: string;
-  farmer: string;
-  delivery: string;
-  stock: number;
-};
-
 export default function CheckoutPage() {
   const params = useParams();
   const router = useRouter();

@@ -5,18 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-
-type Order = {
-  id: number;
-  product: string;
-  buyerName: string;
-  quantity: number;
-  price: number;
-  status: "paid" | "delivered" | "completed";
-};
+import { FarmerOrder } from "@/lib/types";
 
 export default function FarmerOrders() {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<FarmerOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -62,7 +54,7 @@ export default function FarmerOrders() {
     alert(`Raise dispute for Order #${orderId}`);
   };
 
-  const getStatusBadge = (status: Order["status"]) => {
+  const getStatusBadge = (status: FarmerOrder["status"]) => {
     switch (status) {
       case "paid":
         return <Badge variant="outline">Paid to Escrow</Badge>;

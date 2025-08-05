@@ -15,6 +15,7 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Download, Clock } from "lucide-react";
 import { format } from "date-fns";
+import { ScheduledReport } from "@/lib/types";
 
 // Mock definitions
 const reportOptions = [
@@ -49,17 +50,6 @@ const reportOptions = [
     metric: "High Trust ↑ 5%",
   },
 ];
-
-// Mock scheduled reports
-type ScheduledReport = {
-  id: string;
-  reportKey: string;
-  frequency: "Daily" | "Weekly" | "Monthly";
-  time: string; // HH:MM
-  recipients: string;
-  enabled: boolean;
-  nextRun: string;
-};
 
 const initialSchedules: ScheduledReport[] = [
   {

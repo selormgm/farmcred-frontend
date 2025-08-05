@@ -13,33 +13,25 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination";
-import { Search } from "lucide-react";
+import { InvestorProfile } from "@/lib/types";
 
-type Investor = {
-  id: number;
-  full_name: string;
-  email: string;
-  total_investments: number;
-  created_at: string;
-};
-
-const mockInvestors: Investor[] = [
+const mockInvestors: InvestorProfile[] = [
   {
-    id: 1,
+    account: 1,
     full_name: "Kwame Mensah",
     email: "kwame@example.com",
     total_investments: 25000,
     created_at: "2024-09-12",
   },
   {
-    id: 2,
+    account: 2,
     full_name: "Ama Boateng",
     email: "ama@example.com",
     total_investments: 14000,
     created_at: "2024-10-01",
   },
   {
-    id: 3,
+    account: 3,
     full_name: "Kojo Asare",
     email: "kojo@example.com",
     total_investments: 31000,
@@ -50,7 +42,7 @@ const mockInvestors: Investor[] = [
 const ITEMS_PER_PAGE = 5;
 
 export default function InvestorListPage() {
-  const [investors] = useState<Investor[]>(mockInvestors);
+  const [investors] = useState<InvestorProfile[]>(mockInvestors);
   const [search, setSearch] = useState("");
   const [filteredInvestors, setFilteredInvestors] = useState(mockInvestors);
   const [currentPage, setCurrentPage] = useState(1);
@@ -90,7 +82,7 @@ export default function InvestorListPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {paginatedInvestors.map((investor) => (
-          <Card key={investor.id} className="shadow-sm"> 
+          <Card key={investor.account} className="shadow-sm"> 
             <CardHeader>
               <CardTitle>{investor.full_name}</CardTitle>
               <p className="text-sm text-gray-500">{investor.email}</p>
@@ -106,7 +98,7 @@ export default function InvestorListPage() {
 
               <div className="flex gap-2">
                 <Link
-                  href={`/admin-dashboard/user-management/investors/${investor.id}`}
+                  href={`/admin-dashboard/user-management/investors/${investor.account}`}
                 >
                   <Button size="sm" variant="outline">
                     View Profile

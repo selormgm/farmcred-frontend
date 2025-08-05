@@ -7,19 +7,9 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
 import Image from "next/image";
+import { Product } from "@/lib/types";
 import { dummyProducts } from "@/mock/products";
 
-type Product = {
-  id: string;
-  name: string;
-  image: string;
-  price: number;
-  description: string;
-  quantity: string;
-  farmer: string;
-  delivery: string;
-  stock: number;
-};
 
 function getDeliveryDateRange(days: string) {
   const [min, max] = days.match(/\d+/g)?.map(Number) || [1, 2];
@@ -76,7 +66,7 @@ export default function BuyPage() {
               </p>
             )}
             <p className="text-sm">Quantity: {product.quantity}</p>
-            <p className="text-sm">Farmer: {product.farmer}</p>
+            <p className="text-sm">Farmer: {product.farmerName}</p>
             <p className="text-sm">Delivery: {product.delivery}</p>
             <p className="text-sm text-gray-600">
               Expected Delivery: {getDeliveryDateRange(product.delivery)}

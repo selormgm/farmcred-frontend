@@ -144,11 +144,18 @@ export const loginAndStoreToken = async (email: string, password: string) => {
   }
 };
 
-export const registerUser = async (
+export const registerFarmer = async (
   email: string,
   password: string,
   fullName: string,
-  role: string = "farmer"
+  role: string = "farmer",
+  phoneNumber: string,
+  country: string,
+  region: string,
+  dob: string,
+  nationalID: string,
+  homeAddress: string,
+  produce:string[],
 ) => {
   try {
     const response = await axios.post(`${API_URL}/api/account/register/`, {
@@ -156,6 +163,13 @@ export const registerUser = async (
       password,
       full_name: fullName,
       role: role,
+      phone_number: phoneNumber,
+      country: country,
+      region: region,
+      dob: dob,
+      national_id: nationalID,
+      home_address: homeAddress,
+      produce: produce
     });
 
     console.log("Registration successful!");
@@ -168,6 +182,38 @@ export const registerUser = async (
     return { success: false, error: error.response?.data || error.message };
   }
 };
+
+export const registerInvestor = async (
+  email: string,
+  password: string,
+  fullName: string,
+  role: string = "investor",
+  phoneNumber: string,
+  country: string,
+  region: string
+) => {
+  try {
+    const response = await axios.post(`${API_URL}/api/account/register/`, {
+      email,
+      password,
+      full_name: fullName,
+      role: role,
+      phone_number: phoneNumber,
+      country: country,
+      region: region,
+    });
+
+    console.log("Registration successful!");
+    return { success: true, data: response.data };
+  } catch (error: any) {
+    console.error(
+      "Registration failed:",
+      error.response?.data || error.message
+    );
+    return { success: false, error: error.response?.data || error.message };
+  }
+};
+
 
 export const logout = () => {
   removeStorageItem("access_token");

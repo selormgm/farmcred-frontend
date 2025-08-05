@@ -5,21 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { InvestorDetail } from "@/lib/types";
 
-interface InvestorDetail {
-  id: number;
-  full_name: string;
-  email: string;
-  phone_number: string;
-  total_investments: number;
-  created_at: string;
-  is_active: boolean;
-  investments: {
-    project: string;
-    amount: number;
-    date: string;
-  }[];
-}
 
 // Mock data
 const mockInvestor: InvestorDetail = {

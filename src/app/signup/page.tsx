@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { registerUser } from "@/lib/services/authService";
+import { registerFarmer, registerInvestor } from "@/lib/services/authService";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
+import FarmerNextStep from "@/components/FarmerNextStep";
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -31,6 +32,13 @@ export default function SignupPage() {
     password: "",
     fullName: "",
     role: "farmer",
+    phoneNumber: "",
+    country: "",
+    region: "",
+    dob: "",
+    nationalID: "",
+    homeAddress: "",
+    produce: [],
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -50,16 +58,31 @@ export default function SignupPage() {
     });
   };
 
+  const handleContinue = () => {
+    {
+      formData.role === "farmer" && (
+        <FarmerNextStep formData={formData} setFormData={setFormData} />
+      );
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
-    const result = await registerUser(
+    const result = await registerFarmer(
       formData.email,
       formData.password,
       formData.fullName,
-      formData.role
+      formData.role,
+      formData.phoneNumber,
+      formData.country,
+      formData.region,
+      formData.dob,
+      formData.nationalID,
+      formData.homeAddress,
+      formData.produce
     );
 
     if (result.success) {
@@ -246,8 +269,8 @@ export default function SignupPage() {
                       className="h-10 border-[#D6DFBC] focus:border-[#158f20] focus:ring-[#158f20] text-[#157148] font-[Inter] text-sm"
                     />
                   </div>
-
-                  <Button
+                  <Button> Continue</Button>
+                  {/* <Button
                     type="submit"
                     disabled={loading}
                     className="w-full h-11 bg-[#158f20] hover:bg-[#157148] text-white font-[Inter] font-medium text-sm mt-6"
@@ -256,7 +279,7 @@ export default function SignupPage() {
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     )}
                     {loading ? "Creating account..." : "Create account"}
-                  </Button>
+                  </Button> */}
                 </form>
 
                 <div className="text-center pt-4">

@@ -3,16 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Product } from "@/lib/types";
 
-type Product = {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  description: string;
-  farmerName: string;
-  category: "Grains" | "Tubers" | "Vegetables" | "Fruits";
-};
 
 type ChatDrawerProps = {
   activeChat: Product | null;

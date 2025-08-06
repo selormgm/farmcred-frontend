@@ -13,7 +13,7 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination";
-import { InvestorProfile } from "@/lib/types";
+import { InvestorProfile } from "@/lib/types/admintypes";
 
 const mockInvestors: InvestorProfile[] = [
   {

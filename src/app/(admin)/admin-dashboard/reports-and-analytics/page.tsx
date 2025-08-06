@@ -15,7 +15,7 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Download, Clock } from "lucide-react";
 import { format } from "date-fns";
-import { ScheduledReport } from "@/lib/types";
+import { ScheduledReport } from "@/lib/types/admintypes";
 
 // Mock definitions
 const reportOptions = [

@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { InvestorDetail } from "@/lib/types";
+import { InvestorDetail } from "@/lib/types/admintypes";
 
 
 // Mock data

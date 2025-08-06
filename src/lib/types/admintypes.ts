@@ -107,6 +107,25 @@ export interface LenderLoans{
     lender: number;
 }
 
+export interface InvestorProfile{
+  account: number;
+  full_name:string;
+  phone_number?: number;
+  country?: string;
+  region?: string;
+  created_at: string;
+  updated_at?: number;
+  farmers?: string[];
+  farmers_reviewed?: number; //farmers invested in and reviewed 
+  farmers_funded?: number; // farmers funded
+  total_investments: number; //total amount invested
+  return_on_investments?:number; // calculated price on how much an investor gets after investing 
+  email: string;
+  bio?: string;
+  password?: string;
+  showPassword?: boolean;
+}
+
 export interface ApiFilters {
   category?: string;
   status?: string;

@@ -17,7 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { InvestmentReport } from "@/lib/types";
+import { InvestmentReport } from "@/lib/types/admintypes";
 
 const investments = [
   {

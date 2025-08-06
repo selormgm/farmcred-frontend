@@ -1,5 +1,5 @@
 import apiClient from "../axios";
-import { LoanQualificationResponse, LoanRequestPayload, LoanRequestResponse, RepaymentConfirmationPayload, RepaymentConfirmationResponse } from "../types";
+import { LoanQualificationResponse, LoanRequestPayload, LoanRequestResponse, RepaymentConfirmationPayload, RepaymentConfirmationResponse } from "../types/farmertypes";
 
 
 export const farmerLoanService = {

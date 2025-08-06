@@ -6,7 +6,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { InvestorFarmers } from "@/lib/types";
+import { InvestorFarmers } from "@/lib/types/investortypes";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface FarmerProfileDialogProps {

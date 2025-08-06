@@ -12,17 +12,11 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useRequestLoan } from "@/hooks/useFarmerLoan";
-
-interface Loan {
-  id: number;
-  amount: number;
-  due_date: string;
-  status: "pending" | "approved" | "repaid" | "declined" | "active";
-}
+import { FarmerLoans } from "@/lib/types/farmertypes";
 
 interface Props {
   onSuccess?: () => void;
-  loans: Loan[];
+  loans: FarmerLoans[];
 }
 
 export function RequestLoanModal({ onSuccess, loans }: Props) {

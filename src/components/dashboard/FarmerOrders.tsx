@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { FarmerOrder } from "@/lib/types";
+import { FarmerOrder } from "@/lib/types/farmertypes";
 
 export default function FarmerOrders() {
   const [orders, setOrders] = useState<FarmerOrder[]>([]);

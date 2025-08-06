@@ -11,6 +11,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { RequestLoanModal } from "@/components/dashboard/RequestLoan";
 import { farmerService } from "@/lib/api/farmer";
 import { Skeleton } from "@/components/ui/skeleton";
+import { FarmerLoans } from "@/lib/types/farmertypes";
 
 interface Loan {
   id: number;
@@ -31,7 +32,7 @@ const statusColorMap = {
 
 export default function LoanPage() {
   const [view, setView] = useState<"grid" | "list">("grid");
-  const [loans, setLoans] = useState<Loan[]>([]);
+  const [loans, setLoans] = useState<FarmerLoans[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);

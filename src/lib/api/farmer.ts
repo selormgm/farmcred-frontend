@@ -12,7 +12,7 @@ import {
   FarmerLoans,
   FarmerDiscoverability,
   StatLogs
-} from '@/lib/types';
+} from '@/lib/types/farmertypes';
 
 import apiClient from '../axios';
 

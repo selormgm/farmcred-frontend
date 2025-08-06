@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
-import { DisputedOrder } from "@/lib/types";
+import { DisputedOrder } from "@/lib/types/farmertypes";
 
 export default function FarmerDisputesPage() {
   const [disputes, setDisputes] = useState<DisputedOrder[]>([]);

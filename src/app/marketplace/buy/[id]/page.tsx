@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
 import Image from "next/image";
-import { Product } from "@/lib/types";
 import { dummyProducts } from "@/mock/products";
 
 
@@ -38,9 +37,9 @@ export default function BuyPage() {
   if (!product) return notFound();
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <MarketplaceNavbar />
-      <main className="max-w-6xl mx-auto px-4 py-10 pt-24 space-y-10">
+      <main className="flex-1 max-w-6xl mx-auto px-4 py-10 pt-24 space-y-10">
         <div className="grid md:grid-cols-2 gap-10">
           <div>
             <Image
@@ -103,6 +102,6 @@ export default function BuyPage() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

@@ -32,9 +32,9 @@ export default function CartCheckoutPage() {
   };
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <MarketplaceNavbar />
-      <main className="max-w-6xl mx-auto px-4 pt-24 pb-20 space-y-10">
+      <main className="flex-1 max-w-6xl mx-auto px-4 pt-24 pb-20 space-y-10">
         <h1 className="text-2xl font-bold">Checkout (Cart)</h1>
 
         {cart.length === 0 ? (
@@ -154,6 +154,6 @@ export default function CartCheckoutPage() {
         )}
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

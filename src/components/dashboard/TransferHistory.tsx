@@ -30,7 +30,7 @@ const TransferHistory = () => {
             {initial && (
               <Avatar className="h-12 w-12 flex-shrink-0 border border-[#E1E3E0]">
                 <AvatarImage />
-                <AvatarFallback className="text-white bg-[#72BF01] text-lg font-bold">
+                <AvatarFallback className="text-[#158f20] text-lg font-bold">
                   {initial}
                 </AvatarFallback>
               </Avatar>
@@ -40,10 +40,10 @@ const TransferHistory = () => {
             <div className="flex justify-between items-center flex-1 border-b border-[#E1E3E0] py-2">
               {/*Transfer Details */}
               <div className="min-w-0">
-                <p className="font-medium text-l text-[#157148] mb-0.5">
+                <p className="font-medium text-l mb-0.5">
                   {recipientName}
                 </p>
-                <p className="text-sm text-[#158f20]">
+                <p className="text-sm">
                   {new Date(transfer.date)
                     .toLocaleDateString("en-GB", {
                       day: "numeric",
@@ -56,7 +56,7 @@ const TransferHistory = () => {
 
               {/* Amount */}
               <div className="text-right flex-shrink-0">
-                <p className="font-semibold text-lg text-[#158f20]">
+                <p className="font-semibold text-lg">
                   GH₵ {transfer.amount}
                 </p>
               </div>

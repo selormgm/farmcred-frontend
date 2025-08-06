@@ -87,37 +87,37 @@ const TransactionHistory = ({
       <TableHeader>
         <TableRow className="border-b border-gray-200 hover:bg-transparent">
           <TableHead
-            className="text-base font-normal text-card-foreground h-auto py-3"
+            className="text-base font-normal text-muted-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Transaction Name
           </TableHead>
           <TableHead
-            className="text-base font-normal text-card-foreground h-auto py-3"
+            className="text-base font-normal text-muted-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Date
           </TableHead>
           <TableHead
-            className="text-base font-normal text-card-foreground h-auto py-3"
+            className="text-base font-normal text-muted-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Category
           </TableHead>
           <TableHead
-            className="text-base font-normal text-card-foreground h-auto py-3"
+            className="text-base font-normal text-muted-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Status
           </TableHead>
           <TableHead
-            className="text-base font-normal text-card-foreground h-auto py-3"
+            className="text-base font-normal text-muted-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Amount
           </TableHead>
           <TableHead
-            className="text-base font-normal text-card-foreground h-auto py-3"
+            className="text-base font-normal text-muted-foreground h-auto py-3"
             style={{ letterSpacing: "-0.06em" }}
           >
             Action
@@ -155,13 +155,13 @@ function TransactionTableRow({
       }`}
     >
       <TableCell
-        className="text-base font-normal text-[#158F20] py-3"
+        className="text-base font-normal py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
         {transaction.name}
       </TableCell>
       <TableCell
-        className="text-base font-normal text-[#72BF01] py-3"
+        className="text-base font-normal py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
         {new Date(transaction.date).toLocaleDateString("en-GB", {
@@ -171,7 +171,7 @@ function TransactionTableRow({
         })}
       </TableCell>
       <TableCell
-        className="text-base font-normal text-[#158F20] py-3"
+        className="text-base font-normal py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
         {transaction.category}
@@ -189,7 +189,7 @@ function TransactionTableRow({
         </Badge>
       </TableCell>
       <TableCell
-        className="text-base font-medium text-[#158F20] py-3"
+        className="text-base font-medium py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
         ₵ {transaction.amount.toLocaleString()}
@@ -201,7 +201,7 @@ function TransactionTableRow({
           className="h-8 w-8 p-0"
           onClick={() => setOpen(true)}
         >
-          <MoreVertical className="h-4 w-4 text-[#157148]" />
+          <MoreVertical className="h-4 w-4 +" />
         </Button>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent className="text-[#158f20]">

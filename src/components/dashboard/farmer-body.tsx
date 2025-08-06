@@ -1,20 +1,25 @@
+"use client";
+
 import Link from "next/link";
-import { Button } from "../ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Progress } from "@/components/ui/progress";
+
 import TransferHistory from "./TransferHistory";
 import TransactionHistory from "./TransactionHistory";
+import TrustStar from "./TrustStar";
+import FarmerProduct from "./farmer-product";
+
 import {
   useFarmerProfile,
+  useFarmerOverview,
   useFarmerTransactions,
   useFarmerTransfers,
-  useFarmerOverview,
 } from "@/hooks/useFarmerData";
-import IncomeChartCard from "./IncomeTransaction";
-import ExpensesChartCard from "./ExpenseTransaction";
-import { FarmerInsightCard } from "./FarmerInsight";
-import { Skeleton } from "@/components/ui/skeleton";
+import IncomeExpensesChart from "./IncomeExpenseTransaction";
 
-export function FarmerBody() {
+export default function FarmerDashboard() {
   const {
     data: profile,
     loading: profileLoading,
@@ -32,47 +37,41 @@ export function FarmerBody() {
     transfersLoading;
 
   if (profileError) {
-    console.error("Failed to fetch data:", profileError);
+    console.error("Failed to fetch profile:", profileError);
   }
 
   return (
-    <div className="flex-1 w-full px-6 mt-2">
-      <div className="flex flex-col gap-6">
-        {/* Insights and Charts */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {loading ? (
-            <>
-              <SkeletonCard title="Quick Insights" />
-              <SkeletonCard title="Income" />
-              <SkeletonCard title="Expenses" />
-            </>
-          ) : (
-            <>
-              {!loading && overview && transactions && transfers ? (
-                <FarmerInsightCard
-                  overview={overview}
-                  transactions={transactions}
-                  transfers={transfers}
-                />
+    <div className="flex-1 w-full px-6 mt-2 flex flex-col gap-6">
+      {/* === Overview Section === */}
+      {/* === Overview Section (reordered layout) === */}
+      <div className="flex flex-col lg:flex-row gap-4">
+        <div className="flex flex-wrap gap-4 w-full">
+          {/* Total Income */}
+          <Card className="flex-[1.4] dark:bg-card p-4 rounded-[12px] border flex flex-col justify-between shadow-sm">
+            <CardTitle className="text-sm font-medium ">Total Income</CardTitle>
+            <CardContent className="px-0 mt-auto">
+              {loading ? (
+                <>
+                  <Skeleton className="h-10 w-32 mb-2" />
+                  <Skeleton className="h-4 w-24" />
+                </>
               ) : (
-                <SkeletonCard title="Quick Insights" />
+                <>
+                  <div className="text-4xl font-semibold mb-2">
+                    GH₵{overview?.total_income_last_12_months || 0}
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Last 12 months
+                  </p>
+                </>
               )}
-              {!loading ? <IncomeChartCard /> : <SkeletonCard title="Income" />}
-              {!loading ? (
-                <ExpensesChartCard />
-              ) : (
-                <SkeletonCard title="Expenses" />
-              )}
-            </>
-          )}
-        </div>
+            </CardContent>
+          </Card>
 
-        {/* Transfer & Transaction History */}
-        <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_2fr] gap-6 h-[320px]">
-          {/* Transfer History */}
-          <Card className="p-6 h-full flex flex-col w-full dark:bg-card rounded-[12px]">
+          {/* Transfer History (moved up) */}
+          <Card className="flex-[1.2] dark:bg-card p-4 rounded-[12px] border flex flex-col shadow-sm">
             <CardHeader className="flex flex-row items-center justify-between p-0 pb-4">
-              <CardTitle className="text-sm font-medium text-[#158f20]">
+              <CardTitle className="text-sm font-medium mb-2">
                 Transfer History
               </CardTitle>
               <Link href="/dashboard/transfers">
@@ -84,59 +83,93 @@ export function FarmerBody() {
                 </Button>
               </Link>
             </CardHeader>
-            <div className="flex-1 overflow-auto">
+            <CardContent className="flex-1 overflow-auto p-0">
               {loading ? <SkeletonRows /> : <TransferHistory />}
-            </div>
+            </CardContent>
           </Card>
 
-          {/* Transaction History */}
-          <Card className="p-6 h-full flex flex-col w-full dark:bg-card rounded-[12px]">
-            <CardHeader className="flex flex-row items-center justify-between p-0 pb-4">
-              <CardTitle className="text-sm font-medium text-[#158f20]">
-                Transaction History
+          {/* Trust Info */}
+          <div className="flex flex-col gap-4 flex-1 min-w-[250px]">
+            {/* Trust Level */}
+            <Card className="dark:bg-card p-4 rounded-[12px] border shadow-sm">
+              <CardTitle className="text-sm font-medium mb-2">
+                Trust Level
               </CardTitle>
-              <Link href="/dashboard/transactions">
-                <Button
-                  variant="ghost"
-                  className="text-gray-400 hover:text-[#157148] h-auto p-1 font-medium text-sm"
-                >
-                  View More
-                </Button>
-              </Link>
+              <CardContent className="text-3xl px-0">
+                {overview && <TrustStar income={overview.trust_level_stars} />}
+              </CardContent>
+            </Card>
+
+            {/* Trust Score */}
+            <Card className="dark:bg-card p-4 rounded-[12px] border shadow-sm">
+              <CardTitle className="text-sm font-medium mb-2">
+                Trust Score
+              </CardTitle>
+              <CardContent className="text-3xl font-semibold px-0">
+                {overview && `${Math.round(overview.trust_score_percent)}%`}
+                {overview && (
+                  <Progress
+                    value={overview.trust_score_percent}
+                    className="w-full h-[7px] rounded-full overflow-hidden mt-2"
+                  />
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+
+      {/* === Chart + Products (left) and Transaction History (right) === */}
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 min-h-[500px]">
+        {/* Left Column: Chart + My Products */}
+        <div className="flex flex-col gap-6">
+          {/* Income vs Expenses Chart */}
+          <IncomeExpensesChart />
+
+          {/* My Products */}
+          <Card className="p-6 flex flex-col w-full dark:bg-card rounded-[12px] shadow-sm flex-1">
+            <CardHeader className="flex flex-row items-center justify-between p-0 pb-4">
+              <CardTitle className="text-sm font-medium">My Products</CardTitle>
             </CardHeader>
             <div className="flex-1 overflow-auto">
               {loading ? (
-                <SkeletonRows />
+                <Skeleton className="h-24 w-full rounded-md" />
               ) : (
-                <TransactionHistory tablelength={3} />
+                <FarmerProduct />
               )}
             </div>
           </Card>
         </div>
+
+        {/* Right Column: Transaction History */}
+        <Card className="p-6 flex flex-col w-full dark:bg-card rounded-[12px] shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between p-0 pb-4">
+            <CardTitle className="text-sm font-medium">
+              Transaction History
+            </CardTitle>
+            <Link href="/dashboard/transactions">
+              <Button
+                variant="ghost"
+                className="text-gray-400 hover:text-[#157148] h-auto p-1 font-medium text-sm"
+              >
+                View More
+              </Button>
+            </Link>
+          </CardHeader>
+          <div className="flex-1 overflow-auto">
+            {loading ? (
+              <SkeletonRows />
+            ) : (
+              <TransactionHistory tablelength={8} />
+            )}
+          </div>
+        </Card>
       </div>
     </div>
   );
 }
 
-// 💡 Skeleton for chart/insight cards
-function SkeletonCard({ title }: { title: string }) {
-  return (
-    <Card className="w-full dark:bg-card rounded-[12px] p-4">
-      <CardHeader>
-        <CardTitle className="text-sm font-medium text-[#158f20]">
-          {title}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <Skeleton className="h-6 w-3/4" />
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-5/6" />
-      </CardContent>
-    </Card>
-  );
-}
-
-// 💡 Skeleton for table-like content (transfers/transactions)
+// Skeleton for table-style rows
 function SkeletonRows() {
   return (
     <div className="space-y-3">

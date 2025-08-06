@@ -1,5 +1,5 @@
 import apiClient from "../axios";
-import { SendMessageInput } from "../types";
+import { SendMessageInput } from "../types/marketplacetypes";
 
 export const marketplaceService = {
   // --- Produce Listings ---

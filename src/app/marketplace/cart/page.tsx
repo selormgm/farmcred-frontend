@@ -16,9 +16,9 @@ export default function CartPage() {
   );
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <MarketplaceNavbar />
-      <main className="max-w-6xl mx-auto px-4 pt-24 pb-56 space-y-10">
+      <main className="flex-1 max-w-6xl mx-auto px-4 pt-24 pb-56 space-y-10">
         <h1 className="text-3xl font-bold">Your Cart</h1>
 
         {cart.length === 0 ? (
@@ -91,6 +91,6 @@ export default function CartPage() {
         )}
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

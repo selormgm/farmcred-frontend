@@ -19,7 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MoreVertical } from "lucide-react";
 import { useFarmerTransfers } from "@/hooks/useFarmerData";
-import { Transfer } from "@/lib/types";
+import { Transfer } from "@/lib/types/farmertypes";
 import { useState } from "react";
 
 interface TransferHistoryProps {

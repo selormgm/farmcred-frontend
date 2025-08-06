@@ -1,11 +1,8 @@
 
-import {
-  ApiFilters,
-  BuyerProfile,
-  BuyerTransaction,
-} from '@/lib/types';
+
 
 import apiClient from '../axios';
+import { ApiFilters, BuyerProfile, BuyerTransaction } from '../types/marketplacetypes';
 
 export const buyerService = {
   // Profile

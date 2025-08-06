@@ -6,7 +6,7 @@ import {
   FarmerProfile,
   InvestorLoans,
   ApiFilters,
-} from "@/lib/types";
+} from "@/lib/types/investortypes";
 
 import apiClient from "../axios";
 

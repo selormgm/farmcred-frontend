@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Product } from "@/lib/types";
+import { Product } from "@/lib/types/marketplacetypes";
 
 
 type ChatDrawerProps = {

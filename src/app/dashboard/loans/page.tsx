@@ -13,15 +13,6 @@ import { farmerService } from "@/lib/api/farmer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FarmerLoans } from "@/lib/types/farmertypes";
 
-interface Loan {
-  id: number;
-  amount: number;
-  due_date: string;
-  status: "pending" | "approved" | "repaid" | "declined" | "active";
-  date_repaid?: string;
-  on_time?: boolean;
-}
-
 const statusColorMap = {
   repaid: "bg-green-100 text-green-700",
   active: "bg-blue-100 text-blue-700",
@@ -144,8 +135,7 @@ export default function LoanPage() {
 
   return (
     <div className="p-4 space-y-6">
-      <div className="flex items-center justify-between flex-wrap gap-2">
-        <h2 className="text-2xl font-semibold text-[#158f20]">My Loans</h2>
+      <div className="flex justify-end flex-wrap gap-2">
         <div className="flex items-center gap-3">
           <Button
             variant={view === "grid" ? "default" : "outline"}

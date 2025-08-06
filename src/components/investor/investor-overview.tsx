@@ -1,4 +1,4 @@
-import { TrendingDown, TrendingUp } from "lucide-react";
+import { PiggyBank, TrendingDown, TrendingUp } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import {
@@ -22,20 +22,9 @@ export function SectionCards() {
             $1,250.00
           </CardTitle>
           <CardAction className="text-[#158f20]">
-            <Badge variant="outline" className="text-[#158f20]">
-              <TrendingUp />
-              +12.5%
-            </Badge>
+            <PiggyBank className="size-16"/>
           </CardAction>
         </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium text-[#158f20]">
-            Trending up this month <TrendingUp className="size-4" />
-          </div>
-          <div className="text-muted-foreground">
-            Investments for the last 6 months
-          </div>
-        </CardFooter>
       </Card>
       <Card className="dark:bg-card p-5 h-[220px] flex flex-col justify-between">
         <CardHeader>

@@ -135,37 +135,6 @@ export default function GetHelpPage() {
           </ul>
         </CardContent>
       </Card>
-
-      {/* Floating Chat Widget */}
-      <Card className="max-w-md fixed bottom-4 right-4 shadow-lg z-50">
-        <CardHeader>
-          <CardTitle className="text-[#158f20]">Farmcred Chat Assistant</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <div className="max-h-60 overflow-y-auto space-y-1 text-sm">
-            {messages.map((msg, idx) => (
-              <div
-                key={idx}
-                className={`p-2 rounded ${
-                  msg.role === "user"
-                    ? "bg-green-100 text-right"
-                    : "bg-gray-100"
-                }`}
-              >
-                {msg.text}
-              </div>
-            ))}
-          </div>
-          <div className="flex gap-2">
-            <Input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask me anything..."
-            />
-            <Button onClick={handleSend} className="bg-[#158f20] hover:bg-[#136b1b]">Send</Button>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 }

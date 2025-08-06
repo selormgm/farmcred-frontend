@@ -27,7 +27,7 @@ export default function FarmerNextStep({
       <div className="space-y-2">
         <Label
           htmlFor="phoneNumber"
-          className="text-sm text-[#158f20] font-[Inter]"
+          className="text-sm font-medium text-[#157148] font-[Inter]"
         >
           Phone Number
         </Label>
@@ -35,31 +35,36 @@ export default function FarmerNextStep({
           id="phoneNumber"
           name="phoneNumber"
           type="tel"
+          required
           value={formData.phoneNumber}
           onChange={handleChange}
           placeholder="e.g. +233XXXXXXXXX"
-          className="h-10 border-[#D6DFBC] text-[#158f20] text-sm font-[Inter]"
+          className="h-10 border-[#D6DFBC] focus:border-[#158f20] focus:ring-[#158f20] text-[#157148] text-sm font-[Inter]"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="dob" className="text-sm text-[#158f20] font-[Inter]">
+        <Label
+          htmlFor="dob"
+          className="text-sm font-medium text-[#157148] font-[Inter]"
+        >
           Date of Birth
         </Label>
         <Input
           id="dob"
           name="dob"
           type="date"
+          required
           value={formData.dob}
           onChange={handleChange}
-          className="h-10 border-[#D6DFBC] text-[#158f20] text-sm font-[Inter]"
+          className="h-10 border-[#D6DFBC] focus:border-[#158f20] focus:ring-[#158f20] text-[#157148] text-sm font-[Inter]"
         />
       </div>
 
       <div className="space-y-2">
         <Label
           htmlFor="nationalID"
-          className="text-sm text-[#158f20] font-[Inter]"
+          className="text-sm font-medium text-[#157148] font-[Inter]"
         >
           National ID Number
         </Label>
@@ -67,17 +72,18 @@ export default function FarmerNextStep({
           id="nationalID"
           name="nationalID"
           type="text"
+          required
           value={formData.nationalID}
           onChange={handleChange}
           placeholder="e.g. GHA-XXXX-XXXX"
-          className="h-10 border-[#D6DFBC] text-[#158f20] text-sm font-[Inter]"
+          className="h-10 border-[#D6DFBC] focus:border-[#158f20] focus:ring-[#158f20] text-[#157148] text-sm font-[Inter]"
         />
       </div>
 
       <div className="space-y-2">
         <Label
           htmlFor="country"
-          className="text-sm text-[#158f20] font-[Inter]"
+          className="text-sm font-medium text-[#157148] font-[Inter]"
         >
           Country
         </Label>
@@ -85,49 +91,55 @@ export default function FarmerNextStep({
           id="country"
           name="country"
           type="text"
+          required
           value={formData.country}
           onChange={handleChange}
           placeholder="Ghana"
-          className="h-10 border-[#D6DFBC] text-[#157148] text-sm font-[Inter]"
+          className="h-10 border-[#D6DFBC] focus:border-[#158f20] focus:ring-[#158f20] text-[#157148] text-sm font-[Inter]"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="region" className="text-sm text-[#157148] font-[Inter]">
+        <Label
+          htmlFor="region"
+          className="text-sm font-medium text-[#157148] font-[Inter]"
+        >
           Region
         </Label>
         <Input
           id="region"
           name="region"
           type="text"
+          required
           value={formData.region}
           onChange={handleChange}
           placeholder="Greater Accra"
-          className="h-10 border-[#D6DFBC] text-[#157148] text-sm font-[Inter]"
+          className="h-10 border-[#D6DFBC] focus:border-[#158f20] focus:ring-[#158f20] text-[#157148] text-sm font-[Inter]"
         />
       </div>
 
       <div className="space-y-2">
         <Label
           htmlFor="homeAddress"
-          className="text-sm text-[#157148] font-[Inter]"
+          className="text-sm font-medium text-[#157148] font-[Inter]"
         >
           Home Address
         </Label>
         <Textarea
           id="homeAddress"
           name="homeAddress"
+          required
           value={formData.homeAddress}
           onChange={handleChange}
           placeholder="e.g. House No. 23, Agbogba Road, Madina"
-          className="border-[#D6DFBC] text-[#157148] text-sm font-[Inter]"
+          className="border-[#D6DFBC] focus:border-[#158f20] focus:ring-[#158f20] text-[#157148] text-sm font-[Inter]"
         />
       </div>
 
       <div className="space-y-2">
         <Label
           htmlFor="produce"
-          className="text-sm text-[#157148] font-[Inter]"
+          className="text-sm font-medium text-[#157148] font-[Inter]"
         >
           Main Produce (comma separated)
         </Label>
@@ -143,7 +155,7 @@ export default function FarmerNextStep({
             }))
           }
           placeholder="e.g. Tomatoes, Maize, Cassava"
-          className="h-10 border-[#D6DFBC] text-[#157148] text-sm font-[Inter]"
+          className="h-10 border-[#D6DFBC] focus:border-[#158f20] focus:ring-[#158f20] text-[#157148] text-sm font-[Inter]"
         />
       </div>
     </div>

@@ -2,13 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { isAuthenticated } from "@/lib/services/authService";
+import { isAuthenticatedAdmin } from "@/lib/services/authService";
 
 interface AdminProtectedRouteProps {
   children: React.ReactNode;
 }
 
-export default function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
+export default function AdminProtectedRoute({
+  children,
+}: AdminProtectedRouteProps) {
   const router = useRouter();
   const [isChecking, setIsChecking] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -16,7 +18,7 @@ export default function AdminProtectedRoute({ children }: AdminProtectedRoutePro
   useEffect(() => {
     const checkAuth = () => {
       try {
-        const authenticated = isAuthenticated();
+        const authenticated = isAuthenticatedAdmin();
 
         if (authenticated) {
           setIsAuthorized(true);
@@ -24,11 +26,11 @@ export default function AdminProtectedRoute({ children }: AdminProtectedRoutePro
         } else {
           setIsAuthorized(false);
           setIsChecking(false);
-          router.replace("/admin-login"); 
+          router.replace("/admin-login");
           return;
         }
       } catch (error) {
-        console.error("Authentication check failed:", error);
+        console.error("Admin authentication check failed:", error);
         setIsAuthorized(false);
         setIsChecking(false);
         router.replace("/admin-login");
@@ -37,8 +39,13 @@ export default function AdminProtectedRoute({ children }: AdminProtectedRoutePro
 
     checkAuth();
 
+    // Listen for storage changes to handle logout in other tabs
     const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === "access_token" || e.key === "refresh_token") {
+      if (
+        e.key === "access_token" ||
+        e.key === "refresh_token" ||
+        e.key === "user_info"
+      ) {
         checkAuth();
       }
     };
@@ -56,7 +63,7 @@ export default function AdminProtectedRoute({ children }: AdminProtectedRoutePro
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#158f20] mx-auto"></div>
           <p className="mt-4 text-[#157148] font-medium">
-            Checking authentication...
+            Verifying admin authentication...
           </p>
         </div>
       </div>

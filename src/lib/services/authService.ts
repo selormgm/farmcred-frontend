@@ -116,6 +116,16 @@ const forceLogout = () => {
   }
 };
 
+const forceAdminLogout = () => {
+  console.log("Forcing admin logout due to invalid token");
+  logout();
+
+  if (typeof window !== "undefined") {
+    window.location.href = "/admin-login";
+  }
+};
+
+// Regular login function
 export const loginAndStoreToken = async (email: string, password: string) => {
   try {
     const response = await axios.post(`${API_URL}/api/account/login/`, {
@@ -140,6 +150,47 @@ export const loginAndStoreToken = async (email: string, password: string) => {
     };
   } catch (error: any) {
     console.error("Login failed:", error.response?.data || error.message);
+    return { success: false, error: error.response?.data || error.message };
+  }
+};
+
+// Admin login function
+export const adminLoginAndStoreToken = async (email: string, password: string) => {
+  try {
+    const response = await axios.post(`${API_URL}/api/account/login/`, {
+      email,
+      password,
+    });
+
+    const { access, refresh, user } = response.data;
+
+    // Check if user is admin - updated to check role field
+    const isAdmin = user?.is_superuser || user?.is_staff || user?.role === "admin";
+    
+    if (!isAdmin) {
+      console.log("Admin check failed - user is not admin");
+      return { 
+        success: false, 
+        error: { message: "Unauthorized: Admin access required" }
+      };
+    }
+
+    setStorageItem("access_token", access);
+    setStorageItem("refresh_token", refresh);
+
+    if (user) {
+      setStorageItem("user_info", JSON.stringify(user));
+    }
+
+    console.log("Admin logged in! Token stored.");
+    return {
+      success: true,
+      data: response.data,
+      userRole: "admin",
+      isAdmin: true,
+    };
+  } catch (error: any) {
+    console.error("Admin login failed:", error.response?.data || error.message);
     return { success: false, error: error.response?.data || error.message };
   }
 };
@@ -214,7 +265,6 @@ export const registerInvestor = async (
   }
 };
 
-
 export const logout = () => {
   removeStorageItem("access_token");
   removeStorageItem("refresh_token");
@@ -246,4 +296,13 @@ export const isAuthenticated = () => {
   return !!(token && userInfo);
 };
 
-export { apiClient, forceLogout };
+export const isAdmin = () => {
+  const userInfo = getUserInfo();
+  return !!(userInfo?.is_superuser || userInfo?.is_staff || userInfo?.role === "admin");
+};
+
+export const isAuthenticatedAdmin = () => {
+  return isAuthenticated() && isAdmin();
+};
+
+export { apiClient, forceLogout, forceAdminLogout };

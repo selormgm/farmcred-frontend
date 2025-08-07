@@ -22,7 +22,6 @@ import {
   MapPin,
   Calendar,
   Info,
-  ArrowRight,
   Wheat,
   DollarSign,
   CreditCard,
@@ -156,7 +155,7 @@ export default function TrustBreakdown() {
     <div className="space-y-6 p-6">
       {/* Header */}
       <div>
-        <p className="text-xl font-semibold mb-2 text-[#158f20]">
+        <p className="text-xl font-semibold mb-2">
           Comprehensive trust score breakdown and analysis
         </p>
       </div>

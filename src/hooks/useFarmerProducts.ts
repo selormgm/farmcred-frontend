@@ -1,6 +1,6 @@
 import {useState, useEffect, useCallback} from 'react';
 import { farmerProductService } from '@/lib/api/farmerproduct';
-import { ApiFilters, FarmerProduct } from '@/lib/types';
+import { ApiFilters, FarmerProduct } from '@/lib/types/farmertypes';
 
 export function useFarmerProducts(filters?: ApiFilters) {
   const [products, setProducts] = useState<FarmerProduct[]>([]);

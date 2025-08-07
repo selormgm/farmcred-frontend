@@ -71,9 +71,7 @@ export default function ProductPage() {
   return (
     <div className="p-6 space-y-6">
       {/* Header & Sort */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <h1 className="text-2xl font-bold text-[#158f20]">My Products</h1>
-
+      <div className="flex flex-col md:flex-row md:justify-end gap-4">
         <div className="flex items-center gap-3">
           <select
             value={sortBy}

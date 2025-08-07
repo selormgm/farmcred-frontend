@@ -87,11 +87,8 @@ export default function ReviewInvestorsPage() {
   return (
     <div className="px-6 lg:px-24 py-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row items-center justify-between mb-6 gap-4">
-        <h1 className="text-2xl font-semibold text-[#158f20]">
-          Reviews from Your Investors
-        </h1>
-
+      <div className="flex flex-col md:flex-row justify-end mb-6 gap-4">
+       
         {/* Search & View Toggle */}
         <div className="flex gap-2 items-center w-full md:w-auto">
           <div className="relative w-full max-w-sm">

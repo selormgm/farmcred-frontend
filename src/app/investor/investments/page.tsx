@@ -75,9 +75,8 @@ export default function InvestmentPage() {
 
   return (
     <div className="px-6 lg:px-24 overflow-hidden py-6">
-      <div className="flex flex-col md:flex-row items-center justify-between mb-6 gap-4">
-        <h1 className="text-2xl font-semibold text-[#158f20]">My Investments</h1>
-        <div className="flex gap-2">
+      <div className="flex flex-col md:flex-row items-center justify-end mb-6 gap-4">
+        <div className="flex gap-2 ">
           <Button variant={view === "grid" ? "default" : "outline"} onClick={() => setView("grid")} size="icon">
             <LayoutGrid className="w-4 h-4" />
           </Button>

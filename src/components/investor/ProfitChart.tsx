@@ -58,9 +58,9 @@ const chartConfig = {
 
 export function ChartBarProfitLoss() {
   return (
-    <Card className="p-4 flex-1 flex flex-col h-[600px]">
+    <Card className="p-4 flex-1 flex flex-col h-[600px] shadow-md">
       <CardHeader className="flex flex-row items-center justify-between p-0 pb-2 flex-shrink-0">
-        <CardTitle className="text-xl font-medium text-[#157148]">
+        <CardTitle className="text-sm font-medium">
           Investor Profit & Loss
         </CardTitle>
         <CardDescription>January - December 2024</CardDescription>

@@ -1,5 +1,11 @@
 "use client";
-
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -8,23 +14,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-  DialogClose,
-  DialogFooter,
-} from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
 import { MoreVertical } from "lucide-react";
 import { useFarmerList } from "@/hooks/useInvestorData";
 import { useFarmerDetails } from "@/hooks/useInvestorData";
-import { InvestorFarmers } from "@/lib/types";
+import { InvestorFarmers } from "@/lib/types/investortypes";
 import { useState } from "react";
 import FarmerProfile from "./FarmerProfileDialog";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -101,38 +99,42 @@ const BrowseFarmers = ({
   const farmerData = filteredFarmers.slice(0, length);
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow className="border-b border-gray-200 hover:bg-transparent">
-          {[
-            "ID",
-            "Full Name",
-            "Trust Level Stars",
-            "Trust Score Percent",
-            "Active Loans",
-            "Overdue Loans",
-            "Action",
-          ].map((label) => (
-            <TableHead
-              key={label}
-              className="text-base font-normal text-card-foreground h-auto py-3"
-              style={{ letterSpacing: "-0.06em" }}
-            >
-              {t(label)}
-            </TableHead>
-          ))}
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {farmerData.map((farmer: InvestorFarmers, index: number) => (
-          <FarmerTableRow
-            key={farmer.id}
-            farmers={farmer}
-            isLast={index === farmerData.length - 1}
-          />
-        ))}
-      </TableBody>
-    </Table>
+    <Card className="border border-gray-200 p-6">
+      <CardContent className="overflow-x-auto p-0">
+        <Table>
+          <TableHeader>
+            <TableRow className="border-b border-gray-200 hover:bg-transparent">
+              {[
+                "ID",
+                "Full Name",
+                "Trust Level Stars",
+                "Trust Score Percent",
+                "Active Loans",
+                "Overdue Loans",
+                "Action",
+              ].map((label) => (
+                <TableHead
+                  key={label}
+                  className="text-base font-normal text-card-foreground h-auto py-3"
+                  style={{ letterSpacing: "-0.06em" }}
+                >
+                  {t(label)}
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {farmerData.map((farmer: InvestorFarmers, index: number) => (
+              <FarmerTableRow
+                key={farmer.id}
+                farmers={farmer}
+                isLast={index === farmerData.length - 1}
+              />
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
   );
 };
 
@@ -145,7 +147,11 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
   const { t } = useLanguage();
   const [openDetails, setOpenDetails] = useState(false);
   const [openInvest, setOpenInvest] = useState(false);
-  const { data: fullProfile} = useFarmerDetails(farmers.id);
+  const { data: fullProfile } = useFarmerDetails(farmers.id);
+
+  function setShowDialog(arg0: boolean) {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <TableRow
@@ -169,7 +175,7 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
         className="text-base font-normal py-3"
         style={{ letterSpacing: "-0.06em" }}
       >
-        <TrustStar income={farmers.trust_level_stars} size="text-sm"/>
+        <TrustStar income={farmers.trust_level_stars} size="text-sm" />
       </TableCell>
       <TableCell
         className="text-base font-normal py-3 text-[#158f20] dark:text-green-700"
@@ -201,7 +207,7 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
               {t("view_details")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setOpenInvest(true)}>
-             {t("invest_in_farmer")}
+              {t("invest_in_farmer")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -216,6 +222,10 @@ function FarmerTableRow({ farmers, isLast }: FarmersTableRowProps) {
           <InvestorDialogContent
             farmer={farmers}
             onClose={() => setOpenInvest(false)}
+            onConfirm={(amount) => {
+              console.log("Invested:", amount, "in", farmers.full_name);
+              setShowDialog(false);
+            }}
           />
         </Dialog>
       </TableCell>

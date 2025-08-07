@@ -3,6 +3,7 @@ import {
   CheckCircle,
   TrendingUp,
   Users,
+  Wallet,
 } from "lucide-react";
 import {
   Card,
@@ -10,6 +11,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { useInvestorProfile } from "@/hooks/useInvestorData";
 
@@ -23,9 +25,9 @@ export function SectionCards() {
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 w-full ">
       <Card className="dark:bg-card h-[220px] flex flex-col justify-between shadow-md">
         <CardHeader>
-          <CardDescription className="text-sm font-medium  ">
+          <CardTitle className="text-sm font-medium ">
             Total Investments
-          </CardDescription>
+          </CardTitle>
           <CardAction>
             <Banknote size="38" />
           </CardAction>
@@ -36,11 +38,11 @@ export function SectionCards() {
       </Card>
       <Card className="dark:bg-card h-[220px] flex flex-col justify-between shadow-md">
         <CardHeader>
-          <CardDescription className="text-sm font-medium  ">
+          <CardTitle className="text-sm font-medium  ">
             Farmers Funded
-          </CardDescription>
+          </CardTitle>
           <CardAction>
-            <Users size="38" />
+            <Wallet size="38" />
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-3xl font-semibold">
@@ -49,9 +51,9 @@ export function SectionCards() {
       </Card>
       <Card className="dark:bg-card h-[220px] flex flex-col justify-between shadow-md">
         <CardHeader>
-          <CardDescription className="text-sm font-medium  ">
+          <CardTitle className="text-sm font-medium  ">
             Farmers Reviewed
-          </CardDescription>
+          </CardTitle>
           <CardAction>
             <CheckCircle size="38" />
           </CardAction>
@@ -62,9 +64,9 @@ export function SectionCards() {
       </Card>
       <Card className="dark:bg-card h-[220px] flex flex-col justify-between shadow-md">
         <CardHeader>
-          <CardDescription className="text-sm font-medium  ">
+          <CardTitle className="text-sm font-medium  ">
             Return On Investments
-          </CardDescription>
+          </CardTitle>
           <CardAction >
             <TrendingUp size="38" />
           </CardAction>

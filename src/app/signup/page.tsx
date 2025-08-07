@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { registerFarmer, registerInvestor } from "@/lib/services/authService";
@@ -28,7 +28,8 @@ import FarmerNextStep from "@/components/FarmerNextStep";
 import InvestorNextStep from "@/components/InvestorNextStep";
 
 export default function SignupPage() {
-  const [step, setStep] = useState(1); 
+  const [year, setYear] = useState<number | null>(null);
+  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -168,6 +169,10 @@ export default function SignupPage() {
     setLoading(false);
   };
 
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Logo positioned at top left */}
@@ -212,7 +217,7 @@ export default function SignupPage() {
 
           <div className="absolute bottom-6 left-8 right-8 text-center">
             <p className="text-white/90 font-[Inter] text-xs">
-              © {new Date().getFullYear()} FarmCred. All rights reserved.
+              © {year ?? ""} FarmCred. All rights reserved.{" "}
             </p>
           </div>
         </div>

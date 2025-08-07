@@ -1,4 +1,3 @@
-import { ClipboardCheck, HandCoins } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -6,10 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { Button } from "../ui/button";
 import { ChartBarProfitLoss } from "./ProfitChart";
 import { useInvestorProfile } from "@/hooks/useInvestorData";
-import { InvestorInsightCard } from "./InvestorInsight";
 
 export function BodyCards() {
   const { data: profile, loading, error } = useInvestorProfile();
@@ -63,7 +60,7 @@ export function BodyCards() {
                 {recentActivity.length > 0 ? (
                   recentActivity.map((activity, index) => (
                     <div key={index} className="border-b pb-2">
-                      <p className="font-medium text-[#157148]">
+                      <p className="font-medium">
                         {activity.title}
                       </p>
                       <p className="text-xs text-muted-foreground">

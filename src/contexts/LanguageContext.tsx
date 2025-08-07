@@ -76,6 +76,8 @@ const translations: Record<Language, Record<string, string>> = {
     get_help: "Get Help",
     browse_farmers: "Browse Farmers",
     reviews: "Reviews",
+    visibility_to_investors: "Visibility To Investors",
+    make_profile_visible: "Make Profile Visible"
     // Add more keys as needed
   },
   twi: {

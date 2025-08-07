@@ -7,15 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Grid3X3, List, PlusCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-interface Loan {
-  id: number;
-  amount: number;
-  due_date: string;
-  status: "pending" | "approved" | "repaid" | "declined" | "active";
-  date_repaid?: string;
-  on_time?: boolean;
-}
+import { Loan } from "@/lib/types";
 
 const mockLoans: Loan[] = [
   {

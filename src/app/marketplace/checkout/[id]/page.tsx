@@ -9,18 +9,6 @@ import { useState } from "react";
 import { dummyProducts } from "@/mock/products";
 import { useParams } from "next/navigation";
 
-type Product = {
-  id: string;
-  name: string;
-  image: string;
-  price: number;
-  description: string;
-  quantity: string;
-  farmer: string;
-  delivery: string;
-  stock: number;
-};
-
 export default function CheckoutPage() {
   const params = useParams();
   const router = useRouter();
@@ -48,9 +36,9 @@ export default function CheckoutPage() {
   };
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <MarketplaceNavbar />
-      <main className="max-w-6xl mx-auto px-4 pt-24 pb-20 space-y-10">
+      <main className="flex-1 max-w-6xl mx-auto px-4 pt-24 pb-20 space-y-10">
         <h1 className="text-2xl font-bold">Checkout</h1>
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -174,6 +162,6 @@ export default function CheckoutPage() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

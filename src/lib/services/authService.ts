@@ -116,6 +116,16 @@ const forceLogout = () => {
   }
 };
 
+const forceAdminLogout = () => {
+  console.log("Forcing admin logout due to invalid token");
+  logout();
+
+  if (typeof window !== "undefined") {
+    window.location.href = "/admin-login";
+  }
+};
+
+// Regular login function
 export const loginAndStoreToken = async (email: string, password: string) => {
   try {
     const response = await axios.post(`${API_URL}/api/account/login/`, {
@@ -144,11 +154,59 @@ export const loginAndStoreToken = async (email: string, password: string) => {
   }
 };
 
-export const registerUser = async (
+// Admin login function
+export const adminLoginAndStoreToken = async (email: string, password: string) => {
+  try {
+    const response = await axios.post(`${API_URL}/api/account/login/`, {
+      email,
+      password,
+    });
+
+    const { access, refresh, user } = response.data;
+
+    // Check if user is admin - updated to check role field
+    const isAdmin = user?.is_superuser || user?.is_staff || user?.role === "admin";
+    
+    if (!isAdmin) {
+      console.log("Admin check failed - user is not admin");
+      return { 
+        success: false, 
+        error: { message: "Unauthorized: Admin access required" }
+      };
+    }
+
+    setStorageItem("access_token", access);
+    setStorageItem("refresh_token", refresh);
+
+    if (user) {
+      setStorageItem("user_info", JSON.stringify(user));
+    }
+
+    console.log("Admin logged in! Token stored.");
+    return {
+      success: true,
+      data: response.data,
+      userRole: "admin",
+      isAdmin: true,
+    };
+  } catch (error: any) {
+    console.error("Admin login failed:", error.response?.data || error.message);
+    return { success: false, error: error.response?.data || error.message };
+  }
+};
+
+export const registerFarmer = async (
   email: string,
   password: string,
   fullName: string,
-  role: string = "farmer"
+  role: string = "farmer",
+  phoneNumber: string,
+  country: string,
+  region: string,
+  dob: string,
+  nationalID: string,
+  homeAddress: string,
+  produce:string[],
 ) => {
   try {
     const response = await axios.post(`${API_URL}/api/account/register/`, {
@@ -156,6 +214,44 @@ export const registerUser = async (
       password,
       full_name: fullName,
       role: role,
+      phone_number: phoneNumber,
+      country: country,
+      region: region,
+      dob: dob,
+      national_id: nationalID,
+      home_address: homeAddress,
+      produce: produce
+    });
+
+    console.log("Registration successful!");
+    return { success: true, data: response.data };
+  } catch (error: any) {
+    console.error(
+      "Registration failed:",
+      error.response?.data || error.message
+    );
+    return { success: false, error: error.response?.data || error.message };
+  }
+};
+
+export const registerInvestor = async (
+  email: string,
+  password: string,
+  fullName: string,
+  role: string = "investor",
+  phoneNumber: string,
+  country: string,
+  region: string
+) => {
+  try {
+    const response = await axios.post(`${API_URL}/api/account/register/`, {
+      email,
+      password,
+      full_name: fullName,
+      role: role,
+      phone_number: phoneNumber,
+      country: country,
+      region: region,
     });
 
     console.log("Registration successful!");
@@ -200,4 +296,13 @@ export const isAuthenticated = () => {
   return !!(token && userInfo);
 };
 
-export { apiClient, forceLogout };
+export const isAdmin = () => {
+  const userInfo = getUserInfo();
+  return !!(userInfo?.is_superuser || userInfo?.is_staff || userInfo?.role === "admin");
+};
+
+export const isAuthenticatedAdmin = () => {
+  return isAuthenticated() && isAdmin();
+};
+
+export { apiClient, forceLogout, forceAdminLogout };

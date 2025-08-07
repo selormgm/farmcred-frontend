@@ -29,9 +29,9 @@ export default function ConfirmationPage() {
   };
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <MarketplaceNavbar />
-      <main className="max-w-3xl mx-auto px-4 py-24 space-y-10 text-center">
+      <main className="flex-1 max-w-3xl mx-auto px-4 py-24 space-y-10 text-center">
         <h1 className="text-2xl font-bold text-green-700">
           Payment Received & Order Confirmed
         </h1>
@@ -96,6 +96,6 @@ export default function ConfirmationPage() {
         )}
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

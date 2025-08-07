@@ -1,7 +1,7 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Package, MessageSquareText, ShieldAlert } from "lucide-react"; // Lucide icons
+import { Package, MessageSquareText, ShieldAlert } from "lucide-react"; 
 import FarmerOrders from "@/components/dashboard/FarmerOrders";
 import FarmerMessagingPage from "@/components/dashboard/FarmerMessaging";
 import FarmerDisputesPage from "@/components/dashboard/FarmerDispute";

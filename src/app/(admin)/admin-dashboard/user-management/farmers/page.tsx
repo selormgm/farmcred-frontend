@@ -11,7 +11,6 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination";
-import { Search } from "lucide-react";
 
 const dummyFarmers = [
   {

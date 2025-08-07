@@ -5,18 +5,8 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Conversation, Message } from "@/lib/types/farmertypes";
 
-type Conversation = {
-  id: number;
-  buyerName: string;
-};
-
-type Message = {
-  id: number;
-  sender: string;
-  content: string;
-  timestamp: string;
-};
 
 export default function FarmerMessagingPage() {
   const [conversations, setConversations] = useState<Conversation[]>([]);

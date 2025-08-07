@@ -9,17 +9,6 @@ import { notFound, useParams } from "next/navigation";
 import Image from "next/image";
 import { dummyProducts } from "@/mock/products";
 
-type Product = {
-  id: string;
-  name: string;
-  image: string;
-  price: number;
-  description: string;
-  quantity: string;
-  farmer: string;
-  delivery: string;
-  stock: number;
-};
 
 function getDeliveryDateRange(days: string) {
   const [min, max] = days.match(/\d+/g)?.map(Number) || [1, 2];
@@ -48,9 +37,9 @@ export default function BuyPage() {
   if (!product) return notFound();
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <MarketplaceNavbar />
-      <main className="max-w-6xl mx-auto px-4 py-10 pt-24 space-y-10">
+      <main className="flex-1 max-w-6xl mx-auto px-4 py-10 pt-24 space-y-10">
         <div className="grid md:grid-cols-2 gap-10">
           <div>
             <Image
@@ -76,7 +65,7 @@ export default function BuyPage() {
               </p>
             )}
             <p className="text-sm">Quantity: {product.quantity}</p>
-            <p className="text-sm">Farmer: {product.farmer}</p>
+            <p className="text-sm">Farmer: {product.farmerName}</p>
             <p className="text-sm">Delivery: {product.delivery}</p>
             <p className="text-sm text-gray-600">
               Expected Delivery: {getDeliveryDateRange(product.delivery)}
@@ -113,6 +102,6 @@ export default function BuyPage() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

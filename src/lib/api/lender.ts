@@ -2,7 +2,7 @@ import {
   ApiFilters,
   LenderProfile,
   LenderLoans,
-} from '@/lib/types';
+} from '@/lib/types/admintypes';
 
 import apiClient from '../axios';
 

@@ -11,22 +11,13 @@ import ChartDrawer from "@/components/marketplace/ChartDrawer";
 import { useSearchStore } from "@/lib/store/searchStore";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Wheat, Leaf, Carrot, Apple, ListFilter } from "lucide-react";
-
-type Product = {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  description: string;
-  farmerName: string;
-  category: "Grains" | "Tubers" | "Vegetables" | "Fruits";
-};
+import { Product } from "@/lib/types/marketplacetypes";
 
 const allProducts: Product[] = [
   {
     id: 1,
     name: "Organic Tomatoes",
-    image: "/images/freshtomatoes.jpg",
+    imageURL: "/images/freshtomatoes.jpg",
     price: 25.0,
     description: "Fresh from the farm in Volta Region",
     farmerName: "Kwame Okoro",
@@ -35,7 +26,7 @@ const allProducts: Product[] = [
   {
     id: 2,
     name: "Yellow Maize",
-    image: "/images/freshmaize.jpg",
+    imageURL: "/images/freshmaize.jpg",
     price: 50.0,
     description: "Grown without chemicals in Bono East",
     farmerName: "Ama Mensah",
@@ -44,7 +35,7 @@ const allProducts: Product[] = [
   {
     id: 3,
     name: "Sweet Cassava",
-    image: "/images/freshsweetcassava.jpg",
+    imageURL: "/images/freshsweetcassava.jpg",
     price: 40.0,
     description: "Harvested this week in Eastern Region",
     farmerName: "Yaw Boateng",
@@ -53,7 +44,7 @@ const allProducts: Product[] = [
   {
     id: 4,
     name: "Pineapples",
-    image: "/images/freshpineapple.jpg",
+    imageURL: "/images/freshpineapple.jpg",
     price: 60.0,
     description: "Juicy pineapples from Central Region",
     farmerName: "Akua Sarpong",
@@ -110,7 +101,10 @@ export default function MarketplaceGridPage() {
 
   const handleAddToCart = (product: Product) => {
     if (!isInCart(product.id)) {
-      addToCart({ ...product, quantity: 1 });
+      addToCart({
+        ...product, quantity: 1,
+        image: ""
+      });
       toast.success(`${product.name} added to cart`, {
         action: {
           label: "View Cart",
@@ -184,7 +178,7 @@ export default function MarketplaceGridPage() {
             >
               <div className="relative w-full aspect-[4/3]">
                 <Image
-                  src={product.image}
+                  src={product.imageURL}
                   alt={product.name}
                   fill
                   className="object-cover"

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { loginAndStoreToken } from "@/lib/services/authService";
+import { adminLoginAndStoreToken } from "@/lib/services/authService";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -30,12 +30,19 @@ export default function AdminLoginPage() {
     setLoading(true);
     setError("");
 
-    const result = await loginAndStoreToken(email, password);
+    try {
+      const result = await adminLoginAndStoreToken(email, password);
 
-    if (result.success && result.userRole === "admin") {
-      router.push("/admin-dashboard");
-    } else {
-      setError("Invalid credentials or unauthorized access.");
+      if (result.success && result.isAdmin) {
+        router.push("/admin-dashboard");
+      } else {
+        setError(
+          result.error?.message ||
+            "Invalid credentials or unauthorized access. Admin privileges required."
+        );
+      }
+    } catch (error) {
+      setError("An unexpected error occurred. Please try again.");
     }
 
     setLoading(false);
@@ -76,7 +83,7 @@ export default function AdminLoginPage() {
                 </h1>
                 <p className="text-white/90 font-[Inter] text-sm leading-relaxed drop-shadow-md">
                   Secure access to the FarmCred admin dashboard. Monitor users,
-                  manage loans, and track platform performance in one place.{" "}
+                  manage loans, and track platform performance in one place.
                 </p>
               </div>
             </div>
@@ -93,7 +100,7 @@ export default function AdminLoginPage() {
           <div className="mx-auto w-full max-w-sm">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-[#158f20] font-[Plus Jakarta Sans]">
-                Welcome Administrator{" "}
+                Welcome Administrator
               </h2>
               <p className="mt-2 text-md text-[#157148] font-[Inter]">
                 Sign in to the admin dashboard
@@ -137,7 +144,7 @@ export default function AdminLoginPage() {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="admin@example.com"
+                      placeholder="admin@farmcred.com"
                       className="h-10 border-[#D6DFBC] focus:border-[#158f20] focus:ring-[#158f20] text-[#157148] font-[Inter] text-sm"
                     />
                   </div>
@@ -173,11 +180,23 @@ export default function AdminLoginPage() {
                     {loading ? "Signing in..." : "Sign in"}
                   </Button>
                 </form>
+
+                <div className="text-center pt-4">
+                  <p className="text-sm text-[#157148] font-[Inter]">
+                    Not an admin?{" "}
+                    <Link
+                      href="/login"
+                      className="font-medium text-[#158f20] hover:text-[#157148] hover:underline"
+                    >
+                      Regular Sign in
+                    </Link>
+                  </p>
+                </div>
               </CardContent>
             </Card>
 
             <p className="text-center text-xs text-gray-500 font-[Inter] mt-6">
-              Only authorized admins may access this portal.
+              Only authorized administrators may access this portal.
             </p>
           </div>
         </div>

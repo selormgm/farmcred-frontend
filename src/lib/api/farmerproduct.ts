@@ -1,6 +1,6 @@
 
 import apiClient from '../axios';
-import { FarmerProduct, FarmerProductInput } from '../types';
+import { FarmerProduct, FarmerProductInput } from '../types/farmertypes';
 
 export const farmerProductService = {
   // Farmer Products

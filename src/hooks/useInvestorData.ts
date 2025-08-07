@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { investorService } from "@/lib/api/investor";
-import { InvestorReview, FarmerProfile, InvestorFarmers, InvestorProfile, ReviewInput, ApiFilters } from "@/lib/types";
+import { InvestorReview, FarmerProfile, InvestorFarmers, InvestorProfile, ReviewInput, ApiFilters } from "@/lib/types/investortypes";
 
 function useApiCall<T>(apiCall: () => Promise<T>, dependencies: any[] = []) {
   const [data, setData] = useState<T | null>(null);

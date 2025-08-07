@@ -1,22 +1,5 @@
 import { create } from "zustand";
-
-interface CartItem {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  quantity: number;
-  farmerName: string;
-  description: string;
-}
-
-interface CartState {
-  cart: CartItem[];
-  addToCart: (item: CartItem) => void;
-  removeFromCart: (id: number) => void;
-  isInCart: (id: number) => boolean;
-  updateQuantity: (id: number, delta: number) => void; // optional
-}
+import { CartState } from "../types/marketplacetypes";
 
 export const useCartStore = create<CartState>((set, get) => ({
   cart: [],

@@ -18,32 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
-
-type Comment = {
-  id: number;
-  author: string;
-  content: string;
-  timestamp: string;
-};
-
-type TimelineEvent = {
-  id: number;
-  action: string;
-  performed_by: string;
-  timestamp: string;
-};
-
-type DisputedOrder = {
-  id: number;
-  produce_listing?: {
-    produce_type: string;
-  };
-  reason: string;
-  created_at: string;
-  resolution_status: string;
-  comments?: Comment[];
-  timeline?: TimelineEvent[];
-};
+import { DisputedOrder } from "@/lib/types/farmertypes";
 
 export default function FarmerDisputesPage() {
   const [disputes, setDisputes] = useState<DisputedOrder[]>([]);

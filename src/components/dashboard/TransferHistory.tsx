@@ -1,5 +1,5 @@
 import { useFarmerTransfers } from "@/hooks/useFarmerData";
-import { TransferInput } from "@/lib/types";
+import { TransferInput } from "@/lib/types/farmertypes";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const TransferHistory = () => {

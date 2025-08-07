@@ -16,7 +16,7 @@ import {
   FarmerOverview,
   Transaction,
   Transfer,
-} from "@/lib/types";
+} from "@/lib/types/farmertypes";
 
 interface FarmerInsightCardProps {
   overview: FarmerOverview;

@@ -1,12 +1,12 @@
-import { FarmCredNavbar } from "@/components/landing/Navbar";
 import Footer from "@/components/marketplace/Footer";
+import { MarketplaceNavbar } from "@/components/marketplace/Navbar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function MarketplaceAboutPage() {
   return (
     <>
-      <FarmCredNavbar />
+      <MarketplaceNavbar />
       <main className="max-w-5xl mx-auto px-6 py-24 space-y-14">
         {/* Header */}
         <section className="text-center space-y-4">

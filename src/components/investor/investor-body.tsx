@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { ChartBarProfitLoss } from "./ProfitChart";
+import { ChartBarInvestmentROI } from "./ProfitChart";
 import { useInvestorProfile } from "@/hooks/useInvestorData";
 
 export function BodyCards() {
@@ -45,24 +45,23 @@ export function BodyCards() {
   return (
     <div className="flex-1">
       <div className="flex flex-col gap-6 lg:flex-row">
-        <div className="flex-[2] space-y-6 min-w-[300px]">
-          <div className="flex flex-col xl:flex-row gap-6">
-            <div className="flex-[1.2] min-w-0">
-              <ChartBarProfitLoss />
-            </div>
-            <Card className="min-h-[240px] max-w-full xl:max-w-[350px] flex-1 bg-white p-5 rounded-xl dark:bg-card shadow-md">
+        <div className="flex flex-col xl:flex-row gap-6 w-full">
+          <div className="flex-[2] min-w-0">
+            <ChartBarInvestmentROI />
+          </div>
+
+          <div className="flex-[1]">
+            <Card className="h-[520px] bg-white p-5 rounded-xl dark:bg-card shadow-md">
               <CardHeader className="flex flex-row items-center justify-between p-0 pb-4">
                 <CardTitle className="text-sm font-medium">
                   Recent Activity
                 </CardTitle>
               </CardHeader>
-              <CardContent className="flex-1 px-4 py-2 overflow-y-auto space-y-4">
+              <CardContent className="flex-1 flex-col gap-4">
                 {recentActivity.length > 0 ? (
                   recentActivity.map((activity, index) => (
                     <div key={index} className="border-b pb-2">
-                      <p className="font-medium">
-                        {activity.title}
-                      </p>
+                      <p className="font-medium">{activity.title}</p>
                       <p className="text-xs text-muted-foreground">
                         {activity.timestamp}
                       </p>

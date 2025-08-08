@@ -10,7 +10,8 @@ export interface InvestorProfile{
   farmers_reviewed?: number; //farmers invested in and reviewed 
   farmers_funded?: number; // farmers funded
   total_investments: number; //total amount invested
-  return_on_investments?:number; // calculated price on how much an investor gets after investing 
+  monthly_investment: number; // investment made monthly 
+  return_on_investments?:number; // calculated price on how much an investor gets after investing monthly
   email: string;
   bio?: string;
   password?: string;

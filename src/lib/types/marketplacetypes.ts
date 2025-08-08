@@ -77,3 +77,7 @@ export interface ApiFilters {
   date_from?: string;
   date_to?: string;
 }
+
+export interface CreateListingInput{
+  
+}

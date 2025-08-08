@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { buyerService } from "@/lib/api/buyer";
-import { BuyerProfile, BuyerTransaction, ApiFilters } from "@/lib/types";
+import {  ApiFilters } from "@/lib/types/buyertypes";
 
 function useApiCall<T>(apiCall: () => Promise<T>, dependencies: any[] = []) {
   const [data, setData] = useState<T | null>(null);

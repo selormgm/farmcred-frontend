@@ -1,10 +1,11 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Package, MessageSquareText, ShieldAlert } from "lucide-react"; 
+import { Package, MessageSquareText, ShieldAlert, Hourglass } from "lucide-react"; 
 import FarmerOrders from "@/components/dashboard/FarmerOrders";
 import FarmerMessagingPage from "@/components/dashboard/FarmerMessaging";
 import FarmerDisputesPage from "@/components/dashboard/FarmerDispute";
+import FarmerPendingRequestPage from "@/components/dashboard/FarmerPendingRequest";
 
 export default function FarmerInteractionsPage() {
   return (
@@ -27,6 +28,12 @@ export default function FarmerInteractionsPage() {
             <div className="flex items-center gap-2">
               <ShieldAlert className="w-4 h-4" />
               <span>Disputes</span>
+            </div>
+          </TabsTrigger>
+          <TabsTrigger value="pending-requests">
+            <div className="flex items-center gap-2">
+              <Hourglass className="w-4 h-4" />
+              <span>Pending Requests</span>
             </div>
           </TabsTrigger>
         </TabsList>
@@ -60,6 +67,17 @@ export default function FarmerInteractionsPage() {
             </CardHeader>
             <CardContent>
               <FarmerDisputesPage/>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="pending-requests">
+          <Card>
+            <CardHeader>
+              <CardTitle>Pending Requests</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <FarmerPendingRequestPage/>
             </CardContent>
           </Card>
         </TabsContent>

@@ -1,6 +1,4 @@
 
-
-
 import apiClient from '../axios';
 import { ApiFilters, BuyerProfile, BuyerTransaction } from '../types/marketplacetypes';
 

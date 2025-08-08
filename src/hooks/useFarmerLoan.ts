@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { farmerLoanService } from "@/lib/api/farmerloan";
-import { LoanQualificationResponse, LoanRequestPayload, LoanRequestResponse, RepaymentConfirmationPayload, RepaymentConfirmationResponse } from "@/lib/types";
+import { LoanQualificationResponse, LoanRequestPayload, LoanRequestResponse, RepaymentConfirmationPayload, RepaymentConfirmationResponse } from "@/lib/types/farmertypes";
 
 //Hook for loan qualifications
 export function useLoanQualifications() {

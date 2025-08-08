@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { lenderService } from "@/lib/api/lender";
-import { LenderProfile, LenderLoans, ApiFilters } from "@/lib/types";
+import { LenderProfile, LenderLoans, ApiFilters } from "@/lib/types/admintypes";
 
 function useApiCall<T>(apiCall: () => Promise<T>, dependencies: any[] = []) {
   const [data, setData] = useState<T | null>(null);

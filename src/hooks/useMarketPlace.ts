@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { marketplaceService } from '@/lib/api/marketplace';
-import { MarketplaceListing, Conversation, Message, CreateListingInput, SendMessageInput } from '@/lib/types';
+import { CreateListingInput, SendMessageInput } from '@/lib/types/marketplacetypes';
 
 function useApiCall<T>(apiCall: () => Promise<T>, dependencies: any[] = []) {
   const [data, setData] = useState<T | null>(null);

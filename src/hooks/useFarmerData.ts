@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { farmerService } from '@/lib/api/farmer';
-import { ApiFilters, FarmerProfile } from '@/lib/types';
+import { ApiFilters, FarmerProfile } from '@/lib/types/farmertypes';
 
 
 function useApiCall<T>(apiCall: () => Promise<T>, dependencies: any[] = []) {

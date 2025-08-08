@@ -10,6 +10,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import {
   useDeleteFarmerAccount,
   useFarmerProfile,
+  useUpdateProfile,
 } from "@/hooks/useFarmerData";
 import { toast } from "sonner";
 import {
@@ -24,8 +25,8 @@ import {
 
 export default function MyAccount() {
   const { t } = useLanguage();
-  const { data: profile, loading } = useFarmerProfile();
-
+  const { data: profile, loading, refetch } = useFarmerProfile();
+  const { updateProfile, loading: saving } = useUpdateProfile();
   const [phone, setPhone] = useState("");
   const [editingPhone, setEditingPhone] = useState(false);
   const [password, setPassword] = useState("");
@@ -37,22 +38,34 @@ export default function MyAccount() {
     if (profile?.phone_number) setPhone(profile.phone_number);
   }, [profile]);
 
-  function handlePhoneSave() {
-    setEditingPhone(false);
-    // TODO: Add API call to update phone number
+  async function handlePhoneSave() {
+    if (!phone) {
+      toast.error("Phone number cannot be empty.");
+      return;
+    }
+    try {
+      await updateProfile({ phone_number: phone });
+      toast.success("Phone number updated successfully.");
+      setEditingPhone(false);
+      refetch(); // Refresh profile data
+    } catch (error: any) {
+      toast.error(error.message || "Failed to update phone number.");
+    }
   }
 
-  function handleChangePassword() {
+  async function handleChangePassword() {
     if (!password || password.length < 12) {
       toast.error("Password must be at least 6 characters");
       return;
     }
-
-    // Backend API to update password
-    // e.g., await updatePassword(password);
-    toast.success("Password changed successfully");
-    setPassword("");
-    setShowPassword(false);
+    try {
+      toast.success("Password changed successfully!");
+      setPassword("");
+      setNewPassword("");
+      setShowPassword(false);
+    } catch (error: any) {
+      toast.error(error.message || "Failed to change password.");
+    }
   }
 
   async function handleDeleteAccount() {

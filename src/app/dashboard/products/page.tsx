@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useFarmerProducts } from "@/hooks/useFarmerProducts";
+import { useFarmerProducts, useCreateFarmerProduct, useUpdateFarmerProduct, useDeleteFarmerProduct } from "@/hooks/useFarmerProducts";
 import { Button } from "@/components/ui/button";
 import { Plus, Trash2, Pencil } from "lucide-react";
 import {
@@ -10,16 +10,100 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
+
+// Component for the Add/Edit Product form
+function ProductForm({ initialData, onClose, onSave }: { initialData?: any, onClose: () => void, onSave: () => void }) {
+  const [name, setName] = useState(initialData?.name || "");
+  const [price, setPrice] = useState(initialData?.price || "");
+  const [image, setImage] = useState<File | null>(null);
+
+  const { createProduct, loading: createLoading } = useCreateFarmerProduct();
+  const { updateProduct, loading: updateLoading } = useUpdateFarmerProduct();
+  const isEditing = !!initialData;
+  const loading = isEditing ? updateLoading : createLoading;
+
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   try {
+  //     if (isEditing) {
+  //       await updateProduct(initialData.name, { name, price: Number(price) });
+  //       toast.success(`Product "${name}" updated successfully`);
+  //     } else {
+  //       await createProduct({ name, price: Number(price), image });
+  //       toast.success(`Product "${name}" added successfully`);
+  //     }
+  //     onSave();
+  //     onClose();
+  //   } catch (error: any) {
+  //     toast.error(error.message || "Failed to save product");
+  //   }
+  // };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="space-y-2">
+        <Label htmlFor="product-name">Product Name</Label>
+        <Input
+          id="product-name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="e.g., Organic Tomatoes"
+          required
+          disabled={isEditing}
+        />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="product-price">Price (GHS)</Label>
+        <Input
+          id="product-price"
+          type="number"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          placeholder="e.g., 25.00"
+          required
+        />
+      </div>
+      {!isEditing && (
+        <div className="space-y-2">
+          <Label htmlFor="product-image">Product Image</Label>
+          <Input
+            id="product-image"
+            type="file"
+            onChange={(e) => setImage(e.target.files?.[0] || null)}
+          />
+        </div>
+      )}
+      <DialogFooter>
+        <Button type="button" variant="outline" onClick={onClose}>
+          Cancel
+        </Button>
+        <Button
+          type="submit"
+          disabled={loading || !name || !price || (!isEditing && !image)}
+          className="bg-[#158f20] text-white hover:bg-[#115c3a]"
+        >
+          {loading ? "Saving..." : (isEditing ? "Update Product" : "Add Product")}
+        </Button>
+      </DialogFooter>
+    </form>
+  );
+}
+
 
 export default function ProductPage() {
-  const { products, loading, error } = useFarmerProducts();
+  const { products, loading, error, refetch } = useFarmerProducts();
+  const { deleteProduct, loading: deleteLoading } = useDeleteFarmerProduct();
+
   const [sortBy, setSortBy] = useState("default");
-  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [isAddEditOpen, setIsAddEditOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
 
-  // New state for delete modal
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState<any>(null);
 
@@ -40,38 +124,47 @@ export default function ProductPage() {
     }
   }, [products, sortBy]);
 
-  async function handleDeleteProductConfirmed() {
-    if (!productToDelete) return;
-    try {
-      await deleteProduct(productToDelete.name);
-      toast.success(`Product "${productToDelete.name}" deleted successfully`);
-      setDeleteModalOpen(false);
-      setProductToDelete(null);
-      // Optionally refresh list or re-fetch data
-    } catch (error: any) {
-      toast.error(error.message || "Failed to delete product");
-    }
-  }
+  const handleProductSave = () => {
+    refetch();
+  };
 
   const handleDeleteClick = (product: any) => {
     setProductToDelete(product);
     setDeleteModalOpen(true);
   };
 
-  const handleEdit = (product: any) => {
-    setEditingProduct(product);
-    setIsAddOpen(true);
+  const handleConfirmDelete = async () => {
+    if (!productToDelete) return;
+    try {
+      await deleteProduct(productToDelete.name);
+      toast.success(`Product "${productToDelete.name}" deleted successfully`);
+      setDeleteModalOpen(false);
+      setProductToDelete(null);
+      refetch();
+    } catch (error: any) {
+      toast.error(error.message || "Failed to delete product");
+    }
   };
 
-  if (loading)
+  const handleEditClick = (product: any) => {
+    setEditingProduct(product);
+    setIsAddEditOpen(true);
+  };
+
+  if (loading) {
     return <div className="p-6 text-gray-500">Loading products...</div>;
-  if (error)
+  }
+  
+  if (error) {
     return <div className="p-6 text-red-600">Failed to load products.</div>;
+  }
 
   return (
     <div className="p-6 space-y-6">
       {/* Header & Sort */}
-      <div className="flex flex-col md:flex-row md:justify-end gap-4">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <h1 className="text-2xl font-bold text-[#158f20]">My Products</h1>
+
         <div className="flex items-center gap-3">
           <select
             value={sortBy}
@@ -84,13 +177,13 @@ export default function ProductPage() {
             <option value="priceLow">Price: Low to High</option>
           </select>
 
-          <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
+          <Dialog open={isAddEditOpen} onOpenChange={setIsAddEditOpen}>
             <DialogTrigger asChild>
               <Button
                 className="bg-[#157f20] hover:bg-[#5aa500] text-white"
                 onClick={() => {
                   setEditingProduct(null);
-                  setIsAddOpen(true);
+                  setIsAddEditOpen(true);
                 }}
               >
                 <Plus className="mr-2 h-4 w-4" />
@@ -103,31 +196,7 @@ export default function ProductPage() {
                   {editingProduct ? "Edit Product" : "Add Product"}
                 </DialogTitle>
               </DialogHeader>
-              {/* AddProductForm can be a separate component */}
-              <form className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Product Name"
-                  className="w-full border rounded px-3 py-2 text-sm"
-                />
-                <input
-                  type="number"
-                  placeholder="Price (GHS)"
-                  className="w-full border rounded px-3 py-2 text-sm"
-                />
-                <select className="w-full border rounded px-3 py-2 text-sm">
-                  <option>Select Image</option>
-                  {/* Replace with real image list */}
-                </select>
-                <div className="flex justify-end">
-                  <Button
-                    type="submit"
-                    className="bg-[#158f20] text-white hover:bg-[#115c3a]"
-                  >
-                    {editingProduct ? "Update" : "Create"}
-                  </Button>
-                </div>
-              </form>
+              <ProductForm initialData={editingProduct} onClose={() => setIsAddEditOpen(false)} onSave={handleProductSave} />
             </DialogContent>
           </Dialog>
         </div>
@@ -165,7 +234,7 @@ export default function ProductPage() {
             <div className="absolute top-2 right-2 flex gap-2">
               <button
                 className="p-1 bg-white border rounded-full hover:bg-gray-100 dark:bg-card"
-                onClick={() => handleEdit(product)}
+                onClick={() => handleEditClick(product)}
               >
                 <Pencil className="h-4 w-4 text-blue-600" />
               </button>
@@ -203,9 +272,10 @@ export default function ProductPage() {
             </Button>
             <Button
               className="bg-red-600 text-white hover:bg-red-700"
-              onClick={handleDeleteProductConfirmed}
+              onClick={handleConfirmDelete}
+              disabled={deleteLoading}
             >
-              Delete
+              {deleteLoading ? "Deleting..." : "Delete"}
             </Button>
           </div>
         </DialogContent>
@@ -219,12 +289,4 @@ export default function ProductPage() {
       )}
     </div>
   );
-}
-
-// Update deleteProduct to call your API
-async function deleteProduct(name: string) {
-  const res = await fetch(`/api/products/${encodeURIComponent(name)}`, {
-    method: "DELETE",
-  });
-  if (!res.ok) throw new Error("Failed to delete product");
 }

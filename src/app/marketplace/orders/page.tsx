@@ -6,69 +6,65 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-
-const allOrders = [
-  {
-    id: "1",
-    name: "Organic Tomatoes",
-    image: "/images/freshtomatoes.jpg",
-    price: 25,
-    status: "Delivered",
-    reviewed: true,
-  },
-  {
-    id: "2",
-    name: "Yellow Maize",
-    image: "/images/freshmaize.jpg",
-    price: 50,
-    status: "Out for Delivery",
-    reviewed: false,
-  },
-  {
-    id: "3",
-    name: "Sweet Cassava",
-    image: "/images/freshsweetcassava.jpg",
-    price: 40,
-    status: "Preparing",
-    reviewed: false,
-  },
-  {
-    id: "4",
-    name: "Pineapples",
-    image: "/images/freshpineapple.jpg",
-    price: 60,
-    status: "Delivered",
-    reviewed: true,
-  },
-  {
-    id: "5",
-    name: "Plantain",
-    image: "/images/freshplantain.jpg",
-    price: 45,
-    status: "Out for Delivery",
-    reviewed: false,
-  },
-  // Add more orders as needed
-];
+import { useMyOrders } from "@/hooks/usePayment";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 const STATUS_TABS = ["All", "Preparing", "Out for Delivery", "Delivered"];
 const PAGE_SIZE = 6;
 
 export default function OrderHistoryPage() {
+  const { data: allOrders, loading, error } = useMyOrders();
   const [selectedTab, setSelectedTab] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredOrders =
     selectedTab === "All"
-      ? allOrders
-      : allOrders.filter((o) => o.status === selectedTab);
+      ? allOrders || []
+      : (allOrders || []).filter((o:any) => o.status === selectedTab);
 
   const paginatedOrders = filteredOrders.slice(
     (currentPage - 1) * PAGE_SIZE,
     currentPage * PAGE_SIZE
   );
 
-  const totalPages = Math.ceil(filteredOrders.length / PAGE_SIZE);
+  const totalPages = Math.ceil((filteredOrders || []).length / PAGE_SIZE);
+  if (loading){
+    return(
+    <div className="flex flex-col min-h-screen">
+        <MarketplaceNavbar />
+        <main className="flex-1 max-w-6xl mx-auto px-4 py-24 space-y-10">
+          <h1 className="text-[#158f20] text-2xl font-bold">My Orders</h1>
+          <div className="flex gap-3 pb-2">
+            {[...Array(4)].map((_, i) => (
+              <Skeleton key={i} className="h-8 w-24" />
+            ))}
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="border rounded-lg bg-white shadow-sm p-4">
+                <Skeleton className="w-full h-48 rounded-md mb-4" />
+                <div className="space-y-1">
+                  <Skeleton className="h-6 w-3/4" />
+                  <Skeleton className="h-4 w-1/2" />
+                  <Skeleton className="h-4 w-1/3" />
+                </div>
+                <div className="flex flex-col gap-2 mt-4">
+                  <Skeleton className="h-9 w-full" />
+                  <Skeleton className="h-9 w-full" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+  if (error) {
+    return <p className="text-red-600 p-8">Error loading orders.</p>;
+  }
 
   return (
     <>
@@ -98,7 +94,7 @@ export default function OrderHistoryPage() {
           <p className="text-gray-600">No orders in this category.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {paginatedOrders.map((order) => (
+            {paginatedOrders.map((order: any) => (
               <div
                 key={order.id}
                 className="border rounded-lg bg-white shadow-sm p-4 flex flex-col relative"

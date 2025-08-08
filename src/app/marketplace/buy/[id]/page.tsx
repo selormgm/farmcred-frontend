@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Footer from "@/components/marketplace/Footer";
 import { MarketplaceNavbar } from "@/components/marketplace/Navbar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
 import Image from "next/image";
-import { dummyProducts } from "@/mock/products";
-
+import { useListings } from "@/hooks/useMarketPlace";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function getDeliveryDateRange(days: string) {
   const [min, max] = days.match(/\d+/g)?.map(Number) || [1, 2];
@@ -33,7 +33,41 @@ export default function BuyPage() {
   >("delivery");
 
   const params = useParams();
-  const product = dummyProducts.find((p) => p.id === params.id);
+  const { data: products, loading, error } = useListings();
+  const product = useMemo(() => {
+    if (!products) return null;
+    return products.find(
+      (p: { id: any }) => String(p.id) === String(params.id)
+    );
+  }, [products, params.id]);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <MarketplaceNavbar />
+        <main className="flex-1 max-w-6xl mx-auto px-4 py-10 pt-24 space-y-10">
+          <div className="grid md:grid-cols-2 gap-10">
+            <Skeleton className="w-full h-[400px]" />
+            <div className="space-y-4">
+              <Skeleton className="h-10 w-3/4" />
+              <Skeleton className="h-6 w-full" />
+              <Skeleton className="h-6 w-1/4" />
+              <Skeleton className="h-4 w-1/2" />
+              <Skeleton className="h-4 w-1/3" />
+              <Skeleton className="h-4 w-1/4" />
+              <Skeleton className="h-4 w-1/2" />
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <p className="text-red-600 p-8">Error loading product details.</p>;
+  }
+
   if (!product) return notFound();
 
   return (
@@ -43,7 +77,7 @@ export default function BuyPage() {
         <div className="grid md:grid-cols-2 gap-10">
           <div>
             <Image
-              src={product.image}
+              src={product.image || "/images/placeholder.png"}
               alt={product.name}
               width={600}
               height={400}
@@ -57,7 +91,7 @@ export default function BuyPage() {
             <p className="text-green-600 text-xl font-semibold">
               GH₵ {product.price}
             </p>
-            {product.stock > 5 ? (
+            {product.stock && product.stock> 5 ? (
               <p className="text-sm text-green-600">In stock</p>
             ) : (
               <p className="text-sm text-red-600">
@@ -70,8 +104,6 @@ export default function BuyPage() {
             <p className="text-sm text-gray-600">
               Expected Delivery: {getDeliveryDateRange(product.delivery)}
             </p>
-
-           
           </div>
         </div>
 

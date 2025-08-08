@@ -1,19 +1,24 @@
 "use client";
-
 import Footer from "@/components/marketplace/Footer";
 import { MarketplaceNavbar } from "@/components/marketplace/Navbar";
 import { Button } from "@/components/ui/button";
 import { notFound, useRouter } from "next/navigation";
 import Image from "next/image";
-import { useState } from "react";
-import { dummyProducts } from "@/mock/products";
+import { useMemo, useState } from "react";
 import { useParams } from "next/navigation";
+import { useListings } from "@/hooks/useMarketPlace";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function CheckoutPage() {
   const params = useParams();
   const router = useRouter();
 
-  const product = dummyProducts.find((p) => p.id === String(params.id));
+  const { data: products, loading, error } = useListings();
+  
+  const product = useMemo(() => {
+    if (!products) return null;
+    return products.find((p: { id: any; }) => String(p.id) === String(params.id));
+  }, [products, params.id]);
 
   const [paymentMethod, setPaymentMethod] = useState<"momo" | "bank" | "cod">(
     "momo"
@@ -23,6 +28,44 @@ export default function CheckoutPage() {
   >("delivery");
 
   const DELIVERY_FEE = 20.0;
+
+  if (loading) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <MarketplaceNavbar />
+        <main className="flex-1 max-w-6xl mx-auto px-4 pt-24 space-y-10">
+          <h1 className="text-2xl font-bold">Checkout</h1>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <Skeleton className="w-full h-24" />
+              <div className="space-y-2">
+                <Skeleton className="h-6 w-1/2" />
+                <div className="flex gap-3">
+                  <Skeleton className="h-9 w-24" />
+                  <Skeleton className="h-9 w-24" />
+                </div>
+              </div>
+              <Skeleton className="h-4 w-full" />
+            </div>
+            <div className="space-y-6">
+              <Skeleton className="h-6 w-1/2" />
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-6 w-full" />
+                <Skeleton className="h-6 w-full" />
+                <Skeleton className="h-6 w-full" />
+              </div>
+              <Skeleton className="h-12 w-full" />
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <p className="text-red-600 p-8">Error loading product details.</p>;
+  }
 
   if (!product) return notFound();
 
@@ -46,7 +89,7 @@ export default function CheckoutPage() {
           <div className="space-y-4">
             <div className="flex gap-4 items-center">
               <Image
-                src={product.image}
+                src={product.image || "/images/placeholder.png"}
                 alt={product.name}
                 width={100}
                 height={100}

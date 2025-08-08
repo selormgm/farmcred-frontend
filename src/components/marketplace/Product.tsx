@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
@@ -12,58 +11,24 @@ import { useSearchStore } from "@/lib/store/searchStore";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Wheat, Leaf, Carrot, Apple, ListFilter } from "lucide-react";
 import { Product } from "@/lib/types/marketplacetypes";
-
-const allProducts: Product[] = [
-  {
-    id: 1,
-    name: "Organic Tomatoes",
-    imageURL: "/images/freshtomatoes.jpg",
-    price: 25.0,
-    description: "Fresh from the farm in Volta Region",
-    farmerName: "Kwame Okoro",
-    category: "Vegetables",
-  },
-  {
-    id: 2,
-    name: "Yellow Maize",
-    imageURL: "/images/freshmaize.jpg",
-    price: 50.0,
-    description: "Grown without chemicals in Bono East",
-    farmerName: "Ama Mensah",
-    category: "Grains",
-  },
-  {
-    id: 3,
-    name: "Sweet Cassava",
-    imageURL: "/images/freshsweetcassava.jpg",
-    price: 40.0,
-    description: "Harvested this week in Eastern Region",
-    farmerName: "Yaw Boateng",
-    category: "Tubers",
-  },
-  {
-    id: 4,
-    name: "Pineapples",
-    imageURL: "/images/freshpineapple.jpg",
-    price: 60.0,
-    description: "Juicy pineapples from Central Region",
-    farmerName: "Akua Sarpong",
-    category: "Fruits",
-  },
-];
+import { useListings } from "@/hooks/useMarketPlace";
+import { Skeleton } from "../ui/skeleton";
 
 export default function MarketplaceGridPage() {
   const router = useRouter();
   const { addToCart, isInCart } = useCartStore();
+  const { data: allProducts, loading, error } = useListings();
   const [sortBy, setSortBy] = useState("default");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
   const [activeChat, setActiveChat] = useState<Product | null>(null);
-  const { query, setQuery } = useSearchStore();
+  const { query } = useSearchStore();
 
   const filteredProducts = useMemo(() => {
-    return allProducts.filter((p) => {
+    if (!allProducts) return [];
+
+    return allProducts.filter((p: { category: string; name: string; farmerName: string; }) => {
       const matchesCategory =
         categoryFilter === "All" || p.category === categoryFilter;
 
@@ -97,13 +62,14 @@ export default function MarketplaceGridPage() {
     return sortedProducts.slice(start, start + pageSize);
   }, [sortedProducts, currentPage]);
 
-  useEffect(() => setCurrentPage(1), [sortBy, categoryFilter]);
+  useEffect(() => setCurrentPage(1), [sortBy, categoryFilter, query]);
 
   const handleAddToCart = (product: Product) => {
     if (!isInCart(product.id)) {
       addToCart({
-        ...product, quantity: 1,
-        image: ""
+        ...product,
+        quantity: 1,
+        image: product.imageURL,
       });
       toast.success(`${product.name} added to cart`, {
         action: {
@@ -120,7 +86,6 @@ export default function MarketplaceGridPage() {
         {/* Header and Filters */}
         <h2 className="text-2xl font-bold text-[#158f20]">Marketplace</h2>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          {/* Category buttons */}
           {/* Category Tabs */}
           <Tabs
             defaultValue="All"
@@ -169,94 +134,120 @@ export default function MarketplaceGridPage() {
           </div>
         </div>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {paginatedProducts.map((product) => (
-            <div
-              key={product.id}
-              className="border rounded-lg bg-white shadow hover:shadow-md transition-shadow"
-            >
-              <div className="relative w-full aspect-[4/3]">
-                <Image
-                  src={product.imageURL}
-                  alt={product.name}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute top-2 right-2 bg-white text-[#158f20] text-sm font-semibold px-2 py-2 rounded shadow-sm">
-                  GH₵ {product.price}
+         {/* Product Grid */}
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="border rounded-lg bg-white shadow-sm">
+                <Skeleton className="w-full aspect-[4/3]" />
+                <div className="p-4 space-y-2">
+                  <Skeleton className="h-6 w-3/4" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-1/2" />
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    <Skeleton className="h-8 w-20" />
+                    <Skeleton className="h-8 w-24" />
+                    <Skeleton className="h-8 w-28" />
+                  </div>
                 </div>
               </div>
-              <div className="p-4 space-y-2">
-                <h2 className="text-base font-semibold text-[#157148] truncate">
-                  {product.name}
-                </h2>
-                <p className="text-sm text-gray-500 line-clamp-2">
-                  {product.description}
-                </p>
-                <p className="text-sm text-gray-500">
-                  Sold by:{" "}
-                  <span className="text-[#05402E] font-semibold">
-                    {product.farmerName}
-                  </span>
-                </p>
-              </div>
-              <div className="flex flex-wrap px-4 pb-4 gap-2">
-                <Link href={`/marketplace/buy/${product.id}`}>
-                  <Button className="bg-gradient-to-br from-[#128f20] to-[#72BF01] text-white hover:opacity-90 shadow-lg">
-                    Buy
+            ))}
+          </div>
+        ) : error ? (
+          <p className="text-red-600">Failed to load products. {error}</p>
+        ) : sortedProducts.length === 0 ? (
+          <p className="text-gray-500">No products found for this search/filter.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {paginatedProducts.map((product) => (
+              <div
+                key={product.id}
+                className="border rounded-lg bg-white shadow hover:shadow-md transition-shadow"
+              >
+                <div className="relative w-full aspect-[4/3]">
+                  <Image
+                    src={product.imageURL}
+                    alt={product.name}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute top-2 right-2 bg-white text-[#158f20] text-sm font-semibold px-2 py-2 rounded shadow-sm">
+                    GH₵ {product.price}
+                  </div>
+                </div>
+                <div className="p-4 space-y-2">
+                  <h2 className="text-base font-semibold text-[#157148] truncate">
+                    {product.name}
+                  </h2>
+                  <p className="text-sm text-gray-500 line-clamp-2">
+                    {product.description}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Sold by:{" "}
+                    <span className="text-[#05402E] font-semibold">
+                      {product.farmerName}
+                    </span>
+                  </p>
+                </div>
+                <div className="flex flex-wrap px-4 pb-4 gap-2">
+                  <Link href={`/marketplace/buy/${product.id}`}>
+                    <Button className="bg-gradient-to-br from-[#128f20] to-[#72BF01] text-white hover:opacity-90 shadow-lg">
+                      Buy
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="outline"
+                    disabled={isInCart(product.id)}
+                    onClick={() => handleAddToCart(product)}
+                    className="text-[#158f20] hover:bg-white hover:opacity-90 shadow-lg hover:text-[#05402E]"
+                  >
+                    {isInCart(product.id) ? "Added" : "Add to Cart"}
                   </Button>
-                </Link>
-                <Button
-                  variant="outline"
-                  disabled={isInCart(product.id)}
-                  onClick={() => handleAddToCart(product)}
-                  className="text-[#158f20] hover:bg-white hover:opacity-90 shadow-lg hover:text-[#05402E]"
-                >
-                  {isInCart(product.id) ? "Added" : "Add to Cart"}
-                </Button>
-                <Button
-                  variant="ghost"
-                  onClick={() => setActiveChat(product)}
-                  className="text-[#158f20]"
-                >
-                  Inquire to Buy
-                </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => setActiveChat(product)}
+                    className="text-[#158f20]"
+                  >
+                    Inquire to Buy
+                  </Button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* Pagination */}
-        <div className="flex justify-center gap-2 mt-6">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </Button>
-          {[...Array(totalPages)].map((_, i) => (
+         {totalPages > 1 && (
+          <div className="flex justify-center gap-2 mt-6">
             <Button
-              key={i + 1}
+              variant="outline"
               size="sm"
-              variant={currentPage === i + 1 ? "default" : "outline"}
-              onClick={() => setCurrentPage(i + 1)}
-              className={currentPage === i + 1 ? "bg-[#158f20] text-white" : ""}
+              onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+              disabled={currentPage === 1}
             >
-              {i + 1}
+              Previous
             </Button>
-          ))}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </Button>
-        </div>
+            {[...Array(totalPages)].map((_, i) => (
+              <Button
+                key={i + 1}
+                size="sm"
+                variant={currentPage === i + 1 ? "default" : "outline"}
+                onClick={() => setCurrentPage(i + 1)}
+                className={currentPage === i + 1 ? "bg-[#158f20] text-white" : ""}
+              >
+                {i + 1}
+              </Button>
+            ))}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </Button>
+          </div>
+        )}
       </div>
       <ChartDrawer
         activeChat={activeChat}

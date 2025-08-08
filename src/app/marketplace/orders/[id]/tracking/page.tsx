@@ -1,20 +1,54 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Footer from "@/components/marketplace/Footer";
 import { MarketplaceNavbar } from "@/components/marketplace/Navbar";
-import { dummyProducts } from "@/mock/products";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useListings } from "@/hooks/useMarketPlace";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const steps = ["Preparing Order", "Out for Delivery", "Delivered"];
 
 export default function OrderTrackingPage() {
   const params = useParams();
-  const product = dummyProducts.find((p) => p.id === String(params.id));
-
+  const { data: products, loading, error } = useListings();
   const [statusIndex, setStatusIndex] = useState(0);
+
+  const product = useMemo(() => {
+    if (!products) return null;
+    return products.find((p: { id: any; }) => String(p.id) === String(params.id));
+  }, [products, params.id]);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <MarketplaceNavbar />
+        <main className="flex-1 max-w-3xl mx-auto px-4 py-24 space-y-12">
+          <div className="text-center space-y-2">
+            <Skeleton className="h-8 w-1/2 mx-auto" />
+            <Skeleton className="h-4 w-1/4 mx-auto" />
+          </div>
+          <div className="flex flex-col gap-6">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="flex items-center gap-4">
+                <Skeleton className="w-5 h-5 rounded-full" />
+                <Skeleton className="h-4 w-full" />
+              </div>
+            ))}
+          </div>
+          <Skeleton className="h-20 w-full" />
+          <Skeleton className="h-12 w-full mx-auto" />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <p className="text-red-600 p-8">Error loading tracking information.</p>;
+  }
 
   if (!product) return notFound();
 
@@ -76,7 +110,7 @@ export default function OrderTrackingPage() {
         {/* Navigation */}
         <div className="pt-4 text-center">
           <Button
-            onClick={() => window.location.href = "/marketplace"}
+            onClick={() => (window.location.href = "/marketplace")}
             className="bg-gradient-to-br from-[#128f20] to-[#72BF01] text-white"
           >
             Back to Marketplace

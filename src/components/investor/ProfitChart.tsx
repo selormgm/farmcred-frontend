@@ -68,13 +68,13 @@ export function ChartBarInvestmentROI() {
   ];
 
   return (
-    <Card className="max-h-[520px] shadow-md flex flex-col">
+    <Card className="h-full shadow-md flex flex-col">
       <CardHeader>
         <CardTitle>Investment and ROI</CardTitle>
         <CardDescription>August - December 2025</CardDescription>
       </CardHeader>
-      <CardContent className="h-[380px]">
-        <ChartContainer config={chartConfig}  className="h-full">
+      <CardContent className="flex=1 min-h-0">
+        <ChartContainer config={chartConfig}  className="h-full w-full">
           <ResponsiveContainer width="100%" height="100%">
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />

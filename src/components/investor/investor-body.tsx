@@ -1,12 +1,15 @@
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { ChartBarInvestmentROI } from "./ProfitChart";
 import { useInvestorProfile } from "@/hooks/useInvestorData";
+import { Button } from "../ui/button";
 
 export function BodyCards() {
   const { data: profile, loading, error } = useInvestorProfile();
@@ -41,6 +44,23 @@ export function BodyCards() {
       timestamp: "2025-07-05 08:44",
     },
   ];
+  const upcomingActions = [
+    {
+      title: "Review farmer Kofi Boateng",
+      dueDate: "Due in 2 days",
+      link: "/reviews",
+    },
+    {
+      title: "Fund request from Sarah Appiah",
+      dueDate: "Due in 3 days",
+      link: "/investments",
+    },
+    {
+      title: "Respond to message from John Aboagye",
+      dueDate: "Due today",
+      link: "/messages",
+    },
+  ];
 
   return (
     <div className="flex-1">
@@ -50,23 +70,76 @@ export function BodyCards() {
             <ChartBarInvestmentROI />
           </div>
 
-          <div className="flex-[1]">
-            <Card className="h-full bg-white p-5 rounded-xl dark:bg-card shadow-md">
-              <CardHeader className="flex flex-row items-center justify-between p-0 pb-4">
+          <div className="flex flex-col gap-4 flex-1 h-full">
+            {/* Upcoming Actions */}
+            <Card className="bg-white p-5 rounded-xl dark:bg-card shadow-md">
+              <CardHeader className="p-0 pb-4">
+                <CardTitle className="text-sm font-medium">
+                  Upcoming Actions
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0">
+                {upcomingActions.length > 0 ? (
+                  <ul className="space-y-3">
+                    {upcomingActions.map((action, index) => (
+                      <li
+                        key={index}
+                        className="flex items-center justify-between text-sm border-b pb-2"
+                      >
+                        <div>
+                          <p className="font-medium">{action.title}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {action.dueDate}
+                          </p>
+                        </div>
+                        {action.link && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 text-xs px-2"
+                            asChild
+                          >
+                            <a href={action.link}>View</a>
+                          </Button>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div className="text-muted-foreground text-sm">
+                    No upcoming actions.
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+            <Card className="flex-1 bg-white p-5 rounded-xl dark:bg-card shadow-md">
+              <CardHeader className="p-0 pb-4">
                 <CardTitle className="text-sm font-medium">
                   Recent Activity
                 </CardTitle>
               </CardHeader>
-              <CardContent className="flex-1 flex flex-col gap-4">
+              <CardContent className="flex-1 flex flex-col overflow-auto">
                 {recentActivity.length > 0 ? (
-                  recentActivity.map((activity, index) => (
-                    <div key={index} className="border-b pb-2">
-                      <p className="font-medium">{activity.title}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {activity.timestamp}
-                      </p>
-                    </div>
-                  ))
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Activity</TableHead>
+                        <TableHead>Date</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {recentActivity.slice(0,5).map((activity, index) => (
+                        <TableRow key={index}>
+                          <TableCell className="font-medium">
+                            {activity.title}
+                          </TableCell>
+                          <TableCell className="text-muted-foreground text-xs">
+                            {activity.timestamp}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
                 ) : (
                   <div className="flex items-center justify-center text-muted-foreground h-full">
                     No recent activity.

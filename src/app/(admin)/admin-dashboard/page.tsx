@@ -69,6 +69,7 @@ export default function AdminDashboard() {
                       label: "Loan Disbursed (GH₵)",
                       data: [5000, 7000, 6000, 8000, 10000, 9500, 12000],
                       backgroundColor: "#158f20",
+                      borderRadius: 8,
                     },
                   ],
                 }}
@@ -99,6 +100,7 @@ export default function AdminDashboard() {
                       label: "New Farmers",
                       data: [10, 15, 20, 18, 25, 30, 40],
                       backgroundColor: "#72BF01",
+                      borderRadius: 8,
                     },
                   ],
                 }}

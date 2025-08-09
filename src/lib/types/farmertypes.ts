@@ -152,14 +152,14 @@ export interface FarmerOrder{
 };
 
 export interface FarmerProduct {
-  dateAdded: string | number | Date;
+  dateAdded: string;
   imageUrl: string;
   name: string;
   price: number;
 }
 
 export interface FarmerProductInput {
-  image: File | null;
+  image?: File | null;
   name: string;
   price: number;
 }

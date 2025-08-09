@@ -1,6 +1,6 @@
 import {useState, useEffect, useCallback} from 'react';
 import { farmerProductService } from '@/lib/api/farmerproduct';
-import { ApiFilters, FarmerProduct } from '@/lib/types/farmertypes';
+import { ApiFilters, FarmerProduct, FarmerProductInput } from '@/lib/types/farmertypes';
 
 export function useFarmerProducts(filters?: ApiFilters) {
   const [products, setProducts] = useState<FarmerProduct[]>([]);
@@ -66,11 +66,11 @@ export function useCreateFarmerProduct() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const createProduct = async (data: Omit<FarmerProduct, 'image'> & { image: File }) => {
+  const createProduct = async (payload: FarmerProductInput) => {
     try {
       setLoading(true);
       setError(null);
-      const newProduct = await farmerProductService.createFarmerProduct(data);
+      const newProduct = await farmerProductService.createFarmerProduct(payload);
       return newProduct;
     } catch (err: any) {
       setError(err.response?.data?.detail || err.message || 'An error occurred');
@@ -88,16 +88,11 @@ export function useUpdateFarmerProduct() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const updateProduct = async (name: string, data: Omit<FarmerProduct, 'image'> & { image?: File | null }) => {
+  const updateProduct = async (name: string, payload: Partial<Omit<FarmerProduct, 'name'>>) => {
     try {
       setLoading(true);
       setError(null);
-      // Ensure image is never undefined
-      const dataWithImage: typeof data & { image: File | null } = {
-        ...data,
-        image: data.image !== undefined ? data.image : null,
-      };
-      const updatedProduct = await farmerProductService.updateFarmerProduct(name, dataWithImage);
+      const updatedProduct = await farmerProductService.updateFarmerProduct(name, payload);
       return updatedProduct;
     } catch (err: any) {
       setError(err.response?.data?.detail || err.message || 'An error occurred');

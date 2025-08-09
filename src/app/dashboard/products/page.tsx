@@ -28,22 +28,22 @@ function ProductForm({ initialData, onClose, onSave }: { initialData?: any, onCl
   const isEditing = !!initialData;
   const loading = isEditing ? updateLoading : createLoading;
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   try {
-  //     if (isEditing) {
-  //       await updateProduct(initialData.name, { name, price: Number(price) });
-  //       toast.success(`Product "${name}" updated successfully`);
-  //     } else {
-  //       await createProduct({ name, price: Number(price), image });
-  //       toast.success(`Product "${name}" added successfully`);
-  //     }
-  //     onSave();
-  //     onClose();
-  //   } catch (error: any) {
-  //     toast.error(error.message || "Failed to save product");
-  //   }
-  // };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      if (isEditing) {
+        await updateProduct(initialData.name, { price: Number(price) });
+        toast.success(`Product "${name}" updated successfully`);
+      } else {
+        await createProduct({ name, price: Number(price), image });
+        toast.success(`Product "${name}" added successfully`);
+      }
+      onSave();
+      onClose();
+    } catch (error: any) {
+      toast.error(error.message || "Failed to save product");
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

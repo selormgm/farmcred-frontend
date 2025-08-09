@@ -5,22 +5,9 @@ import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Grid3X3, List, PlusCircle } from "lucide-react";
+import { Grid3X3, List } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Loan } from "@/lib/types";
-
-const mockLoans: Loan[] = [
-  {
-    id: 1,
-    amount: 500,
-    due_date: "2025-08-01",
-    status: "repaid",
-    on_time: true,
-  },
-  { id: 2, amount: 300, due_date: "2025-09-15", status: "active" },
-  { id: 3, amount: 400, due_date: "2025-07-10", status: "declined" },
-  { id: 4, amount: 250, due_date: "2025-10-01", status: "pending" },
-];
+import { useInvestorLoans } from "@/hooks/useInvestorData";
 
 const statusColorMap = {
   repaid: "bg-green-100 text-green-700",
@@ -32,13 +19,26 @@ const statusColorMap = {
 
 export default function LoanPage() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const { data: loans, loading, error } = useInvestorLoans();
 
-  const totalLoaned = mockLoans
+  if (loading) {
+    return <p className="text-center p-8 text-gray-500">Loading reviews...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center p-8 text-red-600">Error: {error}</p>;
+  }
+  
+  const safeLoans = loans || [];
+
+  const totalLoaned = safeLoans
     .filter((loan) => loan.status !== "declined")
     .reduce((sum, loan) => sum + loan.amount, 0);
 
-  const repaidLoans = mockLoans.filter((loan) => loan.status === "repaid");
-  const repaymentProgress = (repaidLoans.length / mockLoans.length) * 100;
+  const repaidLoans = safeLoans.filter((loan) => loan.status === "repaid");
+  const repaymentProgress = safeLoans.length
+    ? (repaidLoans.length / safeLoans.length) * 100
+    : 0;
 
   return (
     <div className="p-4 space-y-6">
@@ -79,7 +79,7 @@ export default function LoanPage() {
           <CardContent>
             <Progress value={repaymentProgress} className="h-3" />
             <div className="text-sm mt-2">
-              {repaidLoans.length} of {mockLoans.length} loans repaid
+              {repaidLoans.length} of {safeLoans.length} loans repaid
             </div>
           </CardContent>
         </Card>
@@ -92,7 +92,7 @@ export default function LoanPage() {
             : "space-y-4"
         )}
       >
-        {mockLoans.map((loan) => (
+        {safeLoans.map((loan) => (
           <Card
             key={loan.id}
             className={cn(

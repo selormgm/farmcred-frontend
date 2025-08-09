@@ -4,66 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, LayoutGrid, List, Star } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-
-// Dummy investor reviews
-const dummyInvestorReviews = [
-  {
-    id: 1,
-    investorName: "Daniel Owusu",
-    rating: 5,
-    tags: ["Supportive", "Prompt Funding"],
-    comment: "Daniel was very responsive and funded quickly.",
-  },
-  {
-    id: 2,
-    investorName: "Akosua Ntim",
-    rating: 4,
-    tags: ["Provided Guidance"],
-    comment: "Offered helpful feedback throughout the season.",
-  },
-  {
-    id: 3,
-    investorName: "Kofi Manu",
-    rating: 3,
-    tags: ["Delayed Responses"],
-    comment: "There were delays in communication, but we managed.",
-  },
-  {
-    id: 4,
-    investorName: "Ama Kwarteng",
-    rating: 5,
-    tags: ["Reliable", "Trustworthy"],
-    comment: "Ama has been a consistent and trustworthy investor.",
-  },
-  {
-    id: 5,
-    investorName: "Nana Adjei",
-    rating: 2,
-    tags: ["Lacked Feedback"],
-    comment: "I wish there was more guidance provided.",
-  },
-  {
-    id: 6,
-    investorName: "Esi Koranteng",
-    rating: 4,
-    tags: ["Environmentally Conscious"],
-    comment: "Happy to work with someone who cares about sustainability.",
-  },
-  {
-    id: 7,
-    investorName: "Yaw Frimpong",
-    rating: 5,
-    tags: ["Great Communication", "Goal-Oriented"],
-    comment: "Great partner to work with, very clear expectations.",
-  },
-  {
-    id: 8,
-    investorName: "Selina Boateng",
-    rating: 3,
-    tags: ["Occasional Check-ins"],
-    comment: "Helpful, but not very consistent with follow-ups.",
-  },
-];
+import { useInvestorReview } from "@/hooks/useInvestorData";
+import { InvestorReview } from "@/lib/types/investortypes";
 
 export default function ReviewInvestorsPage() {
   const [search, setSearch] = useState("");
@@ -72,9 +14,21 @@ export default function ReviewInvestorsPage() {
 
   const REVIEWS_PER_PAGE = 9;
 
+  const { data: fetchedReviews, loading, error } = useInvestorReview();
+
+  if (loading) {
+    return <p className="text-center p-8 text-gray-500">Loading reviews...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center p-8 text-red-600">Error: {error}</p>;
+  }
+
+  const reviews = fetchedReviews ? [fetchedReviews] : [];
+
   // Filter reviews by investor name
-  const filteredReviews = dummyInvestorReviews.filter((review) =>
-    review.investorName.toLowerCase().includes(search.toLowerCase())
+  const filteredReviews = reviews.filter((review: InvestorReview) =>
+    review.investor_full_name.toLowerCase().includes(search.toLowerCase())
   );
 
   const totalPages = Math.ceil(filteredReviews.length / REVIEWS_PER_PAGE);
@@ -133,7 +87,7 @@ export default function ReviewInvestorsPage() {
             <Card key={review.id} className="dark:bg-card">
               <CardHeader>
                 <h2 className="text-lg font-semibold text-foreground">
-                  {review.investorName}
+                  {review.investor_full_name}
                 </h2>
               </CardHeader>
 
@@ -151,19 +105,6 @@ export default function ReviewInvestorsPage() {
                     />
                   ))}
                 </div>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {review.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs border bg-green-50 dark:bg-green-900 text-green-700 dark:text-green-300 px-2 py-1 rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
                 {/* Comment */}
                 {review.comment && (
                   <p className="mt-2 text-sm text-muted-foreground">

@@ -8,19 +8,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ChartBarInvestmentROI } from "./ProfitChart";
-import { useInvestorProfile } from "@/hooks/useInvestorData";
+import { useInvestorLoans, useInvestorProfile } from "@/hooks/useInvestorData";
 import { Button } from "../ui/button";
 
 export function BodyCards() {
   const { data: profile, loading, error } = useInvestorProfile();
+  const {data: loans, loading: loansLoading, error: loansError} = useInvestorLoans();
   const tablelength = 3;
-  if (error) {
+  if (error || loansError) {
     console.error("Failed to fetch data:", error);
   }
-  if (loading) {
+  if (loading || loansLoading) {
     return <div className="p-4">Loading...</div>;
   }
-  if (!profile) {
+  if (!profile || !loans) {
     return <div className="p-4">No data available.</div>;
   }
   console.log(profile);
@@ -44,23 +45,14 @@ export function BodyCards() {
       timestamp: "2025-07-05 08:44",
     },
   ];
-  const upcomingActions = [
-    {
-      title: "Review farmer Kofi Boateng",
-      dueDate: "Due in 2 days",
-      link: "/reviews",
-    },
-    {
-      title: "Fund request from Sarah Appiah",
-      dueDate: "Due in 3 days",
-      link: "/investments",
-    },
-    {
-      title: "Respond to message from John Aboagye",
-      dueDate: "Due today",
-      link: "/messages",
-    },
-  ];
+  // Filter loans to find pending requests
+  const upcomingActions = loans
+    .filter((loan) => loan.status === "pending")
+    .map((loan) => ({
+      title: `Fund request from ${loan.farmer_full_name}`,
+      dueDate: `Due on ${loan.due_date}`,
+      link: "/investor/loans",
+    }));
 
   return (
     <div className="flex-1">

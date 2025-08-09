@@ -6,66 +6,8 @@ import { useState } from "react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { ReviewDialogContent } from "@/components/investor/ReviewDialog";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-
-// Dummy reviews
-const dummyReviews = [
-  {
-    id: 1,
-    farmerName: "Kwame Mensah",
-    rating: 4,
-    tags: ["Timely Updates", "Good Communication"],
-    comment: "Kwame was very consistent with his updates and results.",
-  },
-  {
-    id: 2,
-    farmerName: "Ama Boateng",
-    rating: 5,
-    tags: ["Met Investment Goals", "Transparent Reporting"],
-    comment: "",
-  },
-  {
-    id: 3,
-    farmerName: "Yaw Adomako",
-    rating: 3,
-    tags: ["Lack of Communication", "Missed Deadlines"],
-    comment: "A few missed deadlines, but decent returns.",
-  },
-  {
-    id: 4,
-    farmerName: "Linda Osei",
-    rating: 5,
-    tags: ["Transparent Reporting", "Timely Updates"],
-    comment: "",
-  },
-  {
-    id: 5,
-    farmerName: "John Akoto",
-    rating: 2,
-    tags: ["Unclear Financials"],
-    comment: "Needs better transparency.",
-  },
-  {
-    id: 6,
-    farmerName: "Akua Sarpong",
-    rating: 4,
-    tags: ["Environmentally Responsible", "Good Communication"],
-    comment: "Loved the environmental focus.",
-  },
-  {
-    id: 7,
-    farmerName: "Kojo Antwi",
-    rating: 5,
-    tags: ["Reliable & Trustworthy", "Met Investment Goals"],
-    comment: "Excellent performance overall.",
-  },
-  {
-    id: 8,
-    farmerName: "Nana Abena",
-    rating: 3,
-    tags: ["Missed Deadlines"],
-    comment: "Could improve on timeline delivery.",
-  },
-];
+import { useInvestorReview } from "@/hooks/useInvestorData";
+import { InvestorReview } from "@/lib/types/investortypes";
 
 export default function ReviewFarmersPage() {
   const [search, setSearch] = useState("");
@@ -73,13 +15,25 @@ export default function ReviewFarmersPage() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const REVIEWS_PER_PAGE = 9;
+  const mockReviewData = {
+    rating: 4, // Default to a positive rating
+    tags: ["Timely Updates", "Good Communication"],
+    comment: "This review is a placeholder as no comments are available from the API.",
+};
 
   const [open, setOpen] = useState(false);
-  // const { data: review, loading, error } = useInvestorReview();
+  const { data: review, loading, error } = useInvestorReview();
+  if (loading) {
+    return <p className="text-center p-8 text-gray-500">Loading reviews...</p>;
+  }
 
-  // Filter dummy reviews by search term
-  const filteredReviews = dummyReviews.filter((review) =>
-    review.farmerName.toLowerCase().includes(search.toLowerCase())
+  if (error) {
+    return <p className="text-center p-8 text-red-600">Error: {error}</p>;
+  }
+
+  const reviews = review ? [{ ...review, ...mockReviewData }] : [];
+  const filteredReviews = reviews.filter((review) =>
+    review.farmer_full_name.toLowerCase().includes(search.toLowerCase())
   );
 
   const totalPages = Math.ceil(filteredReviews.length / REVIEWS_PER_PAGE);
@@ -141,7 +95,7 @@ export default function ReviewFarmersPage() {
             <Card key={review.id} className="dark:bg-card">
               <CardHeader>
                 <h2 className="text-lg font-semibold text-foreground">
-                  {review.farmerName}
+                  {review.farmer_full_name}
                 </h2>
               </CardHeader>
 

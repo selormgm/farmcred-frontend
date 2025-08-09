@@ -55,6 +55,8 @@ export interface InvestorReview{
   investor: number;
   investor_full_name: string;
   created_at: string;
+  rating: number;// stars given after rating 
+  comment?: string;// alittle comment on how the farmer was
 }
 
 
